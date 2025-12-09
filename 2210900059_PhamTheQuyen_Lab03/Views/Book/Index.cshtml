@@ -1,0 +1,89 @@
+﻿@model IEnumerable<_2210900059_PhamTheQuyen_Lab03.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sach</h1>
+
+@await Component.InvokeAsync("Book")
+
+<form action="" method="post" class="form-inline" role="form">
+    <div class="form-group">
+        <select name="AuthorId" class="form-control" asp-items="@ViewBag.authors">
+            <option>-- Chọn tác giả --</option>
+        </select>
+        <select name="GenreId" class="form-control" asp-items="@ViewBag.genres">
+            <option>-- Chọn thể loại --</option>
+        </select>
+        <button>Tìm kiếm</button>
+        <a asp-action="Create">Create New</a>
+    </div>
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GenreId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sumary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenreId)
+                </td>
+                <td>
+                    <img src="@item.Image" alt="@item.Title" style="width:50px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sumary)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
