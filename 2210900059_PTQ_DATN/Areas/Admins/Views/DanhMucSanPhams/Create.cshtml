@@ -1,0 +1,51 @@
+﻿@model _2210900059_PTQ_DATN.Models.DanhMucSanPham
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DanhMucSanPham</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenDanhMuc" class="control-label"></label>
+                <input asp-for="TenDanhMuc" class="form-control" />
+                <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slug" class="control-label"></label>
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTa" class="control-label"></label>
+                <input asp-for="MoTa" class="form-control" />
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaNguoiTao" class="control-label"></label>
+                <select asp-for="MaNguoiTao" class ="form-control" asp-items="ViewBag.MaNguoiTao"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaNguoiCapNhat" class="control-label"></label>
+                <select asp-for="MaNguoiCapNhat" class ="form-control" asp-items="ViewBag.MaNguoiCapNhat"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

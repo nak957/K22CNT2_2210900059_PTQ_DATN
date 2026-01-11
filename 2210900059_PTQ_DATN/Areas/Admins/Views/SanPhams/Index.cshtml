@@ -1,0 +1,137 @@
+﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenSanPham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoaiSanPham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThuongHieu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DungTich)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoiTuongSuDung)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CongDungChinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThanhPhanNoiBat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTaNgan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTaChiTiet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HinhAnh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoiBat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayTao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrangThai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaDanhMucNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSanPham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiSanPham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThuongHieu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DungTich)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoiTuongSuDung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CongDungChinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThanhPhanNoiBat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTaNgan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTaChiTiet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HinhAnh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoiBat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDanhMucNavigation.MaDanhMuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaSanPham">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaSanPham">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaSanPham">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

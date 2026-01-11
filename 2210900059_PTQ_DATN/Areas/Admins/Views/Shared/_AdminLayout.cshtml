@@ -1,0 +1,212 @@
+﻿@{
+    Layout = null;
+    var title = ViewData["Title"] ?? "Admin Panel";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title - _2210900059_PTQ_DATN</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+
+    <style>
+        /* Layout admin: sidebar cố định bên trái, nội dung có margin-left */
+        :root {
+            --admin-sidebar-width: 250px;
+            --admin-header-height: 60px;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        aside.main-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--admin-sidebar-width);
+            height: 100vh;
+            background: #343a40;
+            color: #fff;
+            overflow-y: auto;
+            z-index: 1000;
+            padding-bottom: 2rem;
+        }
+
+        aside.main-sidebar .brand-link {
+            padding: .75rem 1rem;
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            background: rgba(0,0,0,0.08);
+        }
+
+        .sidebar .nav-link { color: #cfd8dc; }
+        .sidebar .nav-link.active, .sidebar .nav-link:hover { background: rgba(255,255,255,0.04); color:#fff; }
+
+        /* Main content: có margin-left bằng chiều rộng sidebar */
+        main.admin-content {
+            margin-left: var(--admin-sidebar-width);
+            min-height: 100vh;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        /* Header trong main */
+        header.admin-top {
+            height: var(--admin-header-height);
+            background: #fff;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 .75rem;
+            margin-bottom: 1rem;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a asp-area="Admins" asp-controller="Home" asp-action="Index" class="brand-link">
+            <span class="brand-text font-weight-light">ADMIN PANEL</span>
+        </a>
+
+        <div class="sidebar p-2">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column">
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="Home" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="NguoiDungs" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Người dùng</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="DanhMucSanPhams" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-list"></i>
+                            <p>Danh mục sản phẩm</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="SanPhams" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-box"></i>
+                            <p>Sản phẩm</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="DanhMucDichVus" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>Danh mục dịch vụ</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="DichVus" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>Dịch vụ</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="DonHangs" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-file-invoice"></i>
+                            <p>Đơn hàng</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="ChiTietDonHangs" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>Chi tiết đơn hàng</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="GioHangs" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>Giỏ hàng</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="GioHangChiTiets" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-cart-plus"></i>
+                            <p>Chi tiết giỏ hàng</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="LienHes" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-envelope"></i>
+                            <p>Liên hệ</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="TrangNoiDungs" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>Trang nội dung</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Admins" asp-controller="BaiViets" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>Trang bài viết</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="admin-content">
+        <header class="admin-top">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">@title</h5>
+                <div>
+                    <a class="btn btn-outline-secondary btn-sm me-2" asp-area="" asp-controller="Home" asp-action="Index">Site</a>
+                    <a class="btn btn-outline-danger btn-sm" asp-area="Admins" asp-controller="Account" asp-action="Logout">Logout</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+
+        <footer class="border-top footer text-muted mt-4">
+            <div class="container">
+                &copy; @(DateTime.Now.Year) - _2210900059_PTQ_DATN
+            </div>
+        </footer>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

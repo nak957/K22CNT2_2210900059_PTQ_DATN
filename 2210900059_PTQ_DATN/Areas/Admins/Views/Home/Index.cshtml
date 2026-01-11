@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Trang quản trị";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Trang tổng quan hệ thống</li>
+    </ol>
+
+    <!-- Thẻ thống kê -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="fw-bold">Người dùng</div>
+                    <div class="fs-3">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="fw-bold">Sản phẩm</div>
+                    <div class="fs-3">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="fw-bold">Đơn hàng</div>
+                    <div class="fs-3">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <div class="fw-bold">Liên hệ</div>
+                    <div class="fs-3">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Giới thiệu -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <strong>Giới thiệu</strong>
+        </div>
+        <div class="card-body">
+            <p>
+                Đây là trang quản trị hệ thống. Tại đây, quản trị viên có thể:
+            </p>
+            <ul>
+                <li>Quản lý người dùng</li>
+                <li>Quản lý danh mục</li>
+                <li>Quản lý sản phẩm</li>
+                <li>Quản lý đơn hàng</li>
+                <li>Xem liên hệ &amp; nội dung</li>
+            </ul>
+            <p class="mb-0">
+                Vui lòng chọn chức năng ở menu bên trái.
+            </p>
+        </div>
+    </div>
+</div>
