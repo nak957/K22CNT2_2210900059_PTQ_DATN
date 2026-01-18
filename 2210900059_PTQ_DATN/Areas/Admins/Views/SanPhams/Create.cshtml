@@ -1,100 +1,183 @@
 ﻿@model _2210900059_PTQ_DATN.Models.SanPham
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tạo sản phẩm";
 }
 
-<h1>Create</h1>
+<!-- Tailwind CDN (nếu _Layout đã có thì có thể bỏ) -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-<h4>SanPham</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MaDanhMuc" class="control-label"></label>
-                <select asp-for="MaDanhMuc" class ="form-control" asp-items="ViewBag.MaDanhMuc"></select>
+<div class="max-w-5xl mx-auto px-6 py-8">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-3xl font-extrabold text-gray-800">Thêm sản phẩm mới</h1>
+        <p class="text-gray-500 mt-1">Nhập thông tin chi tiết cho sản phẩm</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow border border-gray-200 p-8">
+
+        <form asp-action="Create"
+              method="post"
+              enctype="multipart/form-data"
+              class="space-y-6">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="rounded-lg bg-red-50 text-red-600 px-4 py-3 text-sm"></div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Danh mục -->
+                <div>
+                    <label asp-for="MaDanhMuc"
+                           class="block font-semibold text-gray-700 mb-1">Danh mục</label>
+                    <select asp-for="MaDanhMuc"
+                            asp-items="ViewBag.MaDanhMuc"
+                            class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500">
+                    </select>
+                    <span asp-validation-for="MaDanhMuc"
+                          class="text-sm text-red-600"></span>
+                </div>
+
+                <!-- Tên sản phẩm -->
+                <div>
+                    <label asp-for="TenSanPham"
+                           class="block font-semibold text-gray-700 mb-1">Tên sản phẩm</label>
+                    <input asp-for="TenSanPham"
+                           class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500" />
+                    <span asp-validation-for="TenSanPham"
+                          class="text-sm text-red-600"></span>
+                </div>
+
+                <div>
+                    <label asp-for="Slug"
+                           class="block font-semibold text-gray-700 mb-1">Slug</label>
+                    <input asp-for="Slug"
+                           class="w-full rounded-xl border-gray-300" />
+                </div>
+
+                <div>
+                    <label asp-for="LoaiSanPham"
+                           class="block font-semibold text-gray-700 mb-1">Loại sản phẩm</label>
+                    <input asp-for="LoaiSanPham"
+                           class="w-full rounded-xl border-gray-300" />
+                </div>
+
+                <div>
+                    <label asp-for="ThuongHieu"
+                           class="block font-semibold text-gray-700 mb-1">Thương hiệu</label>
+                    <input asp-for="ThuongHieu"
+                           class="w-full rounded-xl border-gray-300" />
+                </div>
+
+                <div>
+                    <label asp-for="DungTich"
+                           class="block font-semibold text-gray-700 mb-1">Dung tích</label>
+                    <input asp-for="DungTich"
+                           class="w-full rounded-xl border-gray-300" />
+                </div>
+
+                <div>
+                    <label asp-for="DoiTuongSuDung"
+                           class="block font-semibold text-gray-700 mb-1">Đối tượng sử dụng</label>
+                    <input asp-for="DoiTuongSuDung"
+                           class="w-full rounded-xl border-gray-300" />
+                </div>
+
+                <div>
+                    <label asp-for="Gia"
+                           class="block font-semibold text-gray-700 mb-1">Giá bán (VNĐ)</label>
+                    <input asp-for="Gia"
+                           class="w-full rounded-xl border-gray-300" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TenSanPham" class="control-label"></label>
-                <input asp-for="TenSanPham" class="form-control" />
-                <span asp-validation-for="TenSanPham" class="text-danger"></span>
+
+            <!-- Mô tả -->
+            <div>
+                <label asp-for="MoTaNgan"
+                       class="block font-semibold text-gray-700 mb-1">Mô tả ngắn</label>
+                <textarea asp-for="MoTaNgan"
+                          rows="3"
+                          class="w-full rounded-xl border-gray-300"></textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
+
+            <div>
+                <label asp-for="MoTaChiTiet"
+                       class="block font-semibold text-gray-700 mb-1">Mô tả chi tiết</label>
+                <textarea asp-for="MoTaChiTiet"
+                          rows="5"
+                          class="w-full rounded-xl border-gray-300"></textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="LoaiSanPham" class="control-label"></label>
-                <input asp-for="LoaiSanPham" class="form-control" />
-                <span asp-validation-for="LoaiSanPham" class="text-danger"></span>
+
+            <div>
+                <label asp-for="CongDungChinh"
+                       class="block font-semibold text-gray-700 mb-1">Công dụng chính</label>
+                <input asp-for="CongDungChinh"
+                       class="w-full rounded-xl border-gray-300" />
             </div>
-            <div class="form-group">
-                <label asp-for="ThuongHieu" class="control-label"></label>
-                <input asp-for="ThuongHieu" class="form-control" />
-                <span asp-validation-for="ThuongHieu" class="text-danger"></span>
+
+            <div>
+                <label asp-for="ThanhPhanNoiBat"
+                       class="block font-semibold text-gray-700 mb-1">Thành phần nổi bật</label>
+                <input asp-for="ThanhPhanNoiBat"
+                       class="w-full rounded-xl border-gray-300" />
             </div>
-            <div class="form-group">
-                <label asp-for="DungTich" class="control-label"></label>
-                <input asp-for="DungTich" class="form-control" />
-                <span asp-validation-for="DungTich" class="text-danger"></span>
+
+            <!-- Hình ảnh -->
+            <div>
+                <label class="block font-semibold text-gray-700 mb-1">Hình ảnh sản phẩm</label>
+                <input type="file"
+                       name="HinhAnhFile"
+                       class="w-full rounded-xl border-gray-300"
+                       accept="image/*" />
             </div>
-            <div class="form-group">
-                <label asp-for="DoiTuongSuDung" class="control-label"></label>
-                <input asp-for="DoiTuongSuDung" class="form-control" />
-                <span asp-validation-for="DoiTuongSuDung" class="text-danger"></span>
+
+            <!-- Người tạo / cập nhật -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label asp-for="MaNguoiTao"
+                           class="block font-semibold text-gray-700 mb-1">Người tạo</label>
+                    <select asp-for="MaNguoiTao"
+                            asp-items="ViewBag.MaNguoiTao"
+                            class="w-full rounded-xl border-gray-300"></select>
+                </div>
+
+                <div>
+                    <label asp-for="MaNguoiCapNhat"
+                           class="block font-semibold text-gray-700 mb-1">Người cập nhật</label>
+                    <select asp-for="MaNguoiCapNhat"
+                            asp-items="ViewBag.MaNguoiCapNhat"
+                            class="w-full rounded-xl border-gray-300"></select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CongDungChinh" class="control-label"></label>
-                <input asp-for="CongDungChinh" class="form-control" />
-                <span asp-validation-for="CongDungChinh" class="text-danger"></span>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-between pt-6 border-t">
+
+                <a asp-action="Index"
+                   class="h-12 px-6 rounded-xl border border-[#e4dbe6]
+                          flex items-center justify-center
+                          text-gray-600 hover:bg-gray-100 transition">
+                    Quay lại
+                </a>
+
+                <input type="submit"
+                       value="➕ Thêm sản phẩm"
+                       class="rounded-xl h-12 px-6
+                              bg-purple-600 text-white font-bold
+                              hover:bg-purple-700
+                              transition
+                              shadow-md shadow-purple-600/30" />
             </div>
-            <div class="form-group">
-                <label asp-for="ThanhPhanNoiBat" class="control-label"></label>
-                <input asp-for="ThanhPhanNoiBat" class="form-control" />
-                <span asp-validation-for="ThanhPhanNoiBat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTaNgan" class="control-label"></label>
-                <input asp-for="MoTaNgan" class="form-control" />
-                <span asp-validation-for="MoTaNgan" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTaChiTiet" class="control-label"></label>
-                <input asp-for="MoTaChiTiet" class="form-control" />
-                <span asp-validation-for="MoTaChiTiet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HinhAnh" class="control-label"></label>
-                <input asp-for="HinhAnh" class="form-control" />
-                <span asp-validation-for="HinhAnh" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gia" class="control-label"></label>
-                <input asp-for="Gia" class="form-control" />
-                <span asp-validation-for="Gia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiTao" class="control-label"></label>
-                <select asp-for="MaNguoiTao" class ="form-control" asp-items="ViewBag.MaNguoiTao"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiCapNhat" class="control-label"></label>
-                <select asp-for="MaNguoiCapNhat" class ="form-control" asp-items="ViewBag.MaNguoiCapNhat"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

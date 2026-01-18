@@ -1,54 +1,123 @@
 ﻿@model _2210900059_PTQ_DATN.Models.DanhMucSanPham
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa danh mục sản phẩm";
 }
 
-<h1>Edit</h1>
+<div class="max-w-3xl mx-auto">
 
-<h4>DanhMucSanPham</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <!-- PAGE HEADER -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-black text-[#171118]">
+            Chỉnh sửa danh mục sản phẩm
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Cập nhật thông tin danh mục
+        </p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm p-8">
+
+        <form asp-action="Edit" class="space-y-6">
+            <div asp-validation-summary="ModelOnly"
+                 class="text-red-500 text-sm"></div>
+
+            <!-- ID hidden -->
             <input type="hidden" asp-for="MaDanhMuc" />
-            <div class="form-group">
-                <label asp-for="TenDanhMuc" class="control-label"></label>
-                <input asp-for="TenDanhMuc" class="form-control" />
-                <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
+
+            <!-- Tên danh mục -->
+            <div>
+                <label asp-for="TenDanhMuc"
+                       class="block text-sm font-bold text-[#171118] mb-2"></label>
+                <input asp-for="TenDanhMuc"
+                       class="w-full h-12 rounded-xl border border-[#e4dbe6]
+                              px-4 text-[#171118]
+                              focus:border-primary focus:ring-0" />
+                <span asp-validation-for="TenDanhMuc"
+                      class="text-red-500 text-sm"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
+
+            <!-- Slug -->
+            <div>
+                <label asp-for="Slug"
+                       class="block text-sm font-bold text-[#171118] mb-2"></label>
+                <input asp-for="Slug"
+                       class="w-full h-12 rounded-xl border border-[#e4dbe6]
+                              px-4 text-[#171118]
+                              focus:border-primary focus:ring-0" />
+                <span asp-validation-for="Slug"
+                      class="text-red-500 text-sm"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
+
+            <!-- Mô tả -->
+            <div>
+                <label asp-for="MoTa"
+                       class="block text-sm font-bold text-[#171118] mb-2"></label>
+                <textarea asp-for="MoTa"
+                          rows="4"
+                          class="w-full rounded-xl border border-[#e4dbe6]
+                                 px-4 py-3 text-[#171118]
+                                 focus:border-primary focus:ring-0"></textarea>
+                <span asp-validation-for="MoTa"
+                      class="text-red-500 text-sm"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiTao" class="control-label"></label>
-                <select asp-for="MaNguoiTao" class="form-control" asp-items="ViewBag.MaNguoiTao"></select>
-                <span asp-validation-for="MaNguoiTao" class="text-danger"></span>
+
+            <!-- Người tạo -->
+            <div>
+                <label asp-for="MaNguoiTao"
+                       class="block text-sm font-bold text-[#171118] mb-2"></label>
+                <select asp-for="MaNguoiTao"
+                        asp-items="ViewBag.MaNguoiTao"
+                        class="w-full h-12 rounded-xl border border-[#e4dbe6]
+                               px-4 text-[#171118]
+                               focus:border-primary focus:ring-0">
+                </select>
+                <span asp-validation-for="MaNguoiTao"
+                      class="text-red-500 text-sm"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiCapNhat" class="control-label"></label>
-                <select asp-for="MaNguoiCapNhat" class="form-control" asp-items="ViewBag.MaNguoiCapNhat"></select>
-                <span asp-validation-for="MaNguoiCapNhat" class="text-danger"></span>
+
+            <!-- Người cập nhật -->
+            <div>
+                <label asp-for="MaNguoiCapNhat"
+                       class="block text-sm font-bold text-[#171118] mb-2"></label>
+                <select asp-for="MaNguoiCapNhat"
+                        asp-items="ViewBag.MaNguoiCapNhat"
+                        class="w-full h-12 rounded-xl border border-[#e4dbe6]
+                               px-4 text-[#171118]
+                               focus:border-primary focus:ring-0">
+                </select>
+                <span asp-validation-for="MaNguoiCapNhat"
+                      class="text-red-500 text-sm"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex items-center justify-end gap-4 pt-6 border-t">
+
+                <a asp-action="Index"
+                   class="h-12 px-6 rounded-xl border border-[#e4dbe6]
+                          flex items-center justify-center
+                          text-gray-600 hover:bg-gray-100 transition">
+                    Quay lại
+                </a>
+
+                <div class="pt-2">
+                    <input type="submit"
+                           value="Lưu thay đổi"
+                           class="rounded-xl h-12 px-6
+                          bg-purple-600 text-white font-bold
+                          hover:bg-purple-700
+                          transition
+                          shadow-md shadow-purple-600/30" />
+
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

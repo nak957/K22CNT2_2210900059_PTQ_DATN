@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _2210900059_PTQ_DATN.Models;
 
@@ -52,4 +53,8 @@ public partial class SanPham
     public virtual NguoiDung? MaNguoiCapNhatNavigation { get; set; }
 
     public virtual NguoiDung? MaNguoiTaoNavigation { get; set; }
+
+    [NotMapped]
+    public IFormFile? HinhAnhFile { get; set; }
+
 }

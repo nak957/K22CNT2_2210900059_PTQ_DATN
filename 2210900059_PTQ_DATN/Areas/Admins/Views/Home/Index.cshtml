@@ -3,71 +3,99 @@
     Layout = "_AdminLayout";
 }
 
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Dashboard</h1>
+<div class="space-y-8">
 
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Trang tổng quan hệ thống</li>
-    </ol>
-
-    <!-- Thẻ thống kê -->
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">
-                    <div class="fw-bold">Người dùng</div>
-                    <div class="fs-3">0</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">
-                    <div class="fw-bold">Sản phẩm</div>
-                    <div class="fs-3">0</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">
-                    <div class="fw-bold">Đơn hàng</div>
-                    <div class="fs-3">0</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">
-                    <div class="fw-bold">Liên hệ</div>
-                    <div class="fs-3">0</div>
-                </div>
-            </div>
+    <!-- HEADER -->
+    <div class="flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-extrabold text-gray-800">Dashboard</h1>
+            <p class="text-sm text-gray-500 mt-1">
+                Trang tổng quan hệ thống
+            </p>
         </div>
     </div>
 
-    <!-- Giới thiệu -->
-    <div class="card mt-4">
-        <div class="card-header">
-            <strong>Giới thiệu</strong>
+    <!-- STAT CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+        <!-- Người dùng -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-2 bg-indigo-100 rounded-lg">
+                    <span class="material-symbols-outlined text-indigo-600">group</span>
+                </div>
+                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                    +0%
+                </span>
+            </div>
+            <p class="text-sm text-gray-500 uppercase tracking-wide">Người dùng</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
         </div>
-        <div class="card-body">
+
+        <!-- Sản phẩm -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-2 bg-green-100 rounded-lg">
+                    <span class="material-symbols-outlined text-green-600">inventory_2</span>
+                </div>
+                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                    +0%
+                </span>
+            </div>
+            <p class="text-sm text-gray-500 uppercase tracking-wide">Sản phẩm</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
+        </div>
+
+        <!-- Đơn hàng -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-2 bg-amber-100 rounded-lg">
+                    <span class="material-symbols-outlined text-amber-600">receipt_long</span>
+                </div>
+                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                    +0%
+                </span>
+            </div>
+            <p class="text-sm text-gray-500 uppercase tracking-wide">Đơn hàng</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
+        </div>
+
+        <!-- Liên hệ -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-2 bg-rose-100 rounded-lg">
+                    <span class="material-symbols-outlined text-rose-600">mail</span>
+                </div>
+                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                    +0%
+                </span>
+            </div>
+            <p class="text-sm text-gray-500 uppercase tracking-wide">Liên hệ</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
+        </div>
+
+    </div>
+
+    <!-- GIỚI THIỆU -->
+    <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b font-bold text-gray-800">
+            Giới thiệu
+        </div>
+        <div class="px-6 py-4 text-gray-700 space-y-3">
             <p>
                 Đây là trang quản trị hệ thống. Tại đây, quản trị viên có thể:
             </p>
-            <ul>
+            <ul class="list-disc list-inside space-y-1">
                 <li>Quản lý người dùng</li>
                 <li>Quản lý danh mục</li>
                 <li>Quản lý sản phẩm</li>
                 <li>Quản lý đơn hàng</li>
                 <li>Xem liên hệ &amp; nội dung</li>
             </ul>
-            <p class="mb-0">
+            <p>
                 Vui lòng chọn chức năng ở menu bên trái.
             </p>
         </div>
     </div>
+
 </div>

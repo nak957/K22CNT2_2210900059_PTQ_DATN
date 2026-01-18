@@ -1,100 +1,197 @@
 ﻿@model _2210900059_PTQ_DATN.Models.DichVu
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm dịch vụ";
 }
 
-<h1>Create</h1>
+<div class="max-w-5xl mx-auto">
 
-<h4>DichVu</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MaDanhMucDv" class="control-label"></label>
-                <select asp-for="MaDanhMucDv" class ="form-control" asp-items="ViewBag.MaDanhMucDv"></select>
+    <!-- HEADER -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-black text-[#171118]">
+            Thêm dịch vụ mới
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Nhập thông tin dịch vụ vào hệ thống
+        </p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm p-8">
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data" class="space-y-8">
+            <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
+
+            <!-- GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- DANH MỤC -->
+                <div>
+                    <label asp-for="MaDanhMucDv" class="block font-semibold mb-2"></label>
+                    <select asp-for="MaDanhMucDv"
+                            asp-items="ViewBag.MaDanhMucDv"
+                            class="w-full h-12 rounded-xl border border-gray-300 px-4">
+                    </select>
+                </div>
+
+                <!-- TÊN -->
+                <div>
+                    <label asp-for="TenDichVu" class="block font-semibold mb-2"></label>
+                    <input asp-for="TenDichVu"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                    <span asp-validation-for="TenDichVu" class="text-red-500 text-sm"></span>
+                </div>
+
+                <!-- SLUG -->
+                <div>
+                    <label asp-for="Slug" class="block font-semibold mb-2"></label>
+                    <input asp-for="Slug"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- LOẠI -->
+                <div>
+                    <label asp-for="LoaiDichVu" class="block font-semibold mb-2"></label>
+                    <input asp-for="LoaiDichVu"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- CÔNG NGHỆ -->
+                <div>
+                    <label asp-for="CongNghe" class="block font-semibold mb-2"></label>
+                    <input asp-for="CongNghe"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- THỜI LƯỢNG -->
+                <div>
+                    <label asp-for="ThoiLuong" class="block font-semibold mb-2"></label>
+                    <input asp-for="ThoiLuong"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- SỐ BUỔI -->
+                <div>
+                    <label asp-for="SoBuoi" class="block font-semibold mb-2"></label>
+                    <input asp-for="SoBuoi"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- ĐỐI TƯỢNG -->
+                <div>
+                    <label asp-for="DoiTuongPhuHop" class="block font-semibold mb-2"></label>
+                    <input asp-for="DoiTuongPhuHop"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- VÙNG TÁC ĐỘNG -->
+                <div>
+                    <label asp-for="VungTacDong" class="block font-semibold mb-2"></label>
+                    <input asp-for="VungTacDong"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
+
+                <!-- GIÁ -->
+                <div>
+                    <label asp-for="Gia" class="block font-semibold mb-2"></label>
+                    <input asp-for="Gia"
+                           class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TenDichVu" class="control-label"></label>
-                <input asp-for="TenDichVu" class="form-control" />
-                <span asp-validation-for="TenDichVu" class="text-danger"></span>
+
+            <!-- TEXTAREA -->
+            <div>
+                <label asp-for="MoTaNgan" class="block font-semibold mb-2"></label>
+                <textarea asp-for="MoTaNgan"
+                          rows="3"
+                          class="w-full rounded-xl border border-gray-300 px-4 py-3"></textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
+
+            <div>
+                <label asp-for="NoiDungChiTiet" class="block font-semibold mb-2"></label>
+                <textarea asp-for="NoiDungChiTiet"
+                          rows="5"
+                          class="w-full rounded-xl border border-gray-300 px-4 py-3"></textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="LoaiDichVu" class="control-label"></label>
-                <input asp-for="LoaiDichVu" class="form-control" />
-                <span asp-validation-for="LoaiDichVu" class="text-danger"></span>
+
+            <!-- HÌNH ẢNH -->
+            <div>
+                <label class="block font-semibold mb-2">Hình ảnh dịch vụ</label>
+                <input type="file"
+                       name="HinhAnhFile"
+                       accept="image/*"
+                       class="w-full h-12 rounded-xl border border-gray-300 px-4" />
+                <div class="mt-3">
+                    <img id="imgPreview" src="#" alt="Preview" class="max-h-40 rounded-lg hidden" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CongNghe" class="control-label"></label>
-                <input asp-for="CongNghe" class="form-control" />
-                <span asp-validation-for="CongNghe" class="text-danger"></span>
+
+
+            <!-- NGƯỜI TẠO / CẬP NHẬT -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label asp-for="MaNguoiTao" class="block font-semibold mb-2"></label>
+                    <select asp-for="MaNguoiTao"
+                            asp-items="ViewBag.MaNguoiTao"
+                            class="w-full h-12 rounded-xl border border-gray-300 px-4">
+                    </select>
+                </div>
+
+                <div>
+                    <label asp-for="MaNguoiCapNhat" class="block font-semibold mb-2"></label>
+                    <select asp-for="MaNguoiCapNhat"
+                            asp-items="ViewBag.MaNguoiCapNhat"
+                            class="w-full h-12 rounded-xl border border-gray-300 px-4">
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ThoiLuong" class="control-label"></label>
-                <input asp-for="ThoiLuong" class="form-control" />
-                <span asp-validation-for="ThoiLuong" class="text-danger"></span>
+
+            <!-- ACTIONS -->
+            <div class="flex justify-end gap-4 pt-6 border-t">
+
+                <a asp-action="Index"
+                   class="h-12 px-6 rounded-xl border border-gray-300
+                          flex items-center justify-center
+                          text-gray-600 hover:bg-gray-100">
+                    Quay lại
+                </a>
+
+                <div class="pt-2">
+                    <input type="submit"
+                           value="Lưu dịch vụ"
+                           class="rounded-xl h-12 px-6
+                          bg-purple-600 text-white font-bold
+                          hover:bg-purple-700
+                          transition
+                          shadow-md shadow-purple-600/30" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SoBuoi" class="control-label"></label>
-                <input asp-for="SoBuoi" class="form-control" />
-                <span asp-validation-for="SoBuoi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoiTuongPhuHop" class="control-label"></label>
-                <input asp-for="DoiTuongPhuHop" class="form-control" />
-                <span asp-validation-for="DoiTuongPhuHop" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VungTacDong" class="control-label"></label>
-                <input asp-for="VungTacDong" class="form-control" />
-                <span asp-validation-for="VungTacDong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTaNgan" class="control-label"></label>
-                <input asp-for="MoTaNgan" class="form-control" />
-                <span asp-validation-for="MoTaNgan" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoiDungChiTiet" class="control-label"></label>
-                <input asp-for="NoiDungChiTiet" class="form-control" />
-                <span asp-validation-for="NoiDungChiTiet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HinhAnh" class="control-label"></label>
-                <input asp-for="HinhAnh" class="form-control" />
-                <span asp-validation-for="HinhAnh" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gia" class="control-label"></label>
-                <input asp-for="Gia" class="form-control" />
-                <span asp-validation-for="Gia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiTao" class="control-label"></label>
-                <select asp-for="MaNguoiTao" class ="form-control" asp-items="ViewBag.MaNguoiTao"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiCapNhat" class="control-label"></label>
-                <select asp-for="MaNguoiCapNhat" class ="form-control" asp-items="ViewBag.MaNguoiCapNhat"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @Html.Partial("_ValidationScriptsPartial")
+
+    <script>
+        (function () {
+            const input = document.querySelector('input[name="HinhAnhFile"]');
+            const preview = document.getElementById('imgPreview');
+
+            if (!input) return;
+
+            input.addEventListener('change', function (e) {
+                const file = e.target.files && e.target.files[0];
+                if (!file) {
+                    preview.src = '#';
+                    preview.classList.add('hidden');
+                    return;
+                }
+                const url = URL.createObjectURL(file);
+                preview.src = url;
+                preview.classList.remove('hidden');
+            });
+        })();
+    </script>
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("2210900059_PTQ_DATN")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33833ab455ec8fc5c8c31fd605680a13cbcb04ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0434cd337b1499419cffc1230638e2bf73aa5db")]
 [assembly: System.Reflection.AssemblyProductAttribute("2210900059_PTQ_DATN")]
 [assembly: System.Reflection.AssemblyTitleAttribute("2210900059_PTQ_DATN")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

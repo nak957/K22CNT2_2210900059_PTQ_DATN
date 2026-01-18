@@ -4,56 +4,78 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] px-6 py-10 gap-8">
+    <!-- Page Heading -->
+    <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col gap-1">
+            <h1 class="text-[#171118] dark:text-white text-3xl font-black leading-tight">Danh sách danh mục dịch vụ</h1>
+            <p class="text-gray-500 dark:text-gray-400 text-sm">Manage service categories used across the system</p>
+        </div>
+        <a asp-action="Create"
+           class="flex items-center gap-2 rounded-xl h-12 px-6
+          bg-purple-600 text-white text-base font-bold
+          hover:bg-purple-700
+          shadow-lg shadow-purple-600/30
+          transition">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span>Thêm danh mục</span>
+        </a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDanhMuc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDanhMuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaDanhMucDv">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaDanhMucDv">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaDanhMucDv">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    </div>
+
+    <!-- Utility Bar -->
+    <div class="flex flex-col md:flex-row gap-4 w-full bg-white dark:bg-background-dark p-4 rounded-2xl shadow-sm border border-[#e4dbe6] dark:border-[#3a2a3d]">
+        <div class="flex-1">
+            <label class="flex flex-col h-12 w-full">
+                <div class="flex w-full items-stretch rounded-xl h-full overflow-hidden border border-[#e4dbe6] dark:border-[#3a2a3d]">
+                    <div class="text-gray-400 flex items-center justify-center pl-4">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <input class="form-input flex w-full text-[#171118] dark:text-white bg-[#f8f6f8] dark:bg-[#2d1b31] h-full px-4 placeholder:text-gray-400" placeholder="Search categories..." />
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="flex flex-col overflow-hidden rounded-2xl border border-[#e4dbe6] dark:border-[#3a2a3d] bg-white dark:bg-background-dark shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-[#f8f6f8] dark:bg-[#2d1b31] border-b border-[#e4dbe6] dark:border-[#3a2a3d]">
+                        <th class="px-6 py-4 text-sm font-bold text-[#171118] dark:text-white uppercase tracking-wider">@Html.DisplayNameFor(model => model.TenDanhMuc)</th>
+                        <th class="px-6 py-4 text-sm font-bold text-[#171118] dark:text-white uppercase tracking-wider">@Html.DisplayNameFor(model => model.Slug)</th>
+                        <th class="px-6 py-4 text-sm font-bold text-[#171118] dark:text-white uppercase tracking-wider">@Html.DisplayNameFor(model => model.MoTa)</th>
+                        <th class="px-6 py-4 text-sm font-bold text-[#171118] dark:text-white uppercase tracking-wider">Updated By</th>
+                        <th class="px-6 py-4 text-sm font-bold text-[#171118] dark:text-white uppercase tracking-wider">Created By</th>
+                        <th class="px-6 py-4 text-sm font-bold text-[#171118] dark:text-white uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#e4dbe6] dark:divide-[#3a2a3d]">
+                @foreach (var item in Model) {
+                    <tr class="hover:bg-[#fcfaff] dark:hover:bg-[#2d1b31]/50 transition-colors">
+                        <td class="px-6 py-4">@Html.DisplayFor(modelItem => item.TenDanhMuc)</td>
+                        <td class="px-6 py-4">@Html.DisplayFor(modelItem => item.Slug)</td>
+                        <td class="px-6 py-4">@Html.DisplayFor(modelItem => item.MoTa)</td>
+                        <td class="px-6 py-4">@Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)</td>
+                        <td class="px-6 py-4">@Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)</td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.MaDanhMucDv" class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.MaDanhMucDv" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined">visibility</span>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.MaDanhMucDv" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

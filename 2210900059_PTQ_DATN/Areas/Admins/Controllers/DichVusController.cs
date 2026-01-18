@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using _2210900059_PTQ_DATN.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _2210900059_PTQ_DATN.Models;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
 {
@@ -13,10 +15,12 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
     public class DichVusController : Controller
     {
         private readonly LeSkinDbContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public DichVusController(LeSkinDbContext context)
+        public DichVusController(LeSkinDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: Admins/DichVus
@@ -50,28 +54,78 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         // GET: Admins/DichVus/Create
         public IActionResult Create()
         {
-            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "MaDanhMucDv");
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
+            ViewData["MaDanhMucDv"] = new SelectList(
+                _context.DanhMucDichVus,
+                "MaDanhMucDv",      // value
+                "TenDanhMuc"        // text hiển thị
+            );
+
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen");
+            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen");
             return View();
         }
 
         // POST: Admins/DichVus/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaDichVu,MaDanhMucDv,TenDichVu,Slug,LoaiDichVu,CongNghe,ThoiLuong,SoBuoi,DoiTuongPhuHop,VungTacDong,MoTaNgan,NoiDungChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")] DichVu dichVu)
+        public async Task<IActionResult> Create(
+            [Bind("MaDichVu,MaDanhMucDv,TenDichVu,Slug,LoaiDichVu,CongNghe,ThoiLuong,SoBuoi,DoiTuongPhuHop,VungTacDong,MoTaNgan,NoiDungChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
+            DichVu dichVu,
+            IFormFile? HinhAnhFile
+        )
         {
             if (ModelState.IsValid)
             {
+                if (HinhAnhFile != null && HinhAnhFile.Length > 0)
+                {
+                    string uploadPath = Path.Combine(
+                        _environment.WebRootPath ?? "wwwroot",
+                        "images",
+                        "services"
+                    );
+
+                    if (!Directory.Exists(uploadPath))
+                        Directory.CreateDirectory(uploadPath);
+
+                    string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
+                    string filePath = Path.Combine(uploadPath, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await HinhAnhFile.CopyToAsync(stream);
+                    }
+
+                    dichVu.HinhAnh = fileName; // chỉ lưu tên file
+                }
+
+                dichVu.NgayTao ??= DateTime.Now;
+
                 _context.Add(dichVu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "MaDanhMucDv", dichVu.MaDanhMucDv);
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", dichVu.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", dichVu.MaNguoiTao);
+
+            ViewData["MaDanhMucDv"] = new SelectList(
+                _context.DanhMucDichVus,
+                "MaDanhMucDv",
+                "TenDanhMuc",
+                dichVu.MaDanhMucDv
+            );
+
+            ViewData["MaNguoiCapNhat"] = new SelectList(
+                _context.NguoiDungs,
+                "MaNguoiDung",
+                "HoTen",
+                dichVu.MaNguoiCapNhat
+            );
+
+            ViewData["MaNguoiTao"] = new SelectList(
+                _context.NguoiDungs,
+                "MaNguoiDung",
+                "HoTen",
+                dichVu.MaNguoiTao
+            );
+
             return View(dichVu);
         }
 
@@ -88,18 +142,22 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "MaDanhMucDv", dichVu.MaDanhMucDv);
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", dichVu.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", dichVu.MaNguoiTao);
+
+            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "TenDanhMuc", dichVu.MaDanhMucDv);
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiCapNhat);
+            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiTao);
             return View(dichVu);
         }
 
         // POST: Admins/DichVus/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaDichVu,MaDanhMucDv,TenDichVu,Slug,LoaiDichVu,CongNghe,ThoiLuong,SoBuoi,DoiTuongPhuHop,VungTacDong,MoTaNgan,NoiDungChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")] DichVu dichVu)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("MaDichVu,MaDanhMucDv,TenDichVu,Slug,LoaiDichVu,CongNghe,ThoiLuong,SoBuoi,DoiTuongPhuHop,VungTacDong,MoTaNgan,NoiDungChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
+            DichVu dichVu,
+            IFormFile? HinhAnhFile
+        )
         {
             if (id != dichVu.MaDichVu)
             {
@@ -110,6 +168,40 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             {
                 try
                 {
+                    // If a new image is uploaded, save it and set HinhAnh
+                    if (HinhAnhFile != null && HinhAnhFile.Length > 0)
+                    {
+                        string uploadPath = Path.Combine(
+                            _environment.WebRootPath ?? "wwwroot",
+                            "images",
+                            "services"
+                        );
+
+                        if (!Directory.Exists(uploadPath))
+                            Directory.CreateDirectory(uploadPath);
+
+                        string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
+                        string filePath = Path.Combine(uploadPath, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await HinhAnhFile.CopyToAsync(stream);
+                        }
+
+                        dichVu.HinhAnh = fileName;
+                    }
+                    else
+                    {
+                        // Preserve existing image when no new file uploaded
+                        var existingImage = await _context.DichVus
+                            .AsNoTracking()
+                            .Where(d => d.MaDichVu == id)
+                            .Select(d => d.HinhAnh)
+                            .FirstOrDefaultAsync();
+
+                        dichVu.HinhAnh = existingImage;
+                    }
+
                     _context.Update(dichVu);
                     await _context.SaveChangesAsync();
                 }
@@ -126,9 +218,10 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "MaDanhMucDv", dichVu.MaDanhMucDv);
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", dichVu.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", dichVu.MaNguoiTao);
+
+            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "TenDanhMuc", dichVu.MaDanhMucDv);
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiCapNhat);
+            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiTao);
             return View(dichVu);
         }
 

@@ -50,18 +50,25 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         }
 
         // POST: Admins/NguoiDungs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNguoiDung,TenDangNhap,MatKhau,HoTen,Email,VaiTro,NgayTao")] NguoiDung nguoiDung)
+        public async Task<IActionResult> Create(
+            [Bind("MaNguoiDung,TenDangNhap,MatKhau,HoTen,Email,VaiTro,NgayTao")]
+            NguoiDung nguoiDung)
         {
+            // Siết vai trò phía server
+            if (nguoiDung.VaiTro != "admin" && nguoiDung.VaiTro != "khachhang")
+            {
+                ModelState.AddModelError("VaiTro", "Vai trò không hợp lệ");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(nguoiDung);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(nguoiDung);
         }
 
@@ -82,15 +89,22 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         }
 
         // POST: Admins/NguoiDungs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNguoiDung,TenDangNhap,MatKhau,HoTen,Email,VaiTro,NgayTao")] NguoiDung nguoiDung)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("MaNguoiDung,TenDangNhap,MatKhau,HoTen,Email,VaiTro,NgayTao")]
+            NguoiDung nguoiDung)
         {
             if (id != nguoiDung.MaNguoiDung)
             {
                 return NotFound();
+            }
+
+            // Siết vai trò phía server
+            if (nguoiDung.VaiTro != "admin" && nguoiDung.VaiTro != "khachhang")
+            {
+                ModelState.AddModelError("VaiTro", "Vai trò không hợp lệ");
             }
 
             if (ModelState.IsValid)
@@ -113,6 +127,7 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(nguoiDung);
         }
 

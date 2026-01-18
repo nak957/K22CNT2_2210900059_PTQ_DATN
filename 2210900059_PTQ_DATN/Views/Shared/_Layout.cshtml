@@ -1,49 +1,103 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Leskin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - _2210900059_PTQ_DATN</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/_2210900059_PTQ_DATN.styles.css" asp-append-version="true" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">_2210900059_PTQ_DATN</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - _2210900059_PTQ_DATN - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- HEADER / MENU -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <a asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="Leskin" />
+                </a>
+            </div>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">TRANG CHỦ</a></li>
+                    <li><a asp-controller="Home" asp-action="GioiThieu">GIỚI THIỆU</a></li>
+                    <li><a asp-controller="DichVu" asp-action="Index">DỊCH VỤ</a></li>
+                    <li><a asp-controller="SanPham" asp-action="Index">SẢN PHẨM</a></li>
+                    <li><a asp-controller="TinTuc" asp-action="Index">TIN TỨC</a></li>
+                    <li><a asp-controller="SuKien" asp-action="Index">SỰ KIỆN</a></li>
+                    <li><a asp-controller="LienHe" asp-action="Index">LIÊN HỆ</a></li>
+                </ul>
+            </nav>
+            
+
+            <div class="nav-icons">
+                @if (Context.Session.GetString("TenDangNhap") == null)
+                {
+                    <!-- CHƯA ĐĂNG NHẬP -->
+                    <button class="icon"
+                            title="Đăng nhập"
+                            onclick="location.href='@Url.Action("Login", "TaiKhoan")'">
+                        👤
+                    </button>
+
+                    <button class="icon"
+                            title="Đăng ký"
+                            onclick="location.href='@Url.Action("Register", "TaiKhoan")'">
+                        📝
+                    </button>
+                }
+                else
+                {
+                    <!-- ĐÃ ĐĂNG NHẬP -->
+                    <div class="user-menu-icons">
+                        <span class="welcome-text">
+                            Xin chào, <strong>@Context.Session.GetString("TenDangNhap")</strong>
+                        </span>
+
+                        <!-- SỬA THÔNG TIN -->
+                        <a asp-controller="TaiKhoan"
+                           asp-action="Edit"
+                           title="Chỉnh sửa thông tin cá nhân"
+                           class="icon-btn">
+                            ⚙️
+                        </a>
+
+                        <!-- ĐĂNG XUẤT -->
+                        <a asp-controller="TaiKhoan"
+                           asp-action="Logout"
+                           title="Đăng xuất"
+                           class="icon-btn logout">
+                            🚪
+                        </a>
+                    </div>
+                }
+            </div>
+
+
+
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    </header>
+    
+    <div class="accent-line"></div>
+
+    <!-- NỘI DUNG TRANG -->
+    @RenderBody()
+
+    <!-- JS -->
+    <script src="~/js/index.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+    @await Html.PartialAsync("_Partners")
+    @await Html.PartialAsync("_Footer")
+
+
 </body>
 </html>
+

@@ -1,113 +1,99 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.DonHang>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý đơn hàng";
 }
 
-<h1>Index</h1>
+<h2 class="mb-3">Quản lý đơn hàng</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"
+       class="flex items-center gap-2 rounded-xl h-12 px-6
+          bg-purple-600 text-white text-base font-bold
+          hover:bg-purple-700
+          shadow-lg shadow-purple-600/30
+          transition">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Thêm đơn hàng</span>
+    </a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark text-center">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MaDonHangCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoTen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoDienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TongTien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhiVanChuyen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhuongThucThanhToan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThaiThanhToan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayDat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayCapNhat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiDungNavigation)
-            </th>
-            <th></th>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Điện thoại</th>
+            <th>Tổng tiền</th>
+            <th>Thanh toán</th>
+            <th>Trạng thái</th>
+            <th>Ngày đặt</th>
+            <th width="150">Thao tác</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaDonHangCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoTen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoDienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TongTien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhiVanChuyen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhuongThucThanhToan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThaiThanhToan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayDat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayCapNhat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiDungNavigation.MaNguoiDung)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaDonHang">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaDonHang">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaDonHang">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="fw-bold">@item.MaDonHangCode</td>
+
+                <td>@item.HoTen</td>
+
+                <td>@item.SoDienThoai</td>
+
+                <td class="text-danger fw-bold">
+                    @string.Format("{0:N0} đ", item.TongTien)
+                </td>
+
+                <td class="text-center">
+                    @if (item.TrangThaiThanhToan == "1")
+
+                    {
+                        <span class="badge bg-success">Đã thanh toán</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Chưa thanh toán</span>
+                    }
+                </td>
+
+                <td class="text-center">
+                    @if (item.TrangThai == "1")
+                    {
+                        <span class="badge bg-primary">Đang xử lý</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Đã hủy</span>
+                    }
+                </td>
+
+                <td class="text-center">
+                    @item.NgayDat?.ToString("dd/MM/yyyy")
+                </td>
+
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <a asp-action="Edit"
+                           asp-route-id="@item.MaDonHang"
+                           class="p-2 rounded-lg text-primary hover:bg-primary/10 transition">
+                            <span class="material-symbols-outlined">Sửa</span>
+                        </a>
+
+                        <a asp-action="Details"
+                           asp-route-id="@item.MaDonHang"
+                           class="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition">
+                            <span class="material-symbols-outlined">Chi tiết</span>
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.MaDonHang"
+                           class="p-2 rounded-lg text-red-500 hover:bg-red-50 transition">
+                            <span class="material-symbols-outlined">Xóa</span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

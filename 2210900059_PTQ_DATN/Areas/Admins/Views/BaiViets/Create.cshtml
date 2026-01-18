@@ -1,66 +1,130 @@
 ﻿@model _2210900059_PTQ_DATN.Models.BaiViet
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tạo bài viết";
 }
 
-<h1>Create</h1>
+<div class="layout-content-container flex flex-col w-full max-w-[900px] px-6 py-10 gap-6 mx-auto">
+    <div class="flex items-center justify-between mb-4">
+        <div>
+            <h1 class="text-2xl font-extrabold text-[#171118] dark:text-white">Tạo mới bài viết</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Thêm bài viết mới cho trang</p>
+        </div>
+        <a asp-action="Index" class="text-sm text-slate-500 hover:underline">Quay lại danh sách</a>
+    </div>
 
-<h4>BaiViet</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TieuDe" class="control-label"></label>
-                <input asp-for="TieuDe" class="form-control" />
-                <span asp-validation-for="TieuDe" class="text-danger"></span>
+    <div class="bg-white dark:bg-background-dark p-6 rounded-2xl border border-[#e4dbe6] dark:border-[#3a2a3d] shadow-sm">
+        <form asp-action="Create" method="post" class="grid grid-cols-1 gap-4">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-sm text-red-600"></div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tiêu đề</label>
+                <input asp-for="TieuDe" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="TieuDe" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Slug</label>
+                    <input asp-for="Slug" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                    <span asp-validation-for="Slug" class="text-sm text-red-500"></span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ngày đăng</label>
+                    <input asp-for="NgayDang" id="NgayDang" type="date" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                    <span asp-validation-for="NgayDang" class="text-sm text-red-500"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="HinhAnh" class="control-label"></label>
-                <input asp-for="HinhAnh" class="form-control" />
-                <span asp-validation-for="HinhAnh" class="text-danger"></span>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Hình ảnh (URL)</label>
+                <input asp-for="HinhAnh" id="HinhAnh" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="HinhAnh" class="text-sm text-red-500"></span>
+
+                <div id="previewWrap" class="mt-3 hidden">
+                    <p class="text-xs text-gray-500 mb-2">Preview:</p>
+                    <div id="imgPreview" class="w-40 h-24 rounded-md overflow-hidden border bg-center bg-cover"></div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mô tả ngắn</label>
+                <input asp-for="MoTa" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="MoTa" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NoiDung" class="control-label"></label>
-                <input asp-for="NoiDung" class="form-control" />
-                <span asp-validation-for="NoiDung" class="text-danger"></span>
+
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nội dung</label>
+            <textarea asp-for="NoiDung" rows="6" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white"></textarea>
+            <span asp-validation-for="NoiDung" class="text-sm text-red-500"></span>
+
+            <div class="grid grid-cols-2 gap-4 items-end">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Loại</label>
+                    <input asp-for="Loai" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118] dark:text-white" placeholder="Ví dụ: Tin tức, Blog..." />
+                    <span asp-validation-for="Loai" class="text-sm text-red-500"></span>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    @* pattern an toàn cho nullable bool: hidden + checkbox name="NoiBat" *@
+                    <input type="hidden" name="NoiBat" value="false" />
+                    <input id="NoiBat" name="NoiBat" type="checkbox" value="true" class="h-4 w-4 text-primary rounded" @(Model?.NoiBat == true ? "checked" : "") />
+                    <label for="NoiBat" class="text-sm text-gray-700 dark:text-gray-300">Đánh dấu nổi bật</label>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Loai" class="control-label"></label>
-                <input asp-for="Loai" class="form-control" />
-                <span asp-validation-for="Loai" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiTao" class="control-label"></label>
-                <select asp-for="MaNguoiTao" class ="form-control" asp-items="ViewBag.MaNguoiTao"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNguoiCapNhat" class="control-label"></label>
-                <select asp-for="MaNguoiCapNhat" class ="form-control" asp-items="ViewBag.MaNguoiCapNhat"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            @if (ViewData["MaNguoiTao"] != null)
+            {
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Người tạo</label>
+                    <select asp-for="MaNguoiTao" asp-items="@(ViewData["MaNguoiTao"] as SelectList)" class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-white dark:bg-[#1f1022] text-[#171118]"></select>
+                </div>
+            }
+            else
+            {
+                <input asp-for="MaNguoiTao" type="hidden" />
+            }
+
+            <div class="flex items-center justify-end gap-3 mt-4">
+                <a asp-action="Index" class="px-4 py-2 rounded-lg border border-[#e4dbe6] text-sm text-slate-600 hover:bg-slate-100">Hủy</a>
+                <button type="submit" class="px-6 py-2 rounded-lg bg-primary text-white font-bold" style="background:#c813ec;color:#fff;">Lưu</button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // set default date to today if empty
+        (function () {
+            const dateInput = document.getElementById('NgayDang');
+            if (dateInput && !dateInput.value) {
+                const d = new Date();
+                const iso = d.toISOString().slice(0, 10);
+                dateInput.value = iso;
+            }
+
+            // preview image URL
+            const imgInput = document.getElementById('HinhAnh');
+            const previewWrap = document.getElementById('previewWrap');
+            const imgPreview = document.getElementById('imgPreview');
+            function updatePreview() {
+                const url = imgInput.value?.trim();
+                if (url) {
+                    previewWrap.classList.remove('hidden');
+                    imgPreview.style.backgroundImage = `url('${url}')`;
+                } else {
+                    previewWrap.classList.add('hidden');
+                    imgPreview.style.backgroundImage = '';
+                }
+            }
+            if (imgInput) {
+                imgInput.addEventListener('input', updatePreview);
+                updatePreview();
+            }
+        })();
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

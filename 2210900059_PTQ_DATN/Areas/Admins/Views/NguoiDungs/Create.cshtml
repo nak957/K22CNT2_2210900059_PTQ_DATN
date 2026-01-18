@@ -1,53 +1,74 @@
 ﻿@model _2210900059_PTQ_DATN.Models.NguoiDung
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tạo người dùng";
 }
 
-<h1>Create</h1>
+<div class="layout-content-container flex flex-col w-full max-w-[800px] px-6 py-10 gap-6 mx-auto">
+    <div class="flex items-center justify-between mb-4">
+        <div>
+            <h1 class="text-2xl font-extrabold text-[#171118] dark:text-white">Tạo mới người dùng</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Tạo tài khoản mới cho hệ thống</p>
+        </div>
+        <a asp-action="Index" class="text-sm text-slate-500 hover:underline">Quay lại danh sách</a>
+    </div>
 
-<h4>NguoiDung</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TenDangNhap" class="control-label"></label>
-                <input asp-for="TenDangNhap" class="form-control" />
-                <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+    <div class="bg-white dark:bg-background-dark p-6 rounded-2xl border border-[#e4dbe6] dark:border-[#3a2a3d] shadow-sm">
+        <form asp-action="Create" method="post" class="grid grid-cols-1 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tên đăng nhập</label>
+                <input asp-for="TenDangNhap"
+                       class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-[#fff] dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="TenDangNhap" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="MatKhau" class="control-label"></label>
-                <input asp-for="MatKhau" class="form-control" />
-                <span asp-validation-for="MatKhau" class="text-danger"></span>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mật khẩu</label>
+                <input asp-for="MatKhau"
+                       class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-[#fff] dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="MatKhau" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="HoTen" class="control-label"></label>
-                <input asp-for="HoTen" class="form-control" />
-                <span asp-validation-for="HoTen" class="text-danger"></span>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Họ và tên</label>
+                <input asp-for="HoTen"
+                       class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-[#fff] dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="HoTen" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                <input asp-for="Email"
+                       class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-[#fff] dark:bg-[#1f1022] text-[#171118] dark:text-white" />
+                <span asp-validation-for="Email" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="VaiTro" class="control-label"></label>
-                <input asp-for="VaiTro" class="form-control" />
-                <span asp-validation-for="VaiTro" class="text-danger"></span>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Vai trò</label>
+                <select asp-for="VaiTro"
+                        class="mt-2 block w-full rounded-lg border border-[#e4dbe6] px-3 py-2 bg-[#fff] dark:bg-[#1f1022] text-[#171118] dark:text-white">
+                    <option value="">-- Chọn vai trò --</option>
+                    <option value="admin">Admin</option>
+                    <option value="khachhang">Khách hàng</option>
+                </select>
+                <span asp-validation-for="VaiTro" class="text-sm text-red-500"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="flex items-center justify-end gap-3 mt-4">
+                <a asp-action="Index"
+                   class="px-4 py-2 rounded-lg border border-[#e4dbe6] text-sm text-slate-600 hover:bg-slate-100">
+                    Hủy
+                </a>
+                <button type="submit"
+                        class="px-6 py-2 rounded-lg bg-primary text-white font-bold"
+                        style="background:#c813ec;color:#ffffff;">
+                    Lưu
+                </button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

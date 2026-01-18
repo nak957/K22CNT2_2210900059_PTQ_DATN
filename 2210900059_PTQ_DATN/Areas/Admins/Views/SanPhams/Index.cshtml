@@ -1,137 +1,112 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.SanPham>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý sản phẩm";
 }
 
-<h1>Index</h1>
+<!-- Tailwind CDN (nếu Layout chưa có thì để, có rồi thì bỏ dòng này) -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenSanPham)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoaiSanPham)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThuongHieu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DungTich)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DoiTuongSuDung)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CongDungChinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThanhPhanNoiBat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTaNgan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTaChiTiet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HinhAnh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiBat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayTao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaDanhMucNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenSanPham)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiSanPham)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThuongHieu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DungTich)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoiTuongSuDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CongDungChinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThanhPhanNoiBat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTaNgan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTaChiTiet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HinhAnh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiBat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayTao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaDanhMucNavigation.MaDanhMuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaSanPham">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaSanPham">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaSanPham">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Header -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-800">Quản lý sản phẩm</h1>
+            <p class="text-gray-500 mt-1">Danh sách toàn bộ sản phẩm trong hệ thống</p>
+        </div>
+
+        <a asp-action="Create"
+           class="inline-flex items-center gap-2 px-5 h-11 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">
+            <span>➕</span>
+            Thêm sản phẩm mới
+        </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-2xl shadow border border-gray-200 overflow-hidden">
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-left">
+                <thead class="bg-gray-100 border-b">
+                    <tr class="text-gray-700 font-bold uppercase tracking-wide">
+                        <th class="px-4 py-3">Tên sản phẩm</th>
+                        <th class="px-4 py-3">Slug</th>
+                        <th class="px-4 py-3">Loại</th>
+                        <th class="px-4 py-3">Thương hiệu</th>
+                        <th class="px-4 py-3">Dung tích</th>
+                        <th class="px-4 py-3">Đối tượng</th>
+                        <th class="px-4 py-3">Công dụng</th>
+                        <th class="px-4 py-3">Thành phần</th>
+                        <th class="px-4 py-3">Giá</th>
+                        <th class="px-4 py-3">Trạng thái</th>
+                        <th class="px-4 py-3 text-center">Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-purple-50 transition">
+                            <td class="px-4 py-3 font-semibold text-gray-800">
+                                @item.TenSanPham
+                            </td>
+                            <td class="px-4 py-3 text-gray-600">
+                                @item.Slug
+                            </td>
+                            <td class="px-4 py-3">
+                                @item.LoaiSanPham
+                            </td>
+                            <td class="px-4 py-3">
+                                @item.ThuongHieu
+                            </td>
+                            <td class="px-4 py-3">
+                                @item.DungTich
+                            </td>
+                            <td class="px-4 py-3">
+                                @item.DoiTuongSuDung
+                            </td>
+                            <td class="px-4 py-3 max-w-xs truncate">
+                                @item.CongDungChinh
+                            </td>
+                            <td class="px-4 py-3 max-w-xs truncate">
+                                @item.ThanhPhanNoiBat
+                            </td>
+                            <td class="px-4 py-3 font-semibold text-purple-600">
+                                @String.Format("{0:N0} ₫", item.Gia)
+                            </td>
+                            <td class="px-4 py-3">
+                                @if (item.TrangThai == true)
+                                {
+                                    <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
+                                        Đang bán
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="px-3 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600">
+                                        Ngừng bán
+                                    </span>
+                                }
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex justify-end gap-2">
+                                    <a asp-action="Edit" asp-route-id="@item.MaSanPham" class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.MaSanPham" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.MaSanPham" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -1,48 +1,81 @@
 ﻿@model _2210900059_PTQ_DATN.Models.DanhMucSanPham
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết danh mục sản phẩm";
 }
 
-<h1>Details</h1>
+<div class="max-w-3xl mx-auto">
 
-<div>
-    <h4>DanhMucSanPham</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenDanhMuc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenDanhMuc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Slug)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Slug)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaNguoiCapNhatNavigation.MaNguoiDung)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaNguoiTaoNavigation.MaNguoiDung)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.MaDanhMuc">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <!-- PAGE HEADER -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-black text-[#171118]">
+            Chi tiết danh mục sản phẩm
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Thông tin chi tiết của danh mục trong hệ thống
+        </p>
+    </div>
+
+    <!-- CONTENT CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm p-8">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+
+            <div>
+                <p class="text-gray-500">Tên danh mục</p>
+                <p class="font-semibold text-[#171118]">
+                    @Model.TenDanhMuc
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Slug</p>
+                <p class="font-semibold text-[#171118]">
+                    @Model.Slug
+                </p>
+            </div>
+
+            <div class="sm:col-span-2">
+                <p class="text-gray-500">Mô tả</p>
+                <p class="font-semibold text-[#171118]">
+                    @Model.MoTa
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Người tạo</p>
+                <p class="font-semibold text-[#171118]">
+                    @Model.MaNguoiTaoNavigation?.MaNguoiDung
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Người cập nhật</p>
+                <p class="font-semibold text-[#171118]">
+                    @Model.MaNguoiCapNhatNavigation?.MaNguoiDung
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="flex items-center justify-end gap-4 mt-10 pt-6 border-t">
+
+            <a asp-action="Index"
+               class="h-12 px-6 rounded-xl border border-[#e4dbe6]
+                      flex items-center justify-center
+                      text-gray-600 hover:bg-gray-100 transition">
+                Quay lại
+            </a>
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.MaDanhMuc"
+               class="h-12 px-8 rounded-xl
+                      bg-[#171118] text-white font-bold
+                      hover:opacity-90 transition
+                      shadow-lg shadow-black/20">
+                Chỉnh sửa
+            </a>
+        </div>
+    </div>
 </div>

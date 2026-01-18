@@ -1,137 +1,135 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.DichVu>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý dịch vụ";
 }
 
-<h1>Index</h1>
+<div class="max-w-7xl mx-auto">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDichVu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoaiDichVu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CongNghe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThoiLuong)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoBuoi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DoiTuongPhuHop)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VungTacDong)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTaNgan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiDungChiTiet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HinhAnh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiBat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayTao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaDanhMucDvNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDichVu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiDichVu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CongNghe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiLuong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoBuoi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoiTuongPhuHop)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VungTacDong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTaNgan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiDungChiTiet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HinhAnh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiBat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayTao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaDanhMucDvNavigation.MaDanhMucDv)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaDichVu">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaDichVu">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaDichVu">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-black text-[#171118]">
+                Quản lý dịch vụ
+            </h1>
+            <p class="text-gray-500 mt-1">
+                Danh sách các dịch vụ trong hệ thống
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="flex items-center gap-2 rounded-xl h-12 px-6
+          bg-purple-600 text-white text-base font-bold
+          hover:bg-purple-700
+          shadow-lg shadow-purple-600/30
+          transition">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span>Thêm dịch vụ</span>
+        </a>
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm overflow-x-auto">
+
+        <table class="min-w-full text-sm">
+            <thead class="bg-gray-50 text-gray-600">
+                <tr>
+                    <th class="px-4 py-3 text-left">Tên dịch vụ</th>
+                    <th class="px-4 py-3 text-left">Danh mục</th>
+                    <th class="px-4 py-3 text-right">Giá</th>
+                    <th class="px-4 py-3 text-center">Nổi bật</th>
+                    <th class="px-4 py-3 text-center">Trạng thái</th>
+                    <th class="px-4 py-3 text-center">Ngày tạo</th>
+                    <th class="px-4 py-3 text-center">Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-gray-50">
+
+                        <!-- TÊN -->
+                        <td class="px-4 py-3 font-semibold text-[#171118]">
+                            @item.TenDichVu
+                        </td>
+
+                        <!-- DANH MỤC -->
+                        <td class="px-4 py-3">
+                            @item.MaDanhMucDvNavigation?.TenDanhMuc
+                        </td>
+
+                        <!-- GIÁ -->
+                        <td class="px-4 py-3 text-right font-medium">
+                            @string.Format("{0:N0} ₫", item.Gia)
+                        </td>
+
+                        <!-- NỔI BẬT -->
+                        <td class="px-4 py-3 text-center">
+                            @if (item.NoiBat == true)
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-yellow-100 text-yellow-700 font-semibold">
+                                    Nổi bật
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-gray-100 text-gray-500">
+                                    Thường
+                                </span>
+                            }
+                        </td>
+
+                        <!-- TRẠNG THÁI -->
+                        <td class="px-4 py-3 text-center">
+                            @if (item.TrangThai == true)
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-green-100 text-green-700 font-semibold">
+                                    Hoạt động
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-red-100 text-red-600 font-semibold">
+                                    Tạm ẩn
+                                </span>
+                            }
+                        </td>
+
+                        <!-- NGÀY TẠO -->
+                        <td class="px-4 py-3 text-center text-gray-500">
+                            @item.NgayTao?.ToString("dd/MM/yyyy")
+                        </td>
+
+                        <!-- ACTIONS -->
+                        <td class="px-4 py-3 text-center whitespace-nowrap">
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.MaDichVu"
+                               class="text-blue-600 hover:underline mr-3">
+                                Xem
+                            </a>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.MaDichVu"
+                               class="text-yellow-600 hover:underline mr-3">
+                                Sửa
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.MaDichVu"
+                               class="text-red-600 hover:underline">
+                                Xóa
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

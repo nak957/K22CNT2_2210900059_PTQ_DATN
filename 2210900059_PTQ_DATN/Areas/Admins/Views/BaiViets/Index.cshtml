@@ -1,110 +1,111 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.BaiViet>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý Bài viết";
 }
 
-<h1>Index</h1>
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] px-6 py-10 gap-8 mx-auto">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-extrabold text-[#171118] dark:text-white">Quản lý Bài viết</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Danh sách bài viết — xem, chỉnh sửa hoặc xóa</p>
+        </div>
+        <a asp-action="Create" asp-area="Admins" asp-controller="BaiViets"
+           class="flex items-center gap-2 rounded-xl h-12 px-5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-md">
+            <span class="material-symbols-outlined">post_add</span> Thêm bài viết
+        </a>
+    </div>
 
-<p>
-    <a asp-area="Admins"
-       asp-controller="BaiViets"
-       asp-action="Create">
-        Create New
-    </a>
+    <div class="w-full mt-4">
+        <div class="overflow-hidden rounded-2xl border bg-white dark:bg-background-dark border-[#e4dbe6] dark:border-[#3a2a3d] shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-[#f8f6f8] dark:bg-[#2d1b31] border-b">
+                            <th class="px-4 py-3 text-sm font-semibold">#</th>
+                            <th class="px-4 py-3 text-sm font-semibold">ID</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Ảnh</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Tiêu đề</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Slug</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Loại</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Nổi bật</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Ngày đăng</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Người tạo</th>
+                            <th class="px-4 py-3 text-sm font-semibold">Người cập nhật</th>
+                            <th class="px-4 py-3 text-sm font-semibold text-right">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#e4dbe6] dark:divide-[#3a2a3d]">
+                        @if (Model != null && Model.Any())
+                        {
+                            var i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr class="hover:bg-[#fcfaff] dark:hover:bg-[#2d1b31]/50 transition-colors">
+                                    <td class="px-4 py-3 text-sm text-gray-600 align-middle">@i</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700 align-middle">@item.MaBaiViet</td>
+                                    <td class="px-4 py-3 align-middle">
+                                        @{
+                                            var img = string.IsNullOrEmpty(item.HinhAnh) ? Url.Content("~/images/placeholder.jpg") : Url.Content(item.HinhAnh);
+                                        }
+                                        <div class="w-16 h-10 rounded-md overflow-hidden border bg-center bg-cover" style="background-image: url('@img');"></div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm font-semibold text-[#171118] dark:text-white align-middle">@item.TieuDe</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600 align-middle">@item.Slug</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600 align-middle">@item.Loai</td>
+                                    <td class="px-4 py-3 text-sm align-middle">
+                                        @if (item.NoiBat == true)
+                                        {
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-200">Có</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">Không</span>
+                                        }
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-600 align-middle">@item.NgayDang?.ToString("yyyy-MM-dd")</td>
+                                    <td class="px-4 py-3 text-sm text-gray-700 align-middle">
+                                        @item.MaNguoiTaoNavigation?.HoTen ?? ("#"+(item.MaNguoiTao?.ToString() ?? "—"))
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-700 align-middle">
+                                        @item.MaNguoiCapNhatNavigation?.HoTen ?? ("#"+(item.MaNguoiCapNhat?.ToString() ?? "—"))
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-right align-middle">
+                                        <div class="inline-flex items-center gap-2 justify-end">
+                                            <a asp-area="Admins" asp-controller="BaiViets" asp-action="Edit" asp-route-id="@item.MaBaiViet" class="p-2 text-primary hover:bg-primary/10 rounded-lg">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </a>
+                                            <a asp-area="Admins" asp-controller="BaiViets" asp-action="Details" asp-route-id="@item.MaBaiViet" class="p-2 text-slate-700 hover:bg-slate-100 rounded-lg">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </a>
+                                            <a asp-area="Admins" asp-controller="BaiViets" asp-action="Delete" asp-route-id="@item.MaBaiViet" class="p-2 text-red-500 hover:bg-red-50 rounded-lg">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="11" class="px-4 py-8 text-center text-gray-500">Không có bài viết</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TieuDe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HinhAnh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiDung)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiBat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayDang)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TieuDe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HinhAnh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Loai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiBat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayDang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)
-            </td>
-            <td>
-                    <a asp-area="Admins"
-                       asp-controller="BaiViets"
-                       asp-action="Edit"
-                       asp-route-id="@item.MaBaiViet">
-                        Edit
-                    </a>
-                    |
-                    <a asp-area="Admins"
-                       asp-controller="BaiViets"
-                       asp-action="Details"
-                       asp-route-id="@item.MaBaiViet">
-                        Details
-                    </a> |
-                    <a asp-area="Admins"
-                       asp-controller="BaiViets"
-                       asp-action="Delete"
-                       asp-route-id="@item.MaBaiViet">
-                        Delete
-                    </a> |
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <div class="flex items-center justify-between px-4 py-4 bg-[#f8f6f8] dark:bg-[#2d1b31] border-t border-[#e4dbe6] dark:border-[#3a2a3d]">
+                <p class="text-sm text-gray-500">Hiển thị toàn bộ bài viết</p>
+                <div class="flex items-center gap-2">
+                    <button class="px-3 py-1 rounded-lg border bg-white text-gray-600">‹</button>
+                    <button class="px-3 py-1 rounded-lg bg-primary text-white font-bold">1</button>
+                    <button class="px-3 py-1 rounded-lg border bg-white text-gray-600">2</button>
+                    <button class="px-3 py-1 rounded-lg border bg-white text-gray-600">›</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

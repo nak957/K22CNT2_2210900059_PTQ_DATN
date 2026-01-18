@@ -120,7 +120,6 @@ D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.Razor
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rjimswa.dswa.cache.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\scopedcss\bundle\2210900059_PTQ_DATN.styles.css
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\scopedcss\projectbundle\2210900059_PTQ_DATN.bundle.scp.css
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\staticwebassets.build.json
