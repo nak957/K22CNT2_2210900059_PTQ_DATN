@@ -9,56 +9,125 @@
 <h4>GioHangChiTiet</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MaCt" />
             <div class="form-group">
                 <label asp-for="MaGioHang" class="control-label"></label>
-                <select asp-for="MaGioHang" class="form-control" asp-items="ViewBag.MaGioHang"></select>
+                <select asp-for="MaGioHang" class="form-control" asp-items="@(ViewData["MaGioHang"] as SelectList)"></select>
                 <span asp-validation-for="MaGioHang" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="MaSanPham" class="control-label"></label>
-                <select asp-for="MaSanPham" class="form-control" asp-items="ViewBag.MaSanPham"></select>
-                <span asp-validation-for="MaSanPham" class="text-danger"></span>
+                <label for="LoaiItem" class="control-label">Loại Item</label>
+                <select id="LoaiItem" name="LoaiItem" class="form-control">
+                    @foreach (var li in (SelectList)ViewData["LoaiItem"])
+                    {
+                        <option value="@li.Value" selected="@(li.Value == (Model.LoaiItem ?? "") ? "selected" : null)">@li.Text</option>
+                    }
+                </select>
             </div>
+
+            <div class="form-group" id="wrap-maitem-sp" style="display:none;">
+                <label class="control-label">Sản phẩm</label>
+                <select id="MaItem_SP" class="form-control">
+                    <option value="">-- Chọn sản phẩm --</option>
+                    @foreach (var it in (SelectList)ViewData["SanPhams"])
+                    {
+                        <option value="@it.Value" selected="@(it.Value == (Model.MaItem.ToString()) ? "selected" : null)">@it.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group" id="wrap-maitem-dv" style="display:none;">
+                <label class="control-label">Dịch vụ</label>
+                <select id="MaItem_DV" class="form-control">
+                    <option value="">-- Chọn dịch vụ --</option>
+                    @foreach (var it in (SelectList)ViewData["DichVus"])
+                    {
+                        <option value="@it.Value" selected="@(it.Value == (Model.MaItem.ToString()) ? "selected" : null)">@it.Text</option>
+                    }
+                </select>
+            </div>
+
+            <input type="hidden" id="MaItem" name="MaItem" value="@Model.MaItem" />
+
             <div class="form-group">
                 <label asp-for="SoLuong" class="control-label"></label>
                 <input asp-for="SoLuong" class="form-control" />
                 <span asp-validation-for="SoLuong" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="DonGia" class="control-label"></label>
                 <input asp-for="DonGia" class="form-control" />
                 <span asp-validation-for="DonGia" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="ThanhTien" class="control-label"></label>
-                <input asp-for="ThanhTien" class="form-control" />
-                <span asp-validation-for="ThanhTien" class="text-danger"></span>
+                <input asp-for="ThanhTien" class="form-control" readonly />
             </div>
+
             <div class="form-group">
                 <label asp-for="GhiChu" class="control-label"></label>
                 <input asp-for="GhiChu" class="form-control" />
                 <span asp-validation-for="GhiChu" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="NgayCapNhat" class="control-label"></label>
                 <input asp-for="NgayCapNhat" class="form-control" />
                 <span asp-validation-for="NgayCapNhat" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        (function () {
+            const loaiEl = document.getElementById('LoaiItem');
+            const spWrap = document.getElementById('wrap-maitem-sp');
+            const dvWrap = document.getElementById('wrap-maitem-dv');
+            const spSelect = document.getElementById('MaItem_SP');
+            const dvSelect = document.getElementById('MaItem_DV');
+            const hiddenMaItem = document.getElementById('MaItem');
+
+            function syncHidden() {
+                if (spWrap.style.display !== 'none') {
+                    hiddenMaItem.value = spSelect.value || '';
+                } else {
+                    hiddenMaItem.value = dvSelect.value || '';
+                }
+            }
+
+            function onLoaiChange() {
+                const v = loaiEl.value;
+                if (v === 'SP') {
+                    spWrap.style.display = '';
+                    dvWrap.style.display = 'none';
+                } else {
+                    spWrap.style.display = 'none';
+                    dvWrap.style.display = '';
+                }
+                syncHidden();
+            }
+
+            loaiEl.addEventListener('change', onLoaiChange);
+            spSelect.addEventListener('change', syncHidden);
+            dvSelect.addEventListener('change', syncHidden);
+
+            // Khởi tạo hiển thị theo model hiện tại
+            onLoaiChange();
+        })();
+    </script>
 }

@@ -1,95 +1,99 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.LienHe>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý Liên hệ";
 }
 
-<h1>Index</h1>
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] px-6 py-10 gap-8 mx-auto">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HoTen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoDienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TieuDe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoaiLienHe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiDung)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DaDoc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayGui)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiDungNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoTen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoDienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TieuDe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiLienHe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DaDoc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayGui)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiDungNavigation.MaNguoiDung)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaLienHe">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaLienHe">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaLienHe">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- Heading -->
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-col gap-1">
+            <h1 class="text-[#171118] dark:text-white text-4xl font-black leading-tight">
+                Quản lý Liên hệ
+            </h1>
+            <p class="text-gray-500 dark:text-gray-400">
+                Danh sách liên hệ từ khách hàng
+            </p>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="w-full container">
+        <div class="flex flex-col overflow-hidden rounded-2xl border border-[#e4dbe6] dark:border-[#3a2a3d] bg-white dark:bg-background-dark shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-[#f8f6f8] dark:bg-[#2d1b31] border-b border-[#e4dbe6] dark:border-[#3a2a3d]">
+                            <th class="px-6 py-4 text-sm font-bold uppercase">#</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase">Họ tên</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase">Email</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase">SĐT</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase">Tiêu đề</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase">Loại</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase">Trạng thái</th>
+                            <th class="px-6 py-4 text-sm font-bold uppercase text-right">Hành động</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-[#e4dbe6] dark:divide-[#3a2a3d]">
+                        @if (Model != null && Model.Any())
+                        {
+                            var i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr class="hover:bg-[#fcfaff] dark:hover:bg-[#2d1b31]/50 transition-colors">
+                                    <td class="px-6 py-4 text-sm text-gray-600">@i</td>
+                                    <td class="px-6 py-4 text-sm font-semibold">@item.HoTen</td>
+                                    <td class="px-6 py-4 text-sm">@item.Email</td>
+                                    <td class="px-6 py-4 text-sm">@item.SoDienThoai</td>
+                                    <td class="px-6 py-4 text-sm">@item.TieuDe</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+                                            @item.LoaiLienHe
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
+                                        @if (item.DaDoc == true)
+                                        {
+                                            <span class="text-green-600 font-semibold">Đã đọc</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-red-500 font-semibold">Chưa đọc</span>
+                                        }
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <a asp-action="Details" asp-route-id="@item.MaLienHe"
+                                               class="p-2 text-slate-700 hover:bg-slate-100 rounded-lg">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </a>
+                                            <a asp-action="Edit" asp-route-id="@item.MaLienHe"
+                                               class="p-2 text-primary hover:bg-primary/10 rounded-lg">
+                                                <span class="material-symbols-outlined">edit</span>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.MaLienHe"
+                                               class="p-2 text-red-500 hover:bg-red-50 rounded-lg">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                                    Không có liên hệ
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

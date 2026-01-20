@@ -4,100 +4,124 @@
     ViewData["Title"] = "Xóa sản phẩm";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-sm border-danger">
-        <div class="card-header bg-danger text-white">
-            <h4 class="mb-0">Xác nhận xóa sản phẩm</h4>
+<!-- Nếu Layout đã có Tailwind thì có thể bỏ -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="max-w-5xl mx-auto px-6 py-8">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-3xl font-extrabold text-red-600">Xác nhận xóa sản phẩm</h1>
+        <p class="text-gray-500 mt-1">
+            Vui lòng kiểm tra kỹ thông tin trước khi thực hiện thao tác này
+        </p>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow border border-red-200 p-8">
+
+        <!-- Warning -->
+        <div class="mb-6 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">
+            <strong>Cảnh báo:</strong> Hành động này <u>không thể hoàn tác</u>.
+            Dữ liệu sản phẩm sẽ bị xóa vĩnh viễn khỏi hệ thống.
         </div>
 
-        <div class="card-body">
-            <div class="alert alert-warning">
-                <strong>Cảnh báo:</strong> Hành động này <u>không thể hoàn tác</u>.
-                Vui lòng kiểm tra kỹ thông tin trước khi xóa.
+        <!-- Thông tin sản phẩm -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+
+            <div>
+                <span class="font-semibold text-gray-600">Tên sản phẩm</span>
+                <p class="text-gray-800 mt-1">@Model.TenSanPham</p>
             </div>
 
-            <dl class="row">
-                <dt class="col-sm-3">Tên sản phẩm</dt>
-                <dd class="col-sm-9">@Model.TenSanPham</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Slug</span>
+                <p class="text-gray-800 mt-1">@Model.Slug</p>
+            </div>
 
-                <dt class="col-sm-3">Slug</dt>
-                <dd class="col-sm-9">@Model.Slug</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Loại sản phẩm</span>
+                <p class="text-gray-800 mt-1">@Model.LoaiSanPham</p>
+            </div>
 
-                <dt class="col-sm-3">Loại sản phẩm</dt>
-                <dd class="col-sm-9">@Model.LoaiSanPham</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Thương hiệu</span>
+                <p class="text-gray-800 mt-1">@Model.ThuongHieu</p>
+            </div>
 
-                <dt class="col-sm-3">Thương hiệu</dt>
-                <dd class="col-sm-9">@Model.ThuongHieu</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Dung tích</span>
+                <p class="text-gray-800 mt-1">@Model.DungTich</p>
+            </div>
 
-                <dt class="col-sm-3">Dung tích</dt>
-                <dd class="col-sm-9">@Model.DungTich</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Đối tượng sử dụng</span>
+                <p class="text-gray-800 mt-1">@Model.DoiTuongSuDung</p>
+            </div>
 
-                <dt class="col-sm-3">Đối tượng sử dụng</dt>
-                <dd class="col-sm-9">@Model.DoiTuongSuDung</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Giá bán</span>
+                <p class="text-gray-800 mt-1">@Model.Gia.ToString("N0") VNĐ</p>
+            </div>
 
-                <dt class="col-sm-3">Công dụng chính</dt>
-                <dd class="col-sm-9">@Model.CongDungChinh</dd>
-
-                <dt class="col-sm-3">Thành phần nổi bật</dt>
-                <dd class="col-sm-9">@Model.ThanhPhanNoiBat</dd>
-
-                <dt class="col-sm-3">Mô tả ngắn</dt>
-                <dd class="col-sm-9">@Model.MoTaNgan</dd>
-
-                <dt class="col-sm-3">Mô tả chi tiết</dt>
-                <dd class="col-sm-9">@Model.MoTaChiTiet</dd>
-
-                <dt class="col-sm-3">Hình ảnh</dt>
-                <dd class="col-sm-9">
-                    @if (!string.IsNullOrEmpty(Model.HinhAnh))
-                    {
-                        <img src="~/images/@Model.HinhAnh" class="img-thumbnail" style="max-height:120px" />
-                    }
-                    else
-                    {
-                        <span class="text-muted">Không có hình ảnh</span>
-                    }
-                </dd>
-
-                <dt class="col-sm-3">Giá</dt>
-                <dd class="col-sm-9">@Model.Gia.ToString("N0") VNĐ</dd>
-
-                <dt class="col-sm-3">Ngày tạo</dt>
-                <dd class="col-sm-9">@Model.NgayTao</dd>
-
-                <dt class="col-sm-3">Trạng thái</dt>
-                <dd class="col-sm-9">@Model.TrangThai</dd>
-
-                <dt class="col-sm-3">Danh mục</dt>
-                <dd class="col-sm-9">@Model.MaDanhMucNavigation?.MaDanhMuc</dd>
-
-                <dt class="col-sm-3">Người tạo</dt>
-                <dd class="col-sm-9">@Model.MaNguoiTaoNavigation?.MaNguoiDung</dd>
-
-                <dt class="col-sm-3">Người cập nhật</dt>
-                <dd class="col-sm-9">@Model.MaNguoiCapNhatNavigation?.MaNguoiDung</dd>
-            </dl>
-
-            <form asp-action="Delete" method="post" class="mt-4">
-                <input type="hidden" asp-for="MaSanPham" />
-
-                <div class="d-flex justify-content-between">
-                    <a asp-action="Index"
-                       class="h-12 px-6 rounded-xl border border-[#e4dbe6]
-                      flex items-center justify-center
-                      text-gray-600 hover:bg-gray-100 transition">
-                        Hủy bỏ
-                    </a>
-
-                    <button type="submit"
-                            class="h-12 px-8 rounded-xl
-                           bg-red-600 text-white font-bold
-                           hover:bg-red-700 transition
-                           shadow-lg shadow-red-500/20">
-                        Xóa vĩnh viễn
-                    </button>
-                </div>
-            </form>
+            <div>
+                <span class="font-semibold text-gray-600">Trạng thái</span>
+                <p class="text-gray-800 mt-1">
+                    @(Model.TrangThai == true ? "Đang bán" : "Ngừng bán")
+                </p>
+            </div>
         </div>
+
+        <!-- Mô tả -->
+        <div class="mt-6 space-y-4 text-sm">
+            <div>
+                <span class="font-semibold text-gray-600">Mô tả ngắn</span>
+                <p class="text-gray-800 mt-1">@Model.MoTaNgan</p>
+            </div>
+
+            <div>
+                <span class="font-semibold text-gray-600">Mô tả chi tiết</span>
+                <p class="text-gray-800 mt-1">@Model.MoTaChiTiet</p>
+            </div>
+        </div>
+
+        <!-- Hình ảnh -->
+        <div class="mt-6">
+            <span class="font-semibold text-gray-600 block mb-2">Hình ảnh sản phẩm</span>
+
+            @if (!string.IsNullOrEmpty(Model.HinhAnh))
+            {
+                <img src="~/images/products/@Model.HinhAnh"
+                     class="h-28 rounded-xl border object-cover" />
+            }
+            else
+            {
+                <span class="text-gray-400 text-sm">Không có hình ảnh</span>
+            }
+        </div>
+
+        <!-- Actions -->
+        <form asp-action="Delete" method="post" class="mt-8">
+            <input type="hidden" asp-for="MaSanPham" />
+
+            <div class="flex items-center justify-between pt-6 border-t">
+
+                <a asp-action="Index"
+                   class="h-12 px-6 rounded-xl border border-[#e4dbe6]
+                          flex items-center justify-center
+                          text-gray-600 hover:bg-gray-100 transition">
+                    Quay lại
+                </a>
+
+                <button type="submit"
+                        class="h-12 px-8 rounded-xl
+                               bg-red-600 text-white font-bold
+                               hover:bg-red-700 transition
+                               shadow-md shadow-red-600/30">
+                    Xóa vĩnh viễn
+                </button>
+            </div>
+        </form>
+
     </div>
 </div>

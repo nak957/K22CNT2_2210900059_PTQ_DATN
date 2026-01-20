@@ -340,14 +340,26 @@ public partial class LeSkinDbContext : DbContext
                 .HasColumnName("donGia");
             entity.Property(e => e.GhiChu).HasColumnName("ghiChu");
             entity.Property(e => e.MaGioHang).HasColumnName("maGioHang");
-            entity.Property(e => e.MaSanPham).HasColumnName("maSanPham");
+
+            // MỚI: loaiItem nvarchar(10) NOT NULL
+            entity.Property(e => e.LoaiItem)
+                .HasMaxLength(10)
+                .IsRequired()
+                .HasColumnName("loaiItem");
+
+            // MỚI: maItem (maSanPham hoặc maDichVu)
+            entity.Property(e => e.MaItem).HasColumnName("maItem");
+
             entity.Property(e => e.NgayCapNhat)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("ngayCapNhat");
             entity.Property(e => e.SoLuong).HasColumnName("soLuong");
+
+            // ThanhTien là cột tính toán (PERSISTED)
             entity.Property(e => e.ThanhTien)
                 .HasColumnType("decimal(18, 2)")
+                .HasComputedColumnSql("(soLuong * donGia)", stored: true)
                 .HasColumnName("thanhTien");
 
             entity.HasOne(d => d.MaGioHangNavigation).WithMany(p => p.GioHangChiTiets)
@@ -355,10 +367,10 @@ public partial class LeSkinDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_GHCT_GioHang");
 
-            entity.HasOne(d => d.MaSanPhamNavigation).WithMany(p => p.GioHangChiTiets)
-                .HasForeignKey(d => d.MaSanPham)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_GHCT_SanPham");
+            // Gỡ bỏ ràng buộc FK tới SanPham (đã thay bằng maItem/loaiItem)
+
+            // Thêm check constraint giống DB
+            entity.HasCheckConstraint("CK_GHCT_LoaiItem", "loaiItem IN ('SP', 'DV')");
         });
 
         modelBuilder.Entity<LienHe>(entity =>

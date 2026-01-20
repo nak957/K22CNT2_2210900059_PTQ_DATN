@@ -4,99 +4,153 @@
     ViewData["Title"] = "Chi tiết sản phẩm";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-info text-white">
-            <h4 class="mb-0">Chi tiết sản phẩm</h4>
-        </div>
+<!-- Nếu _Layout đã có Tailwind thì bỏ -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Tên sản phẩm</dt>
-                <dd class="col-sm-9">@Model.TenSanPham</dd>
+<div class="max-w-5xl mx-auto px-6 py-8">
 
-                <dt class="col-sm-3">Slug</dt>
-                <dd class="col-sm-9">@Model.Slug</dd>
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-3xl font-extrabold text-sky-600">Chi tiết sản phẩm</h1>
+        <p class="text-gray-500 mt-1">
+            Thông tin chi tiết đầy đủ của sản phẩm trong hệ thống
+        </p>
+    </div>
 
-                <dt class="col-sm-3">Loại sản phẩm</dt>
-                <dd class="col-sm-9">@Model.LoaiSanPham</dd>
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow border border-sky-200 p-8">
 
-                <dt class="col-sm-3">Thương hiệu</dt>
-                <dd class="col-sm-9">@Model.ThuongHieu</dd>
+        <!-- Thông tin cơ bản -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
 
-                <dt class="col-sm-3">Dung tích</dt>
-                <dd class="col-sm-9">@Model.DungTich</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Tên sản phẩm</span>
+                <p class="text-gray-800 mt-1">@Model.TenSanPham</p>
+            </div>
 
-                <dt class="col-sm-3">Đối tượng sử dụng</dt>
-                <dd class="col-sm-9">@Model.DoiTuongSuDung</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Slug</span>
+                <p class="text-gray-800 mt-1">@Model.Slug</p>
+            </div>
 
-                <dt class="col-sm-3">Công dụng chính</dt>
-                <dd class="col-sm-9">@Model.CongDungChinh</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Loại sản phẩm</span>
+                <p class="text-gray-800 mt-1">@Model.LoaiSanPham</p>
+            </div>
 
-                <dt class="col-sm-3">Thành phần nổi bật</dt>
-                <dd class="col-sm-9">@Model.ThanhPhanNoiBat</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Thương hiệu</span>
+                <p class="text-gray-800 mt-1">@Model.ThuongHieu</p>
+            </div>
 
-                <dt class="col-sm-3">Mô tả ngắn</dt>
-                <dd class="col-sm-9">@Model.MoTaNgan</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Dung tích</span>
+                <p class="text-gray-800 mt-1">@Model.DungTich</p>
+            </div>
 
-                <dt class="col-sm-3">Mô tả chi tiết</dt>
-                <dd class="col-sm-9">@Model.MoTaChiTiet</dd>
+            <div>
+                <span class="font-semibold text-gray-600">Đối tượng sử dụng</span>
+                <p class="text-gray-800 mt-1">@Model.DoiTuongSuDung</p>
+            </div>
 
-                <dt class="col-sm-3">Hình ảnh</dt>
-                <dd class="col-sm-9">
-                    @if (!string.IsNullOrEmpty(Model.HinhAnh))
-                    {
-                        <img src="~/images/products/@Model.HinhAnh"
-                             class="img-thumbnail"
-                             style="max-height:150px" />
-                    }
-                    else
-                    {
-                        <span class="text-muted">Không có hình ảnh</span>
-                    }
-                </dd>
+            <div>
+                <span class="font-semibold text-gray-600">Công dụng chính</span>
+                <p class="text-gray-800 mt-1">@Model.CongDungChinh</p>
+            </div>
 
+            <div>
+                <span class="font-semibold text-gray-600">Thành phần nổi bật</span>
+                <p class="text-gray-800 mt-1">@Model.ThanhPhanNoiBat</p>
+            </div>
 
-                <dt class="col-sm-3">Giá</dt>
-                <dd class="col-sm-9 fw-bold text-danger">
+            <div>
+                <span class="font-semibold text-gray-600">Giá bán</span>
+                <p class="text-red-600 font-bold mt-1">
                     @Model.Gia.ToString("N0") VNĐ
-                </dd>
+                </p>
+            </div>
 
-                <dt class="col-sm-3">Nổi bật</dt>
-                <dd class="col-sm-9">
+            <div>
+                <span class="font-semibold text-gray-600">Sản phẩm nổi bật</span>
+                <p class="text-gray-800 mt-1">
                     @(Model.NoiBat == true ? "Có" : "Không")
+                </p>
+            </div>
 
-                </dd>
+            <div>
+                <span class="font-semibold text-gray-600">Trạng thái</span>
+                <p class="text-gray-800 mt-1">
+                    @(Model.TrangThai == true ? "Đang bán" : "Ngừng bán")
+                </p>
+            </div>
 
-                <dt class="col-sm-3">Ngày tạo</dt>
-                <dd class="col-sm-9">@Model.NgayTao</dd>
-
-                <dt class="col-sm-3">Trạng thái</dt>
-                <dd class="col-sm-9">@Model.TrangThai</dd>
-
-                <dt class="col-sm-3">Danh mục</dt>
-                <dd class="col-sm-9">
-                    @Model.MaDanhMucNavigation?.MaDanhMuc
-                </dd>
-
-                <dt class="col-sm-3">Người tạo</dt>
-                <dd class="col-sm-9">
-                    @Model.MaNguoiTaoNavigation?.MaNguoiDung
-                </dd>
-
-                <dt class="col-sm-3">Người cập nhật</dt>
-                <dd class="col-sm-9">
-                    @Model.MaNguoiCapNhatNavigation?.MaNguoiDung
-                </dd>
-            </dl>
-
-            <div class="d-flex justify-content-between mt-4">
-                <a asp-action="Index" class="btn btn-secondary">
-                    ← Quay lại danh sách
-                </a>
-
-                
+            <div>
+                <span class="font-semibold text-gray-600">Ngày tạo</span>
+                <p class="text-gray-800 mt-1">@Model.NgayTao</p>
             </div>
         </div>
+
+        <!-- Mô tả -->
+        <div class="mt-6 space-y-4 text-sm">
+            <div>
+                <span class="font-semibold text-gray-600">Mô tả ngắn</span>
+                <p class="text-gray-800 mt-1">@Model.MoTaNgan</p>
+            </div>
+
+            <div>
+                <span class="font-semibold text-gray-600">Mô tả chi tiết</span>
+                <p class="text-gray-800 mt-1">@Model.MoTaChiTiet</p>
+            </div>
+        </div>
+
+        <!-- Hình ảnh -->
+        <div class="mt-6">
+            <span class="font-semibold text-gray-600 block mb-2">Hình ảnh sản phẩm</span>
+
+            @if (!string.IsNullOrEmpty(Model.HinhAnh))
+            {
+                <img src="~/images/products/@Model.HinhAnh"
+                     class="h-32 rounded-xl border object-cover" />
+            }
+            else
+            {
+                <span class="text-gray-400 text-sm">Không có hình ảnh</span>
+            }
+        </div>
+
+        <!-- Quan hệ -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div>
+                <span class="font-semibold text-gray-600">Danh mục</span>
+                <p class="text-gray-800 mt-1">
+                    @Model.MaDanhMucNavigation?.MaDanhMuc
+                </p>
+            </div>
+
+            <div>
+                <span class="font-semibold text-gray-600">Người tạo</span>
+                <p class="text-gray-800 mt-1">
+                    @Model.MaNguoiTaoNavigation?.MaNguoiDung
+                </p>
+            </div>
+
+            <div>
+                <span class="font-semibold text-gray-600">Người cập nhật</span>
+                <p class="text-gray-800 mt-1">
+                    @Model.MaNguoiCapNhatNavigation?.MaNguoiDung
+                </p>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-6 border-t mt-8">
+            <a asp-action="Index"
+               class="h-12 px-6 rounded-xl border border-[#e4dbe6]
+                      flex items-center justify-center
+                      text-gray-600 hover:bg-gray-100 transition">
+                Quay lại
+            </a>
+        </div>
+
     </div>
 </div>

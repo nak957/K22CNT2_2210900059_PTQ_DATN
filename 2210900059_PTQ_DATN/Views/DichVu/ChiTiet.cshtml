@@ -1,0 +1,193 @@
+﻿@model _2210900059_PTQ_DATN.Models.DichVu
+
+@{
+    ViewData["Title"] = Model.TenDichVu;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* ===== SERVICE DETAIL – ĐỒNG BỘ TRANG CHỦ ===== */
+
+    .section.service-detail {
+        background: #fff;
+        padding: 50px 0;
+    }
+
+    .service-detail .detail-wrapper {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+    }
+
+    /* IMAGE */
+    .service-detail .detail-image {
+        flex: 1;
+    }
+
+        .service-detail .detail-image img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+    /* CONTENT */
+    .service-detail .detail-content {
+        flex: 1.2;
+    }
+
+    .service-detail h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        color: #222;
+        margin-bottom: 14px;
+    }
+
+    .service-detail .short-desc {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 18px;
+        line-height: 1.6;
+    }
+
+    .service-detail .detail-info {
+        background: #faf7f4;
+        border-left: 4px solid var(--primary);
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+    }
+
+        .service-detail .detail-info p {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+    .service-detail .detail-description {
+        font-size: 14.5px;
+        color: #444;
+        line-height: 1.7;
+        margin-bottom: 26px;
+    }
+
+    /* ADD TO CART */
+    .add-to-cart-form {
+        margin-bottom: 20px;
+    }
+
+        .add-to-cart-form .qty-input {
+            width: 80px;
+            padding: 6px;
+            margin-right: 10px;
+        }
+
+    .btn-add-cart {
+        background: var(--primary);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 24px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+        .btn-add-cart:hover {
+            opacity: 0.9;
+        }
+
+    .btn-outline {
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 24px;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+</style>
+
+<div class="accent-line"></div>
+
+<section class="section service-detail">
+    <div class="container">
+        <div class="detail-wrapper">
+
+            <!-- IMAGE -->
+            <div class="detail-image">
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <img src="@(Url.Content("~/images/services/" + Model.HinhAnh))"
+                         alt="@Model.TenDichVu" />
+                }
+                else
+                {
+                    <img src="@(Url.Content("~/images/no-image.png"))" />
+                }
+            </div>
+
+            <!-- CONTENT -->
+            <div class="detail-content">
+                <h1>@Model.TenDichVu</h1>
+
+                @if (!string.IsNullOrEmpty(Model.MoTaNgan))
+                {
+                    <p class="short-desc">@Model.MoTaNgan</p>
+                }
+
+                <div class="detail-info">
+                    @if (Model.ThoiLuong != null)
+                    {
+                        <p><strong>Thời lượng:</strong> @Model.ThoiLuong phút</p>
+                    }
+                    @if (Model.SoBuoi != null)
+                    {
+                        <p><strong>Số buổi:</strong> @Model.SoBuoi buổi</p>
+                    }
+                    @if (Model.Gia != null)
+                    {
+                        <p><strong>Giá:</strong> @Model.Gia.Value.ToString("N0") đ</p>
+                    }
+                </div>
+
+                <!-- ADD TO CART FORM -->
+                <form asp-controller="GioHang"
+                      asp-action="ThemDichVu"
+                      method="post"
+                      class="add-to-cart-form">
+
+                    <input type="hidden" name="maDichVu" value="@Model.MaDichVu" />
+
+                    <input type="number"
+                           name="soLuong"
+                           value="1"
+                           min="1"
+                           class="qty-input" />
+
+                    <button type="submit" class="btn-add-cart">
+                        Thêm vào giỏ hàng
+                    </button>
+                </form>
+
+                @if (!string.IsNullOrEmpty(Model.NoiDungChiTiet))
+                {
+                    <div class="detail-description">
+                        @Html.Raw(Model.NoiDungChiTiet)
+                    </div>
+                }
+
+                <a asp-controller="DichVu"
+                   asp-action="Index"
+                   class="btn-outline">
+                    ← Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -4,54 +4,50 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Chi tiết mục trong giỏ hàng</h1>
 
 <div>
     <h4>GioHangChiTiet</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLuong)
+        <dt class="col-sm-3">Loại</dt>
+        <dd class="col-sm-9">@ViewBag.ItemLoai</dd>
+
+        <dt class="col-sm-3">Mã Item</dt>
+        <dd class="col-sm-9">@Model.MaItem</dd>
+
+        <dt class="col-sm-3">Tên Item</dt>
+        <dd class="col-sm-9">@ViewBag.ItemName</dd>
+
+        <dt class="col-sm-3">Hình ảnh</dt>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty((string)ViewBag.ItemImage))
+            {
+                <img src="@(Url.Content("~/images/products/" + (string)ViewBag.ItemImage))" alt="@ViewBag.ItemName" style="max-width:200px;"/>
+            }
+            else
+            {
+                <span>(không có ảnh)</span>
+            }
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThanhTien)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThanhTien)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GhiChu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NgayCapNhat)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NgayCapNhat)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaGioHangNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaGioHangNavigation.MaGioHang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaSanPhamNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaSanPhamNavigation.MaSanPham)
-        </dd>
+
+        <dt class="col-sm-3">Số lượng</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.SoLuong)</dd>
+
+        <dt class="col-sm-3">Đơn giá</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DonGia) đ</dd>
+
+        <dt class="col-sm-3">Thành tiền</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.ThanhTien) đ</dd>
+
+        <dt class="col-sm-3">Ghi chú</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.GhiChu)</dd>
+
+        <dt class="col-sm-3">Ngày cập nhật</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.NgayCapNhat)</dd>
+
+        <dt class="col-sm-3">Mã giỏ hàng</dt>
+        <dd class="col-sm-9">@Model.MaGioHangNavigation?.MaGioHang</dd>
     </dl>
 </div>
 <div>

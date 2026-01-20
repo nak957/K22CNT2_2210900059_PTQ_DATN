@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\wwwroot\\css\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:wwwroot\\css\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -17,44 +13,21 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 853,
-          "SelectedChildIndex": 1,
+          "DockedHeight": 1095,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
               "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAADAAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAAAJgAAABbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-18T09:04:33.468Z",
+              "WhenOpened": "2026-01-20T12:51:43.661Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "index.css",
-              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\wwwroot\\css\\index.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\index.css",
-              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\wwwroot\\css\\index.css",
-              "RelativeToolTip": "wwwroot\\css\\index.css",
-              "ViewState": "AgIAAMkCAAAAAAAAAAAAAFECAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-01-18T08:56:21.537Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedHeight": 163,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }

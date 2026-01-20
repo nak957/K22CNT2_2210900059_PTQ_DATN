@@ -48,33 +48,44 @@
     <!-- SẢN PHẨM -->
     <section class="section products">
         <div class="container">
-            <h2 class="section-title">SẢN PHẨM</h2>
-        
-            <div class="product-row">
+            <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
+
+        <div class="product-row">
             @if (sanPhams != null && sanPhams.Any())
-                 @foreach (var sp in sanPhams)
             {
-                <article class="card product-card">
-                     @* Use the same path convention as admin details: ~/images/products/{filename} *@
-                     @if (!string.IsNullOrEmpty(sp.HinhAnh))
-                     {
-                         <img src="@(Url.Content("~/images/products/" + sp.HinhAnh))" alt="@sp.TenSanPham" />
-                     }
-                     else
-                     {
-                         <img src="@(Url.Content("~/images/no-image.png"))" alt="No image" />
-                     }
-                    <div class="card-body">
-                        <h3>@sp.TenSanPham</h3>
-                        <a class="btn-outline" href="#">Xem thêm</a>
-                    </div>
-                </article>
-            }else
+                foreach (var sp in sanPhams)
+                {
+                    <article class="product-card">
+                        <div class="product-img">
+                            @if (!string.IsNullOrEmpty(sp.HinhAnh))
+                            {
+                                <img src="@(Url.Content("~/images/products/" + sp.HinhAnh))"
+                                     alt="@sp.TenSanPham" />
+                            }
+                            else
+                            {
+                                <img src="@(Url.Content("~/images/no-image.png"))"
+                                     alt="No image" />
+                            }
+                        </div>
+
+                        <div class="card-body">
+                            <h3>@sp.TenSanPham</h3>
+                            <a class="btn-outline"
+                               href="@Url.Action("ChiTiet", "SanPham", new { id = sp.MaSanPham })">
+                                Xem thêm
+                            </a>
+
+                        </div>
+                    </article>
+                }
+            }
+            else
             {
                 <p>Không có sản phẩm</p>
             }
-           
-            </div>
+        </div>
+
         </div>
     </section>
 
@@ -103,7 +114,8 @@
                             </div>
                             <div class="card-body">
                                 <h3>@dv.TenDichVu</h3>
-                                <a href="#" class="btn-outline">Xem chi tiết</a>
+                                <a href="@Url.Action("ChiTiet", "DichVu", new { id = dv.MaDichVu })"
+                                class="btn-outline">Xem chi tiết</a>
                             </div>
                         </article>
                     }
@@ -120,9 +132,9 @@
     <!-- 5 steps banner -->
     <section class="section steps">
         <div class="container">
-            <h3 class="muted-title">5 BƯỚC ĐỂ TRẢI NGHIỆM DỊCH VỤ TẠI LESKIN</h3>
+            <h3 class="muted-title">5 BƯỚC ĐỂ TRẢI NGHIỆM DỊCH VỤ TẠI TQBEAUTY</h3>
             <div class="steps-row">
-                <div class="step"><span class="num">01</span><p>Cài app Leskin hoặc vào website Leskin</p></div>
+                <div class="step"><span class="num">01</span><p>Cài app TQbeauty hoặc vào website TQbeauty</p></div>
                 <div class="step"><span class="num">02</span><p>Đăng ký thông tin</p></div>
                 <div class="step"><span class="num">03</span><p>Được tư vấn và giải đáp</p></div>
                 <div class="step"><span class="num">04</span><p>Đặt chỗ tại Spa</p></div>
@@ -134,11 +146,11 @@
     <!-- Why choose section (circle images) -->
     <section class="section why">
         <div class="container">
-            <h2 class="section-title">Vì sao chọn Leskin ?</h2>
+            <h2 class="section-title">Vì sao chọn TQbeauty ?</h2>
 
             <div class="why-wrapper">
                 <div class="center-image">
-                    <img src="@(Url.Content("~/images/dermatude-model.png"))" alt="Leskin Center" />
+                    <img src="@(Url.Content("~/images/dermatude-model.png"))" alt="TQbeauty Center" />
                 </div>
 
                 <div class="circle-card circle1">

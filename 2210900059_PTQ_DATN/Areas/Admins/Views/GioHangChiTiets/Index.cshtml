@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Index";
+    var names = ViewBag.ItemNames as IDictionary<int, string> ?? new Dictionary<int, string>();
+    var images = ViewBag.ItemImages as IDictionary<int, string> ?? new Dictionary<int, string>();
+    var loais = ViewBag.ItemLoais as IDictionary<int, string> ?? new Dictionary<int, string>();
 }
 
 <h1>Index</h1>
@@ -12,53 +15,35 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SoLuong)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DonGia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThanhTien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GhiChu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayCapNhat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaGioHangNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaSanPhamNavigation)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
+            <th>@Html.DisplayNameFor(model => model.DonGia)</th>
+            <th>@Html.DisplayNameFor(model => model.ThanhTien)</th>
+            <th>@Html.DisplayNameFor(model => model.GhiChu)</th>
+            <th>@Html.DisplayNameFor(model => model.NgayCapNhat)</th>
+            <th>Mã giỏ hàng</th>
+            <th>Loại</th>
+            <th>Item (Tên / Ảnh)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+            <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+            <td>@Html.DisplayFor(modelItem => item.ThanhTien)</td>
+            <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
+            <td>@Html.DisplayFor(modelItem => item.NgayCapNhat)</td>
+            <td>@item.MaGioHangNavigation?.MaGioHang</td>
+            <td>@(loais.ContainsKey(item.MaCt) ? loais[item.MaCt] : "")</td>
             <td>
-                @Html.DisplayFor(modelItem => item.SoLuong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DonGia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThanhTien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GhiChu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayCapNhat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaGioHangNavigation.MaGioHang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaSanPhamNavigation.MaSanPham)
+                @(names.ContainsKey(item.MaCt) ? names[item.MaCt] : "(Không xác định)")
+                @if (images.ContainsKey(item.MaCt) && !string.IsNullOrEmpty(images[item.MaCt]))
+                {
+                    var folder = (loais.ContainsKey(item.MaCt) && loais[item.MaCt] == "DV") ? "services" : "products";
+                    <br />
+                    <img src="@(Url.Content($"~/images/{folder}/" + images[item.MaCt]))" alt="img" style="max-width:60px; max-height:60px; margin-top:6px;" />
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MaCt">Edit</a> |

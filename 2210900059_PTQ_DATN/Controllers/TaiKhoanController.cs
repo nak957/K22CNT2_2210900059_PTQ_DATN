@@ -75,39 +75,25 @@ namespace _2210900059_PTQ_DATN.Controllers
             }
 
             // Kiểm tra trùng username
-            bool tonTaiTenDangNhap = _context.NguoiDungs
-                .Any(u => u.TenDangNhap == model.TenDangNhap);
-
-            if (tonTaiTenDangNhap)
+            if (_context.NguoiDungs.Any(u => u.TenDangNhap == model.TenDangNhap))
             {
-                ModelState.AddModelError(
-                    "TenDangNhap",
-                    "Tên đăng nhập đã tồn tại"
-                );
+                ModelState.AddModelError("TenDangNhap", "Tên đăng nhập đã tồn tại");
                 return View(model);
             }
 
-            // Kiểm tra trùng email (nếu có)
-            if (!string.IsNullOrEmpty(model.Email))
+            // Kiểm tra trùng email
+            if (!string.IsNullOrEmpty(model.Email) &&
+                _context.NguoiDungs.Any(u => u.Email == model.Email))
             {
-                bool tonTaiEmail = _context.NguoiDungs
-                    .Any(u => u.Email == model.Email);
-
-                if (tonTaiEmail)
-                {
-                    ModelState.AddModelError(
-                        "Email",
-                        "Email đã được sử dụng"
-                    );
-                    return View(model);
-                }
+                ModelState.AddModelError("Email", "Email đã được sử dụng");
+                return View(model);
             }
 
-            // Map ViewModel → Entity
+            // ===== TẠO NGƯỜI DÙNG =====
             var nguoiDung = new NguoiDung
             {
                 TenDangNhap = model.TenDangNhap,
-                MatKhau = model.MatKhau, // (sau này có thể hash)
+                MatKhau = model.MatKhau, // TODO: hash sau
                 HoTen = model.HoTen,
                 Email = model.Email,
                 VaiTro = "khachhang",
@@ -115,10 +101,29 @@ namespace _2210900059_PTQ_DATN.Controllers
             };
 
             _context.NguoiDungs.Add(nguoiDung);
+            _context.SaveChanges(); // QUAN TRỌNG: để có MaNguoiDung
+
+            // ===== TẠO LIÊN HỆ =====
+            var lienHe = new LienHe
+            {
+                HoTen = model.HoTen ?? model.TenDangNhap,
+                Email = model.Email,
+                SoDienThoai = model.SoDienThoai,
+                TieuDe = "Thông tin khách hàng mới",
+                LoaiLienHe = "Khách hàng",
+                NoiDung = model.DiaChi ?? "Chưa cung cấp địa chỉ",
+                TrangThai = "Mới",
+                DaDoc = false,
+                NgayGui = DateTime.Now,
+                MaNguoiDung = nguoiDung.MaNguoiDung
+            };
+
+            _context.LienHes.Add(lienHe);
             _context.SaveChanges();
 
             return RedirectToAction("Login");
         }
+
 
         // ===================== EDIT =====================
         // GET: /TaiKhoan/Edit

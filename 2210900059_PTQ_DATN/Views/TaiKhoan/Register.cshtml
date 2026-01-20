@@ -67,7 +67,7 @@
             <div class="relative z-10 flex flex-col justify-between p-16 text-white">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-4xl">spa</span>
-                    <span class="text-2xl font-bold">Leskin</span>
+                    <span class="text-2xl font-bold">TQbeauty</span>
                 </div>
 
                 <div>
@@ -142,6 +142,30 @@
                                    placeholder="email@example.com" />
                             <span asp-validation-for="Email"
                                   class="text-red-600 text-sm"></span>
+                        </div>
+                        <!-- PHONE -->
+                        <div>
+                            <label class="text-sm font-semibold uppercase text-gray-700">
+                                Số điện thoại
+                            </label>
+                            <input asp-for="SoDienThoai"
+                                   class="mt-2 w-full px-4 py-3 rounded-lg border border-gray-300
+                                    focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                   placeholder="0123456789" />
+                            <span asp-validation-for="SoDienThoai"
+                                  class="text-red-600 text-sm"></span>
+                        </div>
+
+                        <!-- ADDRESS -->
+                        <div>
+                            <label class="text-sm font-semibold uppercase text-gray-700">
+                                Địa chỉ giao hàng
+                            </label>
+                            <textarea asp-for="DiaChi"
+                                      rows="3"
+                                      class="mt-2 w-full px-4 py-3 rounded-lg border border-gray-300
+                                        focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                      placeholder="Số nhà, đường, phường/xã, quận/huyện..."></textarea>
                         </div>
 
                         <!-- BUTTON -->

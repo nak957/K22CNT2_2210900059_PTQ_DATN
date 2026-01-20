@@ -1,3 +1,4 @@
+wwwroot\css\index.css
 wwwroot\css\site.css
 wwwroot\dist\assets\img\AdminLTEFullLogo.png
 wwwroot\dist\assets\img\AdminLTELogo.png
@@ -112,7 +113,13 @@ wwwroot\images\partner-1.png
 wwwroot\images\phone.png
 wwwroot\images\products\2281ae78-b5b6-44d4-8342-55ca6637178f.jpg
 wwwroot\images\products\659fada3-be98-4da1-a2ec-624e6a457e0b.jpg
+wwwroot\images\products\6e97db4d-bae2-474b-aaf2-ddc21ea4ea51.jpg
 wwwroot\images\products\897f5818-954b-4355-b1af-1c9f299a23c8.jpg
+wwwroot\images\products\a5e3ba86-0530-4ad3-aae2-2f5a20b3e83c.jpg
+wwwroot\images\products\c8fa1a63-ced4-4e6b-a15c-3308dab90ed5.jpg
+wwwroot\images\sanpham4.jpg
+wwwroot\images\sanpham5.jpg
+wwwroot\images\sanpham6.jpg
 wwwroot\images\saokimPharma.png
 wwwroot\images\services\036d87d7-c0f9-4dd1-958c-245ecc7705cf.jpg
 wwwroot\images\services\1e625622-80ae-457a-9766-cd52b46ad0d0.jpg
@@ -188,4 +195,3 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\index.css

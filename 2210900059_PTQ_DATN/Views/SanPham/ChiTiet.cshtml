@@ -1,0 +1,186 @@
+﻿@model _2210900059_PTQ_DATN.Models.SanPham
+
+@{
+    ViewData["Title"] = Model.TenSanPham;
+}
+
+<style>
+    /* ================================
+           CHI TIẾT SẢN PHẨM
+        ================================ */
+
+    .service-detail {
+        padding: 60px 0;
+        background-color: #fff;
+    }
+
+        .service-detail .detail-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* Hình ảnh */
+        .service-detail .detail-image {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+            .service-detail .detail-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+        /* Nội dung */
+        .service-detail .detail-content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #222;
+        }
+
+        .service-detail .short-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        /* Thông tin nhanh */
+        .service-detail .detail-info {
+            background-color: #fafafa;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+            .service-detail .detail-info p {
+                margin: 8px 0;
+                font-size: 15px;
+                color: #333;
+            }
+
+    /* FORM ADD TO CART */
+    .add-to-cart-form {
+        margin-bottom: 24px;
+    }
+
+        .add-to-cart-form input[type="number"] {
+            width: 80px;
+            padding: 6px;
+            margin-right: 10px;
+        }
+
+    .btn-add-cart {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+        .btn-add-cart:hover {
+            opacity: 0.9;
+        }
+
+    /* Nội dung chi tiết */
+    .service-detail .detail-description {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #444;
+        margin-bottom: 32px;
+    }
+
+    /* Nút quay lại */
+    .service-detail .btn-outline {
+        display: inline-block;
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .service-detail .btn-outline:hover {
+            background-color: var(--primary);
+            color: #fff;
+        }
+</style>
+
+<section class="section service-detail">
+    <div class="container">
+        <div class="detail-wrapper">
+
+            <!-- HÌNH ẢNH -->
+            <div class="detail-image">
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <img src="@(Url.Content("~/images/products/" + Model.HinhAnh))"
+                         alt="@Model.TenSanPham" />
+                }
+                else
+                {
+                    <img src="@(Url.Content("~/images/no-image.png"))" />
+                }
+            </div>
+
+            <!-- NỘI DUNG -->
+            <div class="detail-content">
+                <h1>@Model.TenSanPham</h1>
+
+                <p class="short-desc">@Model.MoTaNgan</p>
+
+                <div class="detail-info">
+                    <p><strong>Giá:</strong> @Model.Gia.ToString("N0") đ</p>
+
+                    @if (!string.IsNullOrEmpty(Model.ThuongHieu))
+                    {
+                        <p><strong>Thương hiệu:</strong> @Model.ThuongHieu</p>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.DungTich))
+                    {
+                        <p><strong>Dung tích:</strong> @Model.DungTich</p>
+                    }
+                </div>
+
+                <!-- FORM THÊM VÀO GIỎ -->
+                <form asp-controller="GioHang"
+                      asp-action="ThemSanPham"
+                      method="post"
+                      class="add-to-cart-form">
+
+                    <input type="hidden" name="maSanPham" value="@Model.MaSanPham" />
+
+                    <input type="number"
+                           name="soLuong"
+                           value="1"
+                           min="1" />
+
+                    <button type="submit" class="btn-add-cart">
+                        Thêm vào giỏ hàng
+                    </button>
+                </form>
+
+                <div class="detail-description">
+                    @Html.Raw(Model.MoTaChiTiet)
+                </div>
+
+                <a class="btn-outline"
+                   href="@Url.Action("Index", "SanPham")">
+                    ← Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

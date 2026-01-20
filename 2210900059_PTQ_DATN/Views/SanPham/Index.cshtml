@@ -1,0 +1,51 @@
+﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+<section class="section products">
+    <div class="container">
+        <h2 class="section-title">TẤT CẢ SẢN PHẨM</h2>
+
+        <div class="product-row">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var sp in Model)
+                {
+                    <article class="product-card">
+                        <div class="product-img">
+                            @if (!string.IsNullOrEmpty(sp.HinhAnh))
+                            {
+                                <img src="@(Url.Content("~/images/products/" + sp.HinhAnh))"
+                                     alt="@sp.TenSanPham" />
+                            }
+                            else
+                            {
+                                <img src="@(Url.Content("~/images/no-image.png"))"
+                                     alt="No image" />
+                            }
+                        </div>
+
+                        <div class="card-body">
+                            <h3>@sp.TenSanPham</h3>
+
+                            <p class="price">
+                                @sp.Gia.ToString("N0") đ
+                            </p>
+
+                            <a class="btn-outline"
+                               href="@Url.Action("ChiTiet", "SanPham", new { id = sp.MaSanPham })">
+                                Xem chi tiết
+                            </a>
+                        </div>
+                    </article>
+                }
+            }
+            else
+            {
+                <p>Không có sản phẩm nào.</p>
+            }
+        </div>
+    </div>
+</section>

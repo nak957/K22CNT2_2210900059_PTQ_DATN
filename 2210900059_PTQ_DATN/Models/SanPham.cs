@@ -44,10 +44,6 @@ public partial class SanPham
 
     public int? MaNguoiCapNhat { get; set; }
 
-    public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
-
-    public virtual ICollection<GioHangChiTiet> GioHangChiTiets { get; set; } = new List<GioHangChiTiet>();
-
     public virtual DanhMucSanPham? MaDanhMucNavigation { get; set; }
 
     public virtual NguoiDung? MaNguoiCapNhatNavigation { get; set; }
@@ -55,6 +51,13 @@ public partial class SanPham
     public virtual NguoiDung? MaNguoiTaoNavigation { get; set; }
 
     [NotMapped]
+    public virtual ICollection<GioHangChiTiet> GioHangChiTiets { get; set; } = new List<GioHangChiTiet>();
+
+    [NotMapped]
     public IFormFile? HinhAnhFile { get; set; }
 
+    [NotMapped]
+    public bool IsEditing { get; set; } = false;
+
+    public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
 }

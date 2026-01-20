@@ -1,0 +1,227 @@
+﻿@using _2210900059_PTQ_DATN.Models.ViewModels
+@model List<GioHangItemVM>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<style>
+    /* ================================
+           GIỎ HÀNG – ĐỒNG BỘ UI LESKIN
+        ================================ */
+
+    .section {
+        padding: 60px 0;
+        background: #fff;
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 30px;
+    }
+
+    /* CARD */
+    .cart-wrapper {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        padding: 20px;
+    }
+
+    /* TABLE */
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .cart-table thead {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .cart-table th {
+            padding: 14px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+
+        .cart-table td {
+            padding: 16px 14px;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .cart-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* IMAGE */
+        .cart-table img {
+            width: 80px;
+            border-radius: 10px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+    /* PRICE */
+    .price,
+    .total {
+        font-weight: 600;
+        white-space: nowrap;
+        color: #222;
+    }
+
+    /* ACTION BAR */
+    .cart-actions {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .btn-outline {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+    .btn-primary {
+        padding: 10px 26px;
+        border-radius: 999px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 14px;
+        border: none;
+        text-decoration: none;
+    }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+    /* EMPTY CART */
+    .empty-cart {
+        text-align: center;
+        padding: 60px 0;
+        color: #666;
+    }
+
+    /* RESPONSIVE */
+   
+        .cart-table thead {
+            display: none;
+        }
+
+        .cart-table,
+        .cart-table tbody,
+        .cart-table tr,
+        .cart-table td {
+            display: block;
+            width: 100%;
+        }
+
+        .cart-table tr {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .cart-table td {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-bottom: none;
+        }
+
+        .cart-table td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: #555;
+        }
+    }
+</style>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Giỏ hàng</h2>
+
+        @if (!Model.Any())
+        {
+            <div class="empty-cart">
+                <p>Giỏ hàng của bạn đang trống.</p>
+                <a href="@Url.Action("Index", "Home")" class="btn-outline">
+                    ← Quay lại trang chủ
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="cart-wrapper">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Hình</th>
+                            <th>Tên</th>
+                            <th>Loại</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-label="Hình">
+                                    <img src="@(Url.Content(item.LoaiItem == "SP"
+                                                                                 ? "~/images/products/" + item.HinhAnh
+                                                                                 : "~/images/services/" + item.HinhAnh))" />
+                        </td>
+                        <td data-label="Tên">@item.Ten</td>
+                        <td data-label="Loại">
+                            @(item.LoaiItem == "SP" ? "Sản phẩm" : "Dịch vụ")
+                        </td>
+                        <td data-label="Đơn giá" class="price">
+                            @item.DonGia.ToString("N0") đ
+                        </td>
+                        <td data-label="Số lượng">
+                            @item.SoLuong
+                        </td>
+                        <td data-label="Thành tiền" class="total">
+                            @(item.DonGia* item.SoLuong).ToString("N0") đ
+                        </td>
+                    </tr>
+                                        }
+                    </tbody>
+                </table>
+
+                <div class="cart-actions">
+                    <a href="@Url.Action("Index", "Home")" class="btn-outline">
+                        ← Tiếp tục mua sắm
+                    </a>
+
+                    <a href="@Url.Action("ThanhToan", "GioHang")" class="btn-primary">
+                        Tiến hành thanh toán
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</section>

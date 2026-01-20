@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<_2210900059_PTQ_DATN.Models.DichVu>
+
+@{
     ViewData["Title"] = "Dịch vụ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,73 +11,48 @@
     <div class="container">
         <div class="service-row">
 
-            <!-- 1. Thay da sinh học -->
-            <article class="card service-card">
-                <div class="service-img">
-                    <img src="~/images/tratamiento-facial.jpg" alt="Thay da sinh học">
-                </div>
-                <div class="card-body">
-                    <h3>Thay da sinh học</h3>
-                    <a href="#" class="btn-outline">Xem chi tiết</a>
-                </div>
-            </article>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var dv in Model)
+                {
+                    <article class="card service-card">
+                        <div class="service-img">
+                            @if (!string.IsNullOrEmpty(dv.HinhAnh))
+                            {
+                                <img src="@(Url.Content("~/images/services/" + dv.HinhAnh))"
+                                     alt="@dv.TenDichVu" />
+                            }
+                            else
+                            {
+                                <img src="@(Url.Content("~/images/no-image.png"))"
+                                     alt="No image" />
+                            }
+                        </div>
 
-            <!-- 2. Trẻ hóa da -->
-            <article class="card service-card">
-                <div class="service-img">
-                    <img src="~/images/dien_di_c.jpg" alt="Trẻ hóa da">
-                </div>
-                <div class="card-body">
-                    <h3>Trẻ hóa da bằng điện di Vitamin C + Hyaluronic Acid</h3>
-                    <a href="#" class="btn-outline">Xem chi tiết</a>
-                </div>
-            </article>
+                        <div class="card-body">
+                            <h3>@dv.TenDichVu</h3>
 
-            <!-- 3. Điều trị sẹo rỗ cấp 2 -->
-            <article class="card service-card">
-                <div class="service-img">
-                    <img src="~/images/dbfgn g.jpg" alt="Điều trị sẹo rỗ cấp 2">
-                </div>
-                <div class="card-body">
-                    <h3>Điều trị sẹo rỗ cấp 2</h3>
-                    <a href="#" class="btn-outline">Xem chi tiết</a>
-                </div>
-            </article>
+                            @if (!string.IsNullOrEmpty(dv.MoTaNgan))
+                            {
+                                <p class="service-desc">
+                                    @dv.MoTaNgan
+                                </p>
+                            }
 
-            <!-- 4. Điều trị sắc tố da -->
-            <article class="card service-card">
-                <div class="service-img">
-                    <img src="~/images/bi-quyet-tri-nam-da-mat-bang-tra-don-gian-ma-cuc-hieu-qua-hinh-anh-1.png" alt="Điều trị sắc tố da">
-                </div>
-                <div class="card-body">
-                    <h3>Điều trị sắc tố da cấp 2</h3>
-                    <a href="#" class="btn-outline">Xem chi tiết</a>
-                </div>
-            </article>
-
-            <!-- 5. Tiêm PRP -->
-            <article class="card service-card">
-                <div class="service-img">
-                    <img src="~/images/tre-hoa-da-mat.jpg" alt="Tiêm PRP">
-                </div>
-                <div class="card-body">
-                    <h3>Tiêm PRP tế bào tự thân</h3>
-                    <a href="#" class="btn-outline">Xem chi tiết</a>
-                </div>
-            </article>
-
-            <!-- 6. Điều trị sẹo rỗ cấp 3 -->
-            <article class="card service-card">
-                <div class="service-img">
-                    <img src="~/images/seoro2.jpg" alt="Điều trị sẹo rỗ cấp 3">
-                </div>
-                <div class="card-body">
-                    <h3>Điều trị sẹo rỗ cấp 3</h3>
-                    <a href="#" class="btn-outline">Xem chi tiết</a>
-                </div>
-            </article>
+                            <div class="card-body">
+                                <h3>@dv.TenDichVu</h3>
+                                <a href="@Url.Action("ChiTiet", "DichVu", new { id = dv.MaDichVu })"
+                                   class="btn-outline">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </article>
+                }
+            }
+            else
+            {
+                <p>Chưa có dịch vụ nào.</p>
+            }
 
         </div>
     </div>
 </section>
-
