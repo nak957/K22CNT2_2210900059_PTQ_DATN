@@ -22,7 +22,7 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         // GET: Admins/ChiTietDonHangs
         public async Task<IActionResult> Index()
         {
-            var leSkinDbContext = _context.ChiTietDonHangs.Include(c => c.MaDonHangNavigation).Include(c => c.MaSanPhamNavigation);
+            var leSkinDbContext = _context.ChiTietDonHangs.Include(c => c.MaDonHangNavigation).Include(c => c.ItemId);
             return View(await leSkinDbContext.ToListAsync());
         }
 
@@ -36,7 +36,7 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
 
             var chiTietDonHang = await _context.ChiTietDonHangs
                 .Include(c => c.MaDonHangNavigation)
-                .Include(c => c.MaSanPhamNavigation)
+                .Include(c => c.ItemId)
                 .FirstOrDefaultAsync(m => m.MaChiTiet == id);
             if (chiTietDonHang == null)
             {
@@ -68,7 +68,7 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang", chiTietDonHang.MaDonHang);
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.MaSanPham);
+            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.ItemId);
             return View(chiTietDonHang);
         }
 
@@ -86,7 +86,7 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 return NotFound();
             }
             ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang", chiTietDonHang.MaDonHang);
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.MaSanPham);
+            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.ItemId);
             return View(chiTietDonHang);
         }
 
@@ -123,7 +123,8 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang", chiTietDonHang.MaDonHang);
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.MaSanPham);
+            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.ItemId);
+            ViewData["MaDichVu"] = new SelectList(_context.DichVus, "MaDichVu", "MaDichVu", chiTietDonHang.ItemId);
             return View(chiTietDonHang);
         }
 
@@ -137,7 +138,7 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
 
             var chiTietDonHang = await _context.ChiTietDonHangs
                 .Include(c => c.MaDonHangNavigation)
-                .Include(c => c.MaSanPhamNavigation)
+                .Include(c => c.ItemId)
                 .FirstOrDefaultAsync(m => m.MaChiTiet == id);
             if (chiTietDonHang == null)
             {

@@ -99,7 +99,7 @@ public partial class LeSkinDbContext : DbContext
                 .HasColumnName("donGia");
             entity.Property(e => e.GhiChu).HasColumnName("ghiChu");
             entity.Property(e => e.MaDonHang).HasColumnName("maDonHang");
-            entity.Property(e => e.MaSanPham).HasColumnName("maSanPham");
+            entity.Property(e => e.ItemId).HasColumnName("ItemId");
             entity.Property(e => e.SoLuong).HasColumnName("soLuong");
             entity.Property(e => e.ThanhTien)
                 .HasColumnType("decimal(18, 2)")
@@ -109,11 +109,6 @@ public partial class LeSkinDbContext : DbContext
                 .HasForeignKey(d => d.MaDonHang)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CTDH_DonHang");
-
-            entity.HasOne(d => d.MaSanPhamNavigation).WithMany(p => p.ChiTietDonHangs)
-                .HasForeignKey(d => d.MaSanPham)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CTDH_SanPham");
         });
 
         modelBuilder.Entity<DanhMucDichVu>(entity =>

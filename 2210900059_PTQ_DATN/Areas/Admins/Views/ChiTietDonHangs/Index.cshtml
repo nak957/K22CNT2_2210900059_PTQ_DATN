@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.MaDonHangNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaSanPhamNavigation)
+                @Html.DisplayNameFor(model => model.ItemId)
             </th>
             <th></th>
         </tr>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.MaDonHangNavigation.MaDonHang)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MaSanPhamNavigation.MaSanPham)
+                @Html.DisplayFor(modelItem => item.ItemId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MaChiTiet">Edit</a> |

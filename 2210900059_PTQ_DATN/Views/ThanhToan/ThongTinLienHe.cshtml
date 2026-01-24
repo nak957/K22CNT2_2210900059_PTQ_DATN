@@ -1,0 +1,48 @@
+﻿@model _2210900059_PTQ_DATN.Models.LienHe
+
+@{
+    ViewData["Title"] = "Thông tin liên hệ";
+}
+
+<h2 class="mb-4">Thông tin liên hệ</h2>
+
+<form asp-action="ThongTinLienHe" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="HoTen" class="form-label">Họ tên</label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SoDienThoai" class="form-label">Số điện thoại</label>
+        <input asp-for="SoDienThoai" class="form-control" />
+        <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DiaChi" class="form-label">Địa chỉ</label>
+        <textarea asp-for="DiaChi" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NoiDung" class="form-label">Ghi chú</label>
+        <textarea asp-for="NoiDung" class="form-control" rows="4"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Tiếp tục thanh toán
+    </button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

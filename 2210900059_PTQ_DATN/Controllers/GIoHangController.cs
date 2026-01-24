@@ -114,6 +114,49 @@ namespace _2210900059_PTQ_DATN.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        // ===============================
+        // CẬP NHẬT SỐ LƯỢNG ITEM
+        // ===============================
+        public IActionResult CapNhatSoLuong(string loai, int id, int soLuong)
+        {
+            if (soLuong < 1)
+            {
+                // nếu giảm về 0 thì xóa luôn
+                return RedirectToAction("XoaItem", new { maCt = id });
+            }
+
+            var cart = GetOrCreateCart();
+
+            var item = cart.GioHangChiTiets.FirstOrDefault(x => x.MaCt == id);
+            if (item == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            item.SoLuong = soLuong;
+            item.NgayCapNhat = DateTime.Now;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        // ===============================
+        // XÓA ITEM KHỎI GIỎ HÀNG
+        // ===============================
+        [HttpPost]
+        public IActionResult XoaItem(int maCt)
+        {
+            var cart = GetOrCreateCart();
+
+            var item = cart.GioHangChiTiets.FirstOrDefault(x => x.MaCt == maCt);
+            if (item != null)
+            {
+                _context.GioHangChiTiets.Remove(item);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
 
         // ===============================
         // HIỂN THỊ GIỎ HÀNG

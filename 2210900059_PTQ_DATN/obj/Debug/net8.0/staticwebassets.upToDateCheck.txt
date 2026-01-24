@@ -1,3 +1,4 @@
+wwwroot\css\giohang.css
 wwwroot\css\index.css
 wwwroot\css\site.css
 wwwroot\dist\assets\img\AdminLTEFullLogo.png

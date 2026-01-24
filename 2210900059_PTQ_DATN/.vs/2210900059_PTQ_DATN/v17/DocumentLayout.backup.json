@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\thanhtoan\\xacnhan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\thanhtoan\\xacnhan.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\thanhtoan\\thongtinlienhe.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\thanhtoan\\thongtinlienhe.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,21 +21,57 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 1095,
+          "DockedHeight": 209,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAAAJgAAABbAAAAAAAAAA==",
+              "Title": "XacNhan.cshtml",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\ThanhToan\\XacNhan.cshtml",
+              "RelativeDocumentMoniker": "Views\\ThanhToan\\XacNhan.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\ThanhToan\\XacNhan.cshtml",
+              "RelativeToolTip": "Views\\ThanhToan\\XacNhan.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-20T12:51:43.661Z",
+              "WhenOpened": "2026-01-24T14:58:27.946Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ThongTinLienHe.cshtml",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\ThanhToan\\ThongTinLienHe.cshtml",
+              "RelativeDocumentMoniker": "Views\\ThanhToan\\ThongTinLienHe.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\ThanhToan\\ThongTinLienHe.cshtml",
+              "RelativeToolTip": "Views\\ThanhToan\\ThongTinLienHe.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAC8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-24T14:56:55.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ThanhToanController.cs",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Controllers\\ThanhToanController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ThanhToanController.cs",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Controllers\\ThanhToanController.cs",
+              "RelativeToolTip": "Controllers\\ThanhToanController.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAkwGoAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-24T14:52:57.171Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 69,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }

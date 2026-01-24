@@ -1,0 +1,33 @@
+﻿@model _2210900059_PTQ_DATN.Models.LienHe
+
+@{
+    ViewData["Title"] = "Xác nhận thông tin";
+}
+
+<h2 class="mb-4">Xác nhận thông tin thanh toán</h2>
+
+<div class="card">
+    <div class="card-body">
+        <p><strong>Họ tên:</strong> @Model.HoTen</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Số điện thoại:</strong> @Model.SoDienThoai</p>
+        <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+
+        @if (!string.IsNullOrEmpty(Model.NoiDung))
+        {
+            <p><strong>Ghi chú:</strong> @Model.NoiDung</p>
+        }
+    </div>
+</div>
+
+<div class="mt-4 d-flex gap-2">
+    <a asp-action="ThongTinLienHe" class="btn btn-secondary">
+        Quay lại chỉnh sửa
+    </a>
+
+    <a asp-controller="DonHang"
+       asp-action="TaoDonHang"
+       class="btn btn-success">
+        Xác nhận & đặt hàng
+    </a>
+</div>
