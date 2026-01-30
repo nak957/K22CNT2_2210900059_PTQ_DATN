@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,83 +20,88 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             _environment = environment;
         }
 
-
+        // =======================
         // GET: Admins/SanPhams
+        // =======================
         public async Task<IActionResult> Index()
         {
-            var leSkinDbContext = _context.SanPhams.Include(s => s.MaDanhMucNavigation).Include(s => s.MaNguoiCapNhatNavigation).Include(s => s.MaNguoiTaoNavigation);
-            return View(await leSkinDbContext.ToListAsync());
+            var data = _context.SanPhams
+                .Include(s => s.MaDanhMucNavigation)
+                .Include(s => s.MaNguoiTaoNavigation)
+                .Include(s => s.MaNguoiCapNhatNavigation);
+
+            return View(await data.ToListAsync());
         }
 
-        // GET: Admins/SanPhams/Details/5
+        // =======================
+        // GET: Details
+        // =======================
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var sanPham = await _context.SanPhams
                 .Include(s => s.MaDanhMucNavigation)
-                .Include(s => s.MaNguoiCapNhatNavigation)
                 .Include(s => s.MaNguoiTaoNavigation)
+                .Include(s => s.MaNguoiCapNhatNavigation)
                 .FirstOrDefaultAsync(m => m.MaSanPham == id);
-            if (sanPham == null)
-            {
-                return NotFound();
-            }
+
+            if (sanPham == null) return NotFound();
 
             return View(sanPham);
         }
 
-        // GET: Admins/SanPhams/Create
+        // =======================
+        // GET: Create
+        // =======================
         public IActionResult Create()
         {
             ViewData["MaDanhMuc"] = new SelectList(
                 _context.DanhMucSanPhams,
-                "MaDanhMuc",      // value gửi về
-                "TenDanhMuc"      // text hiển thị
+                "MaDanhMuc",
+                "TenDanhMuc"
             );
 
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
             ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
 
             return View();
         }
 
-
-        // POST: Admins/SanPhams/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // =======================
+        // POST: Create
+        // =======================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("MaSanPham,MaDanhMuc,TenSanPham,Slug,LoaiSanPham,ThuongHieu,DungTich,DoiTuongSuDung,CongDungChinh,ThanhPhanNoiBat,MoTaNgan,MoTaChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
-        SanPham sanPham,
-        IFormFile? HinhAnhFile
-)
+            [Bind("MaDanhMuc,TenSanPham,Slug,LoaiSanPham,ThuongHieu,DungTich,DoiTuongSuDung,CongDungChinh,ThanhPhanNoiBat,MoTaNgan,MoTaChiTiet,HinhAnh,Gia,SoLuong,NoiBat,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
+            SanPham sanPham,
+            IFormFile? HinhAnhFile
+        )
         {
+            if (sanPham.SoLuong < 0)
+            {
+                ModelState.AddModelError("SoLuong", "Số lượng phải ≥ 0");
+            }
+
             if (ModelState.IsValid)
             {
                 if (HinhAnhFile != null && HinhAnhFile.Length > 0)
                 {
                     string uploadPath = Path.Combine(_environment.WebRootPath, "images", "products");
-
                     if (!Directory.Exists(uploadPath))
                         Directory.CreateDirectory(uploadPath);
 
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(HinhAnhFile.FileName);
+                    string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
                     string filePath = Path.Combine(uploadPath, fileName);
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await HinhAnhFile.CopyToAsync(stream);
-                    }
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await HinhAnhFile.CopyToAsync(stream);
 
-                    sanPham.HinhAnh = fileName; // CHỈ lưu tên file
+                    sanPham.HinhAnh = fileName;
                 }
 
-                sanPham.NgayTao ??= DateTime.Now;
+                sanPham.NgayTao = DateTime.Now;
 
                 _context.Add(sanPham);
                 await _context.SaveChangesAsync();
@@ -111,20 +115,21 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 sanPham.MaDanhMuc
             );
 
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiCapNhat);
             ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiTao);
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiCapNhat);
+
             return View(sanPham);
         }
 
-        // GET: Admins/SanPhams/Edit/5
+        // =======================
+        // GET: Edit
+        // =======================
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-                return NotFound();
+            if (id == null) return NotFound();
 
             var sanPham = await _context.SanPhams.FindAsync(id);
-            if (sanPham == null)
-                return NotFound();
+            if (sanPham == null) return NotFound();
 
             ViewData["MaDanhMuc"] = new SelectList(
                 _context.DanhMucSanPhams,
@@ -133,129 +138,96 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 sanPham.MaDanhMuc
             );
 
-            ViewData["MaNguoiCapNhat"] = new SelectList(
-                _context.NguoiDungs,
-                "MaNguoiDung",
-                "MaNguoiDung",
-                sanPham.MaNguoiCapNhat
-            );
-
-            ViewData["MaNguoiTao"] = new SelectList(
-                _context.NguoiDungs,
-                "MaNguoiDung",
-                "MaNguoiDung",
-                sanPham.MaNguoiTao
-            );
+            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiTao);
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiCapNhat);
 
             return View(sanPham);
         }
-    
 
-        // POST: Admins/SanPhams/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // =======================
+        // POST: Edit (AN TOÀN)
+        // =======================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-        int id,
-        [Bind("MaSanPham,MaDanhMuc,TenSanPham,Slug,LoaiSanPham,ThuongHieu,DungTich,DoiTuongSuDung,CongDungChinh,ThanhPhanNoiBat,MoTaNgan,MoTaChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
-        SanPham sanPham,
-        IFormFile? HinhAnhFile
+            int id,
+            [Bind("MaSanPham,MaDanhMuc,TenSanPham,Slug,LoaiSanPham,ThuongHieu,DungTich,DoiTuongSuDung,CongDungChinh,ThanhPhanNoiBat,MoTaNgan,MoTaChiTiet,HinhAnh,Gia,SoLuong,NoiBat,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
+            SanPham sanPham,
+            IFormFile? HinhAnhFile
         )
-            {
-                if (id != sanPham.MaSanPham)
-                {
-                    return NotFound();
-                }
-
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        if (HinhAnhFile != null && HinhAnhFile.Length > 0)
-                        {
-                            string uploadPath = Path.Combine(_environment.WebRootPath, "images", "products");
-
-                            if (!Directory.Exists(uploadPath))
-                                Directory.CreateDirectory(uploadPath);
-
-                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(HinhAnhFile.FileName);
-                            string filePath = Path.Combine(uploadPath, fileName);
-
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await HinhAnhFile.CopyToAsync(stream);
-                            }
-
-                            sanPham.HinhAnh = fileName;
-                        }
-                        // nếu không chọn ảnh mới → giữ ảnh cũ (đã có hidden field)
-
-                        _context.Update(sanPham);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!SanPhamExists(sanPham.MaSanPham))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-                    return RedirectToAction(nameof(Index));
-                }
-
-                    ViewData["MaDanhMuc"] = new SelectList(
-                        _context.DanhMucSanPhams,
-                        "MaDanhMuc",
-                        "TenDanhMuc",
-                        sanPham.MaDanhMuc
-                    );
-
-                    ViewData["MaNguoiCapNhat"] = new SelectList(
-                        _context.NguoiDungs,
-                        "MaNguoiDung",
-                        "MaNguoiDung",
-                        sanPham.MaNguoiCapNhat
-                    );
-
-                    ViewData["MaNguoiTao"] = new SelectList(
-                        _context.NguoiDungs,
-                        "MaNguoiDung",
-                        "MaNguoiDung",
-                        sanPham.MaNguoiTao
-                    );
-
-                    return View(sanPham);
-
-                }
-
-
-        // GET: Admins/SanPhams/Delete/5
-        public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
+            if (id != sanPham.MaSanPham)
                 return NotFound();
+
+            if (sanPham.SoLuong < 0)
+            {
+                ModelState.AddModelError("SoLuong", "Số lượng phải ≥ 0");
             }
 
-            var sanPham = await _context.SanPhams
-                .Include(s => s.MaDanhMucNavigation)
-                .Include(s => s.MaNguoiCapNhatNavigation)
-                .Include(s => s.MaNguoiTaoNavigation)
-                .FirstOrDefaultAsync(m => m.MaSanPham == id);
-            if (sanPham == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var sanPhamDb = await _context.SanPhams.FindAsync(id);
+                if (sanPhamDb == null) return NotFound();
+
+                sanPhamDb.TenSanPham = sanPham.TenSanPham;
+                sanPhamDb.Slug = sanPham.Slug;
+                sanPhamDb.MaDanhMuc = sanPham.MaDanhMuc;
+                sanPhamDb.LoaiSanPham = sanPham.LoaiSanPham;
+                sanPhamDb.ThuongHieu = sanPham.ThuongHieu;
+                sanPhamDb.DungTich = sanPham.DungTich;
+                sanPhamDb.DoiTuongSuDung = sanPham.DoiTuongSuDung;
+                sanPhamDb.CongDungChinh = sanPham.CongDungChinh;
+                sanPhamDb.ThanhPhanNoiBat = sanPham.ThanhPhanNoiBat;
+                sanPhamDb.MoTaNgan = sanPham.MoTaNgan;
+                sanPhamDb.MoTaChiTiet = sanPham.MoTaChiTiet;
+                sanPhamDb.Gia = sanPham.Gia;
+                sanPhamDb.SoLuong = sanPham.SoLuong;
+                sanPhamDb.NoiBat = sanPham.NoiBat;
+                sanPhamDb.TrangThai = sanPham.TrangThai;
+                sanPhamDb.MaNguoiCapNhat = sanPham.MaNguoiCapNhat;
+
+                if (HinhAnhFile != null && HinhAnhFile.Length > 0)
+                {
+                    string uploadPath = Path.Combine(_environment.WebRootPath, "images", "products");
+                    if (!Directory.Exists(uploadPath))
+                        Directory.CreateDirectory(uploadPath);
+
+                    string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
+                    string filePath = Path.Combine(uploadPath, fileName);
+
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await HinhAnhFile.CopyToAsync(stream);
+
+                    sanPhamDb.HinhAnh = fileName;
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+
+            ViewData["MaDanhMuc"] = new SelectList(_context.DanhMucSanPhams, "MaDanhMuc", "TenDanhMuc", sanPham.MaDanhMuc);
+            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiTao);
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", sanPham.MaNguoiCapNhat);
 
             return View(sanPham);
         }
 
-        // POST: Admins/SanPhams/Delete/5
+        // =======================
+        // DELETE
+        // =======================
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var sanPham = await _context.SanPhams
+                .Include(s => s.MaDanhMucNavigation)
+                .FirstOrDefaultAsync(m => m.MaSanPham == id);
+
+            if (sanPham == null) return NotFound();
+
+            return View(sanPham);
+        }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -264,15 +236,10 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             if (sanPham != null)
             {
                 _context.SanPhams.Remove(sanPham);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SanPhamExists(int id)
-        {
-            return _context.SanPhams.Any(e => e.MaSanPham == id);
         }
     }
 }

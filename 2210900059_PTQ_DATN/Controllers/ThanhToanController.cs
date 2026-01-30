@@ -1,92 +1,97 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using _2210900059_PTQ_DATN.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace _2210900059_PTQ_DATN.Controllers
 {
     public class ThanhToanController : Controller
     {
         private readonly LeSkinDbContext _context;
+        private readonly ILogger<ThanhToanController> _logger;
 
-        public ThanhToanController(LeSkinDbContext context)
+        public ThanhToanController(LeSkinDbContext context, ILogger<ThanhToanController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // =====================================================
-        // ĐIỂM VÀO KHI BẤM "TIẾN HÀNH THANH TOÁN"
+        // NHẬN DANH SÁCH ITEM ĐƯỢC CHỌN + CHECK TỒN KHO
         // =====================================================
-        public IActionResult Index()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(List<int> selectedItemIds)
         {
-            // Lấy userId từ session (bạn đang dùng session, không phải Identity)
-            var maNguoiDung = HttpContext.Session.GetInt32("MaNguoiDung");
-
-            // ======================
-            // CASE 1: CHƯA ĐĂNG NHẬP
-            // ======================
-            if (maNguoiDung == null)
+            if (selectedItemIds == null || !selectedItemIds.Any())
             {
-                return RedirectToAction("ThongTinLienHe");
+                TempData["CheckoutError"] = "Vui lòng chọn ít nhất một sản phẩm để thanh toán.";
+                return RedirectToAction("Index", "GioHang");
             }
 
-            // ======================
-            // CASE 2: ĐÃ ĐĂNG NHẬP
-            // ======================
-            var lienHe = _context.LienHes
-                .FirstOrDefault(x => x.MaNguoiDung == maNguoiDung);
-
-            // Chưa có thông tin liên hệ → bắt nhập
-            if (lienHe == null)
+            var sessionId = HttpContext.Session.GetString("CART_SESSION");
+            if (string.IsNullOrEmpty(sessionId))
             {
-                return RedirectToAction("ThongTinLienHe");
+                TempData["CheckoutError"] = "Giỏ hàng đã hết hạn.";
+                return RedirectToAction("Index", "GioHang");
             }
 
-            // Có đủ thông tin → sang xác nhận
-            return RedirectToAction("XacNhan");
+            var cart = _context.GioHangs
+                .Include(g => g.GioHangChiTiets)
+                .FirstOrDefault(g => g.SessionId == sessionId);
+
+            if (cart == null)
+            {
+                TempData["CheckoutError"] = "Không tìm thấy giỏ hàng.";
+                return RedirectToAction("Index", "GioHang");
+            }
+
+            var selectedItems = cart.GioHangChiTiets
+                .Where(x => selectedItemIds.Contains(x.MaCt))
+                .ToList();
+
+            // ================= CHECK TỒN KHO =================
+            foreach (var item in selectedItems)
+            {
+                if (item.LoaiItem == "SP")
+                {
+                    var sp = _context.SanPhams.FirstOrDefault(x => x.MaSanPham == item.MaItem);
+                    if (sp == null || item.SoLuong > sp.SoLuong)
+                    {
+                        TempData["CheckoutError"] =
+                            $"Sản phẩm \"{sp?.TenSanPham}\" chỉ còn {sp?.SoLuong ?? 0} sản phẩm.";
+                        return RedirectToAction("Index", "GioHang");
+                    }
+                }
+            }
+
+            HttpContext.Session.SetString(
+                "CHECKOUT_ITEMS",
+                JsonSerializer.Serialize(selectedItemIds)
+            );
+
+            return RedirectToAction("ThongTinLienHe");
         }
 
         // =====================================================
-        // FORM LIÊN HỆ (GET)
+        // FORM THÔNG TIN LIÊN HỆ (GET)
         // =====================================================
         [HttpGet]
         public IActionResult ThongTinLienHe()
         {
-            var maNguoiDung = HttpContext.Session.GetInt32("MaNguoiDung");
-
-            // Nếu đã đăng nhập → load sẵn dữ liệu (nếu có)
-            if (maNguoiDung != null)
-            {
-                var lienHe = _context.LienHes
-                    .FirstOrDefault(x => x.MaNguoiDung == maNguoiDung);
-
-                if (lienHe != null)
-                {
-                    return View(lienHe);
-                }
-            }
-
             return View(new LienHe());
         }
 
         // =====================================================
-        // FORM LIÊN HỆ (POST)
+        // FORM THÔNG TIN LIÊN HỆ (POST)
         // =====================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThongTinLienHe(LienHe model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var maNguoiDung = HttpContext.Session.GetInt32("MaNguoiDung");
-
-            // Gán user nếu đã đăng nhập
-            if (maNguoiDung != null)
-            {
-                model.MaNguoiDung = maNguoiDung.Value;
-            }
+            if (!ModelState.IsValid) return View(model);
 
             model.NgayGui = DateTime.Now;
             model.DaDoc = false;
@@ -95,42 +100,126 @@ namespace _2210900059_PTQ_DATN.Controllers
             _context.LienHes.Add(model);
             _context.SaveChanges();
 
-            // Lưu ID liên hệ vào session để bước sau dùng
-            HttpContext.Session.SetInt32("MaLienHe", model.MaLienHe);
-
+            HttpContext.Session.SetInt32("MA_LIEN_HE", model.MaLienHe);
             return RedirectToAction("XacNhan");
         }
 
         // =====================================================
-        // TRANG XÁC NHẬN THANH TOÁN
+        // TRANG XÁC NHẬN
         // =====================================================
         public IActionResult XacNhan()
         {
-            // Kiểm tra lại thông tin liên hệ
-            var maNguoiDung = HttpContext.Session.GetInt32("MaNguoiDung");
-            LienHe lienHe = null;
+            var maLienHe = HttpContext.Session.GetInt32("MA_LIEN_HE");
+            if (maLienHe == null) return RedirectToAction("ThongTinLienHe");
 
-            if (maNguoiDung != null)
+            var lienHe = _context.LienHes.FirstOrDefault(x => x.MaLienHe == maLienHe);
+            if (lienHe == null) return RedirectToAction("ThongTinLienHe");
+
+            return View(lienHe);
+        }
+
+        // =====================================================
+        // TẠO ĐƠN HÀNG (CHECK TỒN KHO LẦN CUỐI)
+        // =====================================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult TaoDonHang()
+        {
+            var json = HttpContext.Session.GetString("CHECKOUT_ITEMS");
+            if (string.IsNullOrEmpty(json))
             {
-                lienHe = _context.LienHes
-                    .FirstOrDefault(x => x.MaNguoiDung == maNguoiDung);
+                TempData["CheckoutError"] = "Không có sản phẩm để thanh toán.";
+                return RedirectToAction("Index", "GioHang");
             }
-            else
+
+            var selectedItemIds = JsonSerializer.Deserialize<List<int>>(json) ?? new();
+
+            var sessionId = HttpContext.Session.GetString("CART_SESSION");
+            var cart = _context.GioHangs
+                .Include(g => g.GioHangChiTiets)
+                .FirstOrDefault(g => g.SessionId == sessionId);
+
+            var selectedItems = cart.GioHangChiTiets
+                .Where(x => selectedItemIds.Contains(x.MaCt))
+                .ToList();
+
+            // ===== CHECK TỒN KHO LẦN CUỐI (CHỐNG RACE CONDITION) =====
+            foreach (var item in selectedItems)
             {
-                var maLienHe = HttpContext.Session.GetInt32("MaLienHe");
-                if (maLienHe != null)
+                if (item.LoaiItem == "SP")
                 {
-                    lienHe = _context.LienHes
-                        .FirstOrDefault(x => x.MaLienHe == maLienHe);
+                    var sp = _context.SanPhams.FirstOrDefault(x => x.MaSanPham == item.MaItem);
+                    if (sp == null || item.SoLuong > sp.SoLuong)
+                    {
+                        TempData["CheckoutError"] =
+                            $"Sản phẩm \"{sp?.TenSanPham}\" không đủ số lượng để thanh toán.";
+                        return RedirectToAction("Index", "GioHang");
+                    }
                 }
             }
 
-            if (lienHe == null)
+            var lienHe = _context.LienHes
+                .FirstOrDefault(x => x.MaLienHe == HttpContext.Session.GetInt32("MA_LIEN_HE"));
+
+            decimal tongTien = selectedItems.Sum(x => x.SoLuong * x.DonGia);
+
+            var donHang = new DonHang
             {
-                return RedirectToAction("ThongTinLienHe");
+                MaDonHangCode = GenerateOrderCode(),
+                HoTen = lienHe.HoTen,
+                SoDienThoai = lienHe.SoDienThoai,
+                Email = lienHe.Email,
+                DiaChi = lienHe.DiaChi,
+                TongTien = tongTien,
+                TrangThai = "Chờ xử lý",
+                TrangThaiThanhToan = "Chưa thanh toán",
+                NgayDat = DateTime.Now
+            };
+
+            _context.DonHangs.Add(donHang);
+            _context.SaveChanges();
+
+            foreach (var item in selectedItems)
+            {
+                _context.ChiTietDonHangs.Add(new ChiTietDonHang
+                {
+                    MaDonHang = donHang.MaDonHang,
+                    ItemId = item.MaItem,
+                    ItemType = item.LoaiItem == "SP" ? "SanPham" : "DichVu",
+                    SoLuong = item.SoLuong,
+                    DonGia = item.DonGia,
+                    ThanhTien = item.SoLuong * item.DonGia
+                });
+
+                // TRỪ TỒN KHO
+                if (item.LoaiItem == "SP")
+                {
+                    var sp = _context.SanPhams.First(x => x.MaSanPham == item.MaItem);
+                    sp.SoLuong -= item.SoLuong;
+                }
             }
 
-            return View(lienHe);
+            _context.GioHangChiTiets.RemoveRange(selectedItems);
+            _context.SaveChanges();
+
+            HttpContext.Session.Remove("CHECKOUT_ITEMS");
+
+            return RedirectToAction("HoanTat", new { id = donHang.MaDonHang });
+        }
+
+        public IActionResult HoanTat(int id)
+        {
+            var donHang = _context.DonHangs
+                .Include(d => d.ChiTietDonHangs)
+                .FirstOrDefault(d => d.MaDonHang == id);
+
+            if (donHang == null) return NotFound();
+            return View(donHang);
+        }
+
+        private static string GenerateOrderCode()
+        {
+            return $"DH{DateTime.Now:yyyyMMddHHmmssfff}";
         }
     }
 }

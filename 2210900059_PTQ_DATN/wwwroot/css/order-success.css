@@ -1,0 +1,106 @@
+﻿:root {
+    --primary: #d98b2b;
+}
+
+/* WRAPPER */
+.order-success {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* TITLE */
+.order-success-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #333;
+}
+
+/* INFO CARD */
+.order-info {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    padding: 28px;
+    margin-bottom: 30px;
+}
+
+    .order-info p {
+        margin-bottom: 12px;
+        font-size: 14.5px;
+    }
+
+    .order-info strong {
+        min-width: 140px;
+        display: inline-block;
+        color: #555;
+    }
+
+/* TABLE */
+.order-table {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+    .order-table thead {
+        background: var(--primary);
+        color: #fff;
+    }
+
+    .order-table th,
+    .order-table td {
+        padding: 14px 16px;
+        font-size: 14px;
+        vertical-align: middle;
+    }
+
+    .order-table tbody tr:not(:last-child) {
+        border-bottom: 1px solid #eee;
+    }
+
+/* BUTTONS */
+.order-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 14px;
+}
+
+    .order-actions .btn-primary {
+        background: var(--primary);
+        border: none;
+        border-radius: 999px;
+        padding: 12px 30px;
+        font-weight: 600;
+    }
+
+        .order-actions .btn-primary:hover {
+            background: #b97824;
+            box-shadow: 0 10px 22px rgba(217,139,43,0.35);
+        }
+
+    .order-actions .btn-secondary {
+        background: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 999px;
+        padding: 12px 26px;
+        font-weight: 600;
+    }
+
+        .order-actions .btn-secondary:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .order-actions {
+        flex-direction: column;
+    }
+
+        .order-actions .btn {
+            width: 100%;
+        }
+}

@@ -252,16 +252,6 @@ C:\Users\thequ\Downloads\New folder\K22CNT2_2210900059_PTQ_DATN\2210900059_PTQ_D
 C:\Users\thequ\Downloads\New folder\K22CNT2_2210900059_PTQ_DATN\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.pdb
 C:\Users\thequ\Downloads\New folder\K22CNT2_2210900059_PTQ_DATN\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.genruntimeconfig.cache
 C:\Users\thequ\Downloads\New folder\K22CNT2_2210900059_PTQ_DATN\2210900059_PTQ_DATN\obj\Debug\net8.0\ref\2210900059_PTQ_DATN.dll
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.csproj.AssemblyReference.cache
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rpswa.dswa.cache.json
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.GeneratedMSBuildEditorConfig.editorconfig
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.AssemblyInfoInputs.cache
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.AssemblyInfo.cs
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.csproj.CoreCompileInputs.cache
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.MvcApplicationPartsAssemblyInfo.cache
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.RazorAssemblyInfo.cache
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.RazorAssemblyInfo.cs
-D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.sourcelink.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\appsettings.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\2210900059_PTQ_DATN.staticwebassets.runtime.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\2210900059_PTQ_DATN.staticwebassets.endpoints.json
@@ -489,6 +479,16 @@ D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\runtimes\win-arm64\native
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.csproj.AssemblyReference.cache
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.GeneratedMSBuildEditorConfig.editorconfig
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.AssemblyInfoInputs.cache
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.AssemblyInfo.cs
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.csproj.CoreCompileInputs.cache
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.MvcApplicationPartsAssemblyInfo.cache
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.RazorAssemblyInfo.cache
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.RazorAssemblyInfo.cs
+D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\2210900059_PTQ_DATN.sourcelink.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rjimswa.dswa.cache.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 D:\baitap\ASP.NET\2210900059_PTQ_DATN\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

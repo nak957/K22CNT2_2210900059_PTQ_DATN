@@ -296,8 +296,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljaFZ1XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/DonHang/ChiTiet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xDaGlUaWV0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/DonHang/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9uSGFuZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/GioHang/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2lvSGFuZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/GioiThieu/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2lvaVRoaWV1XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/Home/Index.cshtml]
@@ -306,6 +318,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/LienHe/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGllbkhlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/SanPham/ChiTiet.cshtml]
@@ -346,6 +362,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/TaiKhoan/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/ThanhToan/HoanTat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhhbmhUb2FuXEhvYW5UYXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/baitap/ASP.NET/2210900059_PTQ_DATN/Views/ThanhToan/ThongTinLienHe.cshtml]

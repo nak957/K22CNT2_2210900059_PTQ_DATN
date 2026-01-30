@@ -17,9 +17,10 @@ namespace _2210900059_PTQ_DATN
             );
 
             // >>> THÊM: Session (BẮT BUỘC cho đăng nhập)
+            builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30); // thời gian hết hạn session
+                options.IdleTimeout = TimeSpan.FromHours(1);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

@@ -1,0 +1,195 @@
+﻿@model _2210900059_PTQ_DATN.Models.DonHang
+@using _2210900059_PTQ_DATN.ViewModels
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    var chiTiet = ViewBag.ChiTiet as List<ChiTietDonHangVM>;
+}
+<style>
+    :root {
+        --primary: #d98b2b;
+    }
+
+    /* ================= SECTION ================= */
+    .section {
+        padding: 60px 0;
+        background: #fff;
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+
+    /* ================= INFO CARD ================= */
+    .order-info {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        padding: 24px;
+        margin-bottom: 30px;
+    }
+
+        .order-info p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .order-info strong {
+            color: #333;
+        }
+
+    /* ================= STATUS ================= */
+    .order-status {
+        font-weight: 700;
+    }
+
+        .order-status.pending {
+            color: #e67e22;
+        }
+
+        .order-status.completed {
+            color: #27ae60;
+        }
+
+        .order-status.canceled {
+            color: #e74c3c;
+        }
+
+    /* ================= TABLE WRAPPER ================= */
+    .order-wrapper {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        padding: 24px;
+        margin-bottom: 30px;
+    }
+
+    /* ================= TABLE ================= */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th {
+            padding: 14px;
+            font-size: 12px;
+            text-transform: uppercase;
+            background: var(--primary);
+            color: #fff;
+            text-align: left;
+        }
+
+        .table td {
+            padding: 16px 14px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+            .table tbody tr:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+            }
+
+    /* ================= TOTAL ================= */
+    .order-total {
+        text-align: right;
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 16px;
+    }
+
+    /* ================= BUTTON ================= */
+    .btn-outline {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+        transition: all 0.25s ease;
+        display: inline-block;
+    }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+    .btn-cancel {
+        border-color: #e74c3c;
+        color: #e74c3c;
+    }
+
+        .btn-cancel:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+   
+
+    
+</style>
+
+<section class="section">
+    <div class="container">
+
+        <h2 class="section-title">Chi tiết đơn hàng @Model.MaDonHangCode</h2>
+
+        <div class="order-info">
+            <p><strong>Họ tên:</strong> @Model.HoTen</p>
+            <p><strong>SĐT:</strong> @Model.SoDienThoai</p>
+            <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+            <p>
+                <strong>Trạng thái:</strong>
+                <span class="order-status
+                     @(Model.TrangThai == "Chờ xử lý" ? "pending" :
+                       Model.TrangThai == "Đã hủy" ? "canceled" : "completed")">
+                    @Model.TrangThai
+                </span>
+            </p>
+
+        </div>
+
+        <div class="order-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm / Dịch vụ</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ct in chiTiet)
+                    {
+                        <tr>
+                            <td>@ct.TenItem</td>
+                            <td>@ct.SoLuong</td>
+                            <td>@ct.DonGia.ToString("N0") đ</td>
+                            <td>@ct.ThanhTien.ToString("N0") đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (Model.TrangThai == "Chờ xử lý")
+        {
+            <form asp-action="HuyDon"
+                  method="post"
+                  onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?');"
+                  style="display:inline-block; margin-right:12px;">
+                <input type="hidden" name="id" value="@Model.MaDonHang" />
+                <button type="submit" class="btn-outline btn-cancel">
+                    ✖ Hủy đơn hàng
+                </button>
+            </form>
+        }
+        <a asp-action="Index" class="btn-outline">← Quay lại</a>
+    </div>
+</section>

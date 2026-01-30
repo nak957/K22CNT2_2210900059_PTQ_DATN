@@ -11,6 +11,13 @@
     <div class="container">
         <h2 class="section-title">Giỏ hàng</h2>
 
+        @if (TempData["CheckoutError"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["CheckoutError"]
+            </div>
+        }
+
         @if (!Model.Any())
         {
             <div class="empty-cart">
@@ -22,145 +29,183 @@
         }
         else
         {
-            <div class="cart-layout">
+            <form asp-controller="ThanhToan"
+                  asp-action="Index"
+                  method="post">
 
-                <!-- LEFT -->
-                <div class="cart-left">
-                    <div class="cart-wrapper">
-                        <table class="cart-table">
-                            <thead>
-                                <tr>
-                                    <th>Hình</th>
-                                    <th>Tên</th>
-                                    <th>Loại</th>
-                                    <th>Đơn giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                @Html.AntiForgeryToken()
+
+                <div class="cart-layout">
+
+                    <!-- LEFT -->
+                    <div class="cart-left">
+                        <div class="cart-wrapper">
+                            <table class="cart-table">
+                                <thead>
                                     <tr>
-                                        <td data-label="Hình">
-                                            <img src="@(Url.Content(item.LoaiItem == "SP"
-                                             ? "~/images/products/" + item.HinhAnh
-                                             : "~/images/services/" + item.HinhAnh))" />
-                                </td>
-
-                                        <td data-label="Tên">
-                                            <div class="cart-name">@item.Ten</div>
-                                            <div class="cart-type">
-                                                @(item.LoaiItem == "SP" ? "Sản phẩm" : "Dịch vụ")
-                                            </div>
-                                        </td>
-
-                                        <td data-label="Loại">
-                                            @(item.LoaiItem == "SP" ? "Sản phẩm" : "Dịch vụ")
-                                        </td>
-
-                                        <td data-label="Đơn giá" class="price">
-                                            @item.DonGia.ToString("N0") đ
-                                        </td>
-
-                                        <td data-label="Số lượng">
-                                            <div class="qty-control">
-                                                <!-- GIẢM -->
-                                                <a class="qty-btn"
-                                                   href="@Url.Action("CapNhatSoLuong", "GioHang", new {
-                                                        loai = item.LoaiItem,
-                                                        id = item.MaCt,
-                                                        soLuong = item.SoLuong - 1
-                                                   })">−</a>
-
-                                                <span class="qty-number">@item.SoLuong</span>
-
-                                                <!-- TĂNG -->
-                                                <a class="qty-btn"
-                                                   href="@Url.Action("CapNhatSoLuong", "GioHang", new {
-                                                        loai = item.LoaiItem,
-                                                        id = item.MaCt,
-                                                        soLuong = item.SoLuong + 1
-                                                   })">+</a>
-                                            </div>
-                                        </td>
-
-                                        <td data-label="Thành tiền" class="total">
-                                            @((item.DonGia * item.SoLuong).ToString("N0")) đ
-                                        </td>
-
-                                        <!-- XÓA ITEM -->
-                                        <td data-label="Xóa">
-                                            <form asp-action="XoaItem"
-                                                  asp-controller="GioHang"
-                                                  method="post"
-                                                  onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
-                                                <input type="hidden" name="maCt" value="@item.MaCt" />
-                                                <button type="submit" class="btn-remove">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         width="14"
-                                                         height="14"
-                                                         viewBox="0 0 24 24"
-                                                         fill="none"
-                                                         stroke="currentColor"
-                                                         stroke-width="2"
-                                                         stroke-linecap="round"
-                                                         stroke-linejoin="round">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
-                                                        <path d="M10 11v6"></path>
-                                                        <path d="M14 11v6"></path>
-                                                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        </td>
+                                        <th><input type="checkbox" id="checkAll" /></th>
+                                        <th>Hình</th>
+                                        <th>Tên</th>
+                                        <th>Loại</th>
+                                        <th>Đơn giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                        <th></th>
                                     </tr>
-                                                        }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox"
+                                                       name="selectedItemIds"
+                                                       value="@item.MaCt"
+                                                       class="item-checkbox"
+                                                       data-price="@item.DonGia"
+                                                       data-qty="@item.SoLuong" />
+                                            </td>
+
+                                            <td>
+                                                <img src="@(Url.Content(item.LoaiItem == "SP"
+                                                    ? "~/images/products/" + item.HinhAnh
+                                                    : "~/images/services/" + item.HinhAnh))" />
+                                            </td>
+
+                                            <td>
+                                                <div class="cart-name">@item.Ten</div>
+                                                <div class="cart-type">
+                                                    @(item.LoaiItem == "SP" ? "Sản phẩm" : "Dịch vụ")
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                @(item.LoaiItem == "SP" ? "Sản phẩm" : "Dịch vụ")
+                                            </td>
+
+                                            <td class="price">
+                                                @item.DonGia.ToString("N0") đ
+                                            </td>
+
+                                            <td>
+                                                <div class="qty-control">
+                                                    <a class="qty-btn"
+                                                       href="@Url.Action("CapNhatSoLuong", "GioHang", new {
+                                                           loai = item.LoaiItem,
+                                                           id = item.MaCt,
+                                                           soLuong = item.SoLuong - 1
+                                                       })">−</a>
+
+                                                    <span class="qty-number">@item.SoLuong</span>
+
+                                                    <a class="qty-btn"
+                                                       href="@Url.Action("CapNhatSoLuong", "GioHang", new {
+                                                           loai = item.LoaiItem,
+                                                           id = item.MaCt,
+                                                           soLuong = item.SoLuong + 1
+                                                       })">+</a>
+                                                </div>
+                                            </td>
+
+                                            <td class="total">
+                                                @((item.DonGia * item.SoLuong).ToString("N0")) đ
+                                            </td>
+
+                                            <td>
+                                                <button type="button"
+                                                        class="btn-remove"
+                                                        onclick="xoaItem(@item.MaCt)">
+                                                    ✕
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-                <!-- RIGHT -->
-                <div class="cart-right">
-                    <div class="cart-summary">
-                        <h3>Tóm tắt đơn hàng</h3>
+                    <!-- RIGHT -->
+                    <div class="cart-right">
+                        <div class="cart-summary">
+                            <h3>Tóm tắt đơn hàng</h3>
 
-                        <div class="summary-row">
-                            <span>Tạm tính</span>
-                            <strong>
-                                @Model.Sum(x => x.DonGia * x.SoLuong).ToString("N0") đ
-                            </strong>
+                            <div class="summary-row">
+                                <span>Tạm tính</span>
+                                <strong id="subtotal">0 đ</strong>
+                            </div>
+
+                            <div class="summary-row">
+                                <span>Vận chuyển</span>
+                                <strong>Miễn phí</strong>
+                            </div>
+
+                            <hr />
+
+                            <div class="summary-total">
+                                <span>Tổng</span>
+                                <strong id="total">0 đ</strong>
+                            </div>
+
+                            <button type="submit" class="btn-checkout">
+                                Tiến hành thanh toán
+                            </button>
+
+                            <a href="@Url.Action("Index", "Home")"
+                               class="btn-outline btn-back">
+                                ← Tiếp tục mua sắm
+                            </a>
                         </div>
-
-                        <div class="summary-row">
-                            <span>Vận chuyển</span>
-                            <strong>Miễn phí</strong>
-                        </div>
-
-                        <hr />
-
-                        <div class="summary-total">
-                            <span>Tổng</span>
-                            <strong>
-                                @Model.Sum(x => x.DonGia * x.SoLuong).ToString("N0") đ
-                            </strong>
-                        </div>
-
-                        <a href="@Url.Action("Index", "ThanhToan")" class="btn-checkout">
-                            Tiến hành thanh toán
-                        </a>
-
-                        <a href="@Url.Action("Index", "Home")"
-                           class="btn-outline btn-back">
-                            ← Tiếp tục mua sắm
-                        </a>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </form>
         }
     </div>
 </section>
+
+<script>
+    const checkAll = document.getElementById('checkAll');
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalEl = document.getElementById('total');
+
+    function updateTotal() {
+        let total = 0;
+
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                const price = parseInt(cb.dataset.price);
+                const qty = parseInt(cb.dataset.qty);
+                total += price * qty;
+            }
+        });
+
+        subtotalEl.innerText = total.toLocaleString('vi-VN') + ' đ';
+        totalEl.innerText = subtotalEl.innerText;
+    }
+
+    checkAll?.addEventListener('change', function () {
+        checkboxes.forEach(cb => cb.checked = this.checked);
+        updateTotal();
+    });
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateTotal));
+
+    function xoaItem(maCt) {
+        if (!confirm("Bạn có chắc muốn xóa mục này?")) return;
+
+        fetch('@Url.Action("XoaItem", "GioHang")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'RequestVerificationToken':
+                    document.querySelector('input[name="__RequestVerificationToken"]').value
+            },
+            body: `maCt=${maCt}`
+        }).then(res => {
+            if (res.ok) location.reload();
+            else alert("Xóa thất bại");
+        });
+    }
+</script>

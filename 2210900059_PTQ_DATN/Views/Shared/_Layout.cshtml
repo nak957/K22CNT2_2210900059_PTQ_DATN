@@ -28,7 +28,7 @@
             <nav class="main-nav">
                 <ul>
                     <li><a asp-controller="Home" asp-action="Index">TRANG CHỦ</a></li>
-                    <li><a asp-controller="Home" asp-action="GioiThieu">GIỚI THIỆU</a></li>
+                    <li><a asp-controller="GioiThieu" asp-action="Index">GIỚI THIỆU</a></li>
                     <li><a asp-controller="DichVu" asp-action="Index">DỊCH VỤ</a></li>
                     <li><a asp-controller="SanPham" asp-action="Index">SẢN PHẨM</a></li>
                     <li><a asp-controller="TinTuc" asp-action="Index">TIN TỨC</a></li>
@@ -39,6 +39,14 @@
             
 
             <div class="nav-icons">
+
+                <!-- ICON ĐƠN HÀNG (LUÔN HIỂN THỊ) -->
+                <button class="icon"
+                        title="Đơn hàng của tôi"
+                        onclick="location.href='@Url.Action("Index", "DonHang")'">
+                    📦
+                </button>
+
                 @if (Context.Session.GetString("TenDangNhap") == null)
                 {
                     <!-- CHƯA ĐĂNG NHẬP -->
@@ -80,6 +88,7 @@
                     </div>
                 }
             </div>
+
 
 
 

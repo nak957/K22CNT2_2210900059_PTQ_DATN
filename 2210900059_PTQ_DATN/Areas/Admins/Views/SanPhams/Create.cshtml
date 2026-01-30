@@ -4,7 +4,6 @@
     ViewData["Title"] = "Tạo sản phẩm";
 }
 
-<!-- Tailwind CDN (nếu _Layout đã có thì có thể bỏ) -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="max-w-5xl mx-auto px-6 py-8">
@@ -37,8 +36,6 @@
                             asp-items="ViewBag.MaDanhMuc"
                             class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500">
                     </select>
-                    <span asp-validation-for="MaDanhMuc"
-                          class="text-sm text-red-600"></span>
                 </div>
 
                 <!-- Tên sản phẩm -->
@@ -47,8 +44,6 @@
                            class="block font-semibold text-gray-700 mb-1">Tên sản phẩm</label>
                     <input asp-for="TenSanPham"
                            class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500" />
-                    <span asp-validation-for="TenSanPham"
-                          class="text-sm text-red-600"></span>
                 </div>
 
                 <div>
@@ -86,12 +81,30 @@
                            class="w-full rounded-xl border-gray-300" />
                 </div>
 
+                <!-- Giá -->
                 <div>
                     <label asp-for="Gia"
                            class="block font-semibold text-gray-700 mb-1">Giá bán (VNĐ)</label>
                     <input asp-for="Gia"
+                           type="number"
+                           min="0"
                            class="w-full rounded-xl border-gray-300" />
                 </div>
+
+                <!-- ⭐ SỐ LƯỢNG -->
+                <div>
+                    <label asp-for="SoLuong"
+                           class="block font-semibold text-gray-700 mb-1">
+                        Số lượng tồn kho
+                    </label>
+                    <input asp-for="SoLuong"
+                           type="number"
+                           min="0"
+                           class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500" />
+                    <span asp-validation-for="SoLuong"
+                          class="text-sm text-red-600"></span>
+                </div>
+
             </div>
 
             <!-- Mô tả -->
@@ -155,10 +168,8 @@
 
             <!-- Actions -->
             <div class="flex items-center justify-between pt-6 border-t">
-
                 <a asp-action="Index"
-                   class="h-12 px-6 rounded-xl border border-[#e4dbe6]
-                          flex items-center justify-center
+                   class="h-12 px-6 rounded-xl border flex items-center justify-center
                           text-gray-600 hover:bg-gray-100 transition">
                     Quay lại
                 </a>

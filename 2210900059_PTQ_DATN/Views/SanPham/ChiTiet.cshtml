@@ -152,7 +152,24 @@
                     {
                         <p><strong>Dung tích:</strong> @Model.DungTich</p>
                     }
+
+                    <p>
+                        <strong>Số lượng còn:</strong>
+                        @if (Model.SoLuong > 0)
+                        {
+                            <span style="color: green; font-weight: 600;">
+                                @Model.SoLuong sản phẩm
+                            </span>
+                        }
+                        else
+                        {
+                            <span style="color: red; font-weight: 600;">
+                                Hết hàng
+                            </span>
+                        }
+                    </p>
                 </div>
+
 
                 <!-- FORM THÊM VÀO GIỎ -->
                 <form asp-controller="GioHang"

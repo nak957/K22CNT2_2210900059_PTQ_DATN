@@ -4,96 +4,131 @@
     ViewData["Title"] = "Quản lý đơn hàng";
 }
 
-<h2 class="mb-3">Quản lý đơn hàng</h2>
+<div class="max-w-7xl mx-auto">
 
-<p>
-    <a asp-action="Create"
-       class="flex items-center gap-2 rounded-xl h-12 px-6
-          bg-purple-600 text-white text-base font-bold
-          hover:bg-purple-700
-          shadow-lg shadow-purple-600/30
-          transition">
-        <span class="material-symbols-outlined">add_circle</span>
-        <span>Thêm đơn hàng</span>
-    </a>
-</p>
+    <!-- HEADER -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-black text-[#171118]">
+                Quản lý đơn hàng
+            </h1>
+            <p class="text-gray-500 mt-1">
+                Danh sách các đơn hàng trong hệ thống
+            </p>
+        </div>
 
-<table class="table table-bordered table-hover align-middle">
-    <thead class="table-dark text-center">
-        <tr>
-            <th>Mã đơn</th>
-            <th>Khách hàng</th>
-            <th>Điện thoại</th>
-            <th>Tổng tiền</th>
-            <th>Thanh toán</th>
-            <th>Trạng thái</th>
-            <th>Ngày đặt</th>
-            <th width="150">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td class="fw-bold">@item.MaDonHangCode</td>
+        <a asp-action="Create"
+           class="flex items-center gap-2 rounded-xl h-12 px-6
+                  bg-purple-600 text-white text-base font-bold
+                  hover:bg-purple-700
+                  shadow-lg shadow-purple-600/30
+                  transition">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span>Thêm đơn hàng</span>
+        </a>
+    </div>
 
-                <td>@item.HoTen</td>
+    <!-- TABLE CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm overflow-x-auto">
 
-                <td>@item.SoDienThoai</td>
+        <table class="min-w-full text-sm">
+            <thead class="bg-gray-50 text-gray-600">
+                <tr>
+                    <th class="px-4 py-3 text-left">Mã đơn</th>
+                    <th class="px-4 py-3 text-left">Khách hàng</th>
+                    <th class="px-4 py-3 text-left">Điện thoại</th>
+                    <th class="px-4 py-3 text-right">Tổng tiền</th>
+                    <th class="px-4 py-3 text-center">Thanh toán</th>
+                    <th class="px-4 py-3 text-center">Trạng thái</th>
+                    <th class="px-4 py-3 text-center">Ngày đặt</th>
+                    <th class="px-4 py-3 text-center">Thao tác</th>
+                </tr>
+            </thead>
 
-                <td class="text-danger fw-bold">
-                    @string.Format("{0:N0} đ", item.TongTien)
-                </td>
+            <tbody class="divide-y">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-gray-50">
 
-                <td class="text-center">
-                    @if (item.TrangThaiThanhToan == "1")
+                        <td class="px-4 py-3 font-semibold text-[#171118]">
+                            @item.MaDonHangCode
+                        </td>
 
-                    {
-                        <span class="badge bg-success">Đã thanh toán</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-warning text-dark">Chưa thanh toán</span>
-                    }
-                </td>
+                        <td class="px-4 py-3">
+                            @item.HoTen
+                        </td>
 
-                <td class="text-center">
-                    @if (item.TrangThai == "1")
-                    {
-                        <span class="badge bg-primary">Đang xử lý</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Đã hủy</span>
-                    }
-                </td>
+                        <td class="px-4 py-3">
+                            @item.SoDienThoai
+                        </td>
 
-                <td class="text-center">
-                    @item.NgayDat?.ToString("dd/MM/yyyy")
-                </td>
+                        <td class="px-4 py-3 text-right font-semibold text-red-600">
+                            @string.Format("{0:N0} ₫", item.TongTien)
+                        </td>
 
-                <td class="text-center">
-                    <div class="btn-group btn-group-sm">
-                        <a asp-action="Edit"
-                           asp-route-id="@item.MaDonHang"
-                           class="p-2 rounded-lg text-primary hover:bg-primary/10 transition">
-                            <span class="material-symbols-outlined">Sửa</span>
-                        </a>
+                        <!-- THANH TOÁN -->
+                        <td class="px-4 py-3 text-center">
+                            @if (item.TrangThaiThanhToan == "1")
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-green-100 text-green-700 font-semibold">
+                                    Đã thanh toán
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-yellow-100 text-yellow-700 font-semibold">
+                                    Chưa thanh toán
+                                </span>
+                            }
+                        </td>
 
-                        <a asp-action="Details"
-                           asp-route-id="@item.MaDonHang"
-                           class="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition">
-                            <span class="material-symbols-outlined">Chi tiết</span>
-                        </a>
+                        <!-- TRẠNG THÁI -->
+                        <td class="px-4 py-3 text-center">
+                            @if (item.TrangThai == "1")
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-blue-100 text-blue-700 font-semibold">
+                                    Đang xử lý
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-3 py-1 rounded-full text-xs
+                                                     bg-gray-100 text-gray-600 font-semibold">
+                                    Đã hủy
+                                </span>
+                            }
+                        </td>
 
-                        <a asp-action="Delete"
-                           asp-route-id="@item.MaDonHang"
-                           class="p-2 rounded-lg text-red-500 hover:bg-red-50 transition">
-                            <span class="material-symbols-outlined">Xóa</span>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                        <td class="px-4 py-3 text-center text-gray-500">
+                            @item.NgayDat?.ToString("dd/MM/yyyy")
+                        </td>
+
+                        <!-- ACTION -->
+                        <td class="px-4 py-3 text-center whitespace-nowrap">
+                            <a asp-action="Details"
+                               asp-route-id="@item.MaDonHang"
+                               class="text-blue-600 hover:underline mr-3">
+                                Xem
+                            </a>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.MaDonHang"
+                               class="text-yellow-600 hover:underline mr-3">
+                                Sửa
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.MaDonHang"
+                               class="text-red-600 hover:underline">
+                                Xóa
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

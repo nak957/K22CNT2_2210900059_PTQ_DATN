@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "Xác nhận thông tin";
 }
+<link rel="stylesheet" href="~/css/confirm.css" asp-append-version="true" />
+<h2 class="confirm-title">Xác nhận thông tin thanh toán</h2>
 
-<h2 class="mb-4">Xác nhận thông tin thanh toán</h2>
-
-<div class="card">
-    <div class="card-body">
+<div class="confirm-wrapper">
+    <div class="confirm-info">
         <p><strong>Họ tên:</strong> @Model.HoTen</p>
         <p><strong>Email:</strong> @Model.Email</p>
         <p><strong>Số điện thoại:</strong> @Model.SoDienThoai</p>
@@ -18,16 +18,19 @@
             <p><strong>Ghi chú:</strong> @Model.NoiDung</p>
         }
     </div>
-</div>
 
-<div class="mt-4 d-flex gap-2">
-    <a asp-action="ThongTinLienHe" class="btn btn-secondary">
-        Quay lại chỉnh sửa
-    </a>
+    <div class="confirm-actions">
+        <a asp-action="ThongTinLienHe" class="btn btn-secondary">
+            Quay lại chỉnh sửa
+        </a>
 
-    <a asp-controller="DonHang"
-       asp-action="TaoDonHang"
-       class="btn btn-success">
-        Xác nhận & đặt hàng
-    </a>
+        <form asp-controller="ThanhToan"
+              asp-action="TaoDonHang"
+              method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-success">
+                Xác nhận & đặt hàng
+            </button>
+        </form>
+    </div>
 </div>

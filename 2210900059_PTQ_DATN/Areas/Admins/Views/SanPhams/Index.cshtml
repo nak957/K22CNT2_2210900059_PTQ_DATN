@@ -4,7 +4,7 @@
     ViewData["Title"] = "Quản lý sản phẩm";
 }
 
-<!-- Tailwind CDN (nếu Layout chưa có thì để, có rồi thì bỏ dòng này) -->
+<!-- Tailwind CDN (nếu Layout đã có thì có thể bỏ) -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="max-w-7xl mx-auto px-6 py-8">
@@ -23,9 +23,8 @@
         </a>
     </div>
 
-    <!-- Table Card -->
+    <!-- Table -->
     <div class="bg-white rounded-2xl shadow border border-gray-200 overflow-hidden">
-
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm text-left">
                 <thead class="bg-gray-100 border-b">
@@ -38,8 +37,10 @@
                         <th class="px-4 py-3">Đối tượng</th>
                         <th class="px-4 py-3">Công dụng</th>
                         <th class="px-4 py-3">Thành phần</th>
-                        <th class="px-4 py-3">Giá</th>
-                        <th class="px-4 py-3">Trạng thái</th>
+                        <th class="px-4 py-3 text-right">Giá</th>
+                        <th class="px-4 py-3 text-center">Số lượng</th>
+
+                        <th class="px-4 py-3 text-center">Trạng thái</th>
                         <th class="px-4 py-3 text-center">Thao tác</th>
                     </tr>
                 </thead>
@@ -72,10 +73,23 @@
                             <td class="px-4 py-3 max-w-xs truncate">
                                 @item.ThanhPhanNoiBat
                             </td>
-                            <td class="px-4 py-3 font-semibold text-purple-600">
+                            <td class="px-4 py-3 text-right font-semibold text-purple-600">
                                 @String.Format("{0:N0} ₫", item.Gia)
                             </td>
-                            <td class="px-4 py-3">
+
+                            <!-- ⭐ HIỂN THỊ SỐ LƯỢNG -->
+                            <td class="px-4 py-3 text-center font-semibold">
+                                @if (item.SoLuong > 0)
+                                {
+                                    <span class="text-green-600">@item.SoLuong</span>
+                                }
+                                else
+                                {
+                                    <span class="text-red-500 font-bold">Hết hàng</span>
+                                }
+                            </td>
+
+                            <td class="px-4 py-3 text-center">
                                 @if (item.TrangThai == true)
                                 {
                                     <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
@@ -89,16 +103,20 @@
                                     </span>
                                 }
                             </td>
+
                             <td class="px-4 py-3">
                                 <div class="flex justify-end gap-2">
-                                    <a asp-action="Edit" asp-route-id="@item.MaSanPham" class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors">
-                                        <span class="material-symbols-outlined">edit</span>
+                                    <a asp-action="Edit" asp-route-id="@item.MaSanPham"
+                                       class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                                        ✏️
                                     </a>
-                                    <a asp-action="Details" asp-route-id="@item.MaSanPham" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                                        <span class="material-symbols-outlined">visibility</span>
+                                    <a asp-action="Details" asp-route-id="@item.MaSanPham"
+                                       class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                                        👁
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@item.MaSanPham" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                                        <span class="material-symbols-outlined">delete</span>
+                                    <a asp-action="Delete" asp-route-id="@item.MaSanPham"
+                                       class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition">
+                                        🗑
                                     </a>
                                 </div>
                             </td>
@@ -107,6 +125,5 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>

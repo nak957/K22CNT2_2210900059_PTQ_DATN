@@ -47,12 +47,17 @@ namespace _2210900059_PTQ_DATN.Controllers
 
         // ===============================
         // THÊM SẢN PHẨM
-        // ===============================
         [HttpPost]
         public IActionResult ThemSanPham(int maSanPham, int soLuong = 1)
         {
             var sp = _context.SanPhams.FirstOrDefault(x => x.MaSanPham == maSanPham);
             if (sp == null) return NotFound();
+
+            if (soLuong > sp.SoLuong)
+            {
+                TempData["CheckoutError"] = $"Sản phẩm chỉ còn {sp.SoLuong} sản phẩm.";
+                return RedirectToAction("Index");
+            }
 
             var cart = GetOrCreateCart();
 
@@ -61,8 +66,13 @@ namespace _2210900059_PTQ_DATN.Controllers
 
             if (item != null)
             {
+                if (item.SoLuong + soLuong > sp.SoLuong)
+                {
+                    TempData["CheckoutError"] = $"Sản phẩm chỉ còn {sp.SoLuong} sản phẩm.";
+                    return RedirectToAction("Index");
+                }
+
                 item.SoLuong += soLuong;
-                item.NgayCapNhat = DateTime.Now;
             }
             else
             {
@@ -71,14 +81,14 @@ namespace _2210900059_PTQ_DATN.Controllers
                     LoaiItem = "SP",
                     MaItem = maSanPham,
                     SoLuong = soLuong,
-                    DonGia = sp.Gia,
-                    NgayCapNhat = DateTime.Now
+                    DonGia = sp.Gia
                 });
             }
 
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         // ===============================
         // THÊM DỊCH VỤ

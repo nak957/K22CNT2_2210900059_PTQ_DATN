@@ -443,68 +443,101 @@ public partial class LeSkinDbContext : DbContext
 
         modelBuilder.Entity<SanPham>(entity =>
         {
-            entity.HasKey(e => e.MaSanPham).HasName("PK__SanPham__5B439C4352601915");
+            entity.HasKey(e => e.MaSanPham)
+                .HasName("PK__SanPham__5B439C4352601915");
 
             entity.ToTable("SanPham");
 
-            entity.HasIndex(e => e.Slug, "UQ__SanPham__32DD1E4C2AE52371").IsUnique();
+            entity.HasIndex(e => e.Slug, "UQ__SanPham__32DD1E4C2AE52371")
+                .IsUnique();
 
-            entity.Property(e => e.MaSanPham).HasColumnName("maSanPham");
+            entity.Property(e => e.MaSanPham)
+                .HasColumnName("maSanPham");
+
             entity.Property(e => e.CongDungChinh)
                 .HasMaxLength(255)
                 .HasColumnName("congDungChinh");
+
             entity.Property(e => e.DoiTuongSuDung)
                 .HasMaxLength(255)
                 .HasColumnName("doiTuongSuDung");
+
             entity.Property(e => e.DungTich)
                 .HasMaxLength(50)
                 .HasColumnName("dungTich");
+
             entity.Property(e => e.Gia)
                 .HasColumnType("decimal(18, 2)")
                 .HasColumnName("gia");
+
+            entity.Property(e => e.SoLuong)
+                .HasColumnName("soLuong")
+                .HasDefaultValue(0);
+
             entity.Property(e => e.HinhAnh)
                 .HasMaxLength(255)
                 .HasColumnName("hinhAnh");
+
             entity.Property(e => e.LoaiSanPham)
                 .HasMaxLength(100)
                 .HasColumnName("loaiSanPham");
-            entity.Property(e => e.MaDanhMuc).HasColumnName("maDanhMuc");
-            entity.Property(e => e.MaNguoiCapNhat).HasColumnName("maNguoiCapNhat");
-            entity.Property(e => e.MaNguoiTao).HasColumnName("maNguoiTao");
-            entity.Property(e => e.MoTaChiTiet).HasColumnName("moTaChiTiet");
-            entity.Property(e => e.MoTaNgan).HasColumnName("moTaNgan");
+
+            entity.Property(e => e.MaDanhMuc)
+                .HasColumnName("maDanhMuc");
+
+            entity.Property(e => e.MaNguoiCapNhat)
+                .HasColumnName("maNguoiCapNhat");
+
+            entity.Property(e => e.MaNguoiTao)
+                .HasColumnName("maNguoiTao");
+
+            entity.Property(e => e.MoTaChiTiet)
+                .HasColumnName("moTaChiTiet");
+
+            entity.Property(e => e.MoTaNgan)
+                .HasColumnName("moTaNgan");
+
             entity.Property(e => e.NgayTao)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("ngayTao");
+
             entity.Property(e => e.NoiBat)
                 .HasDefaultValue(false)
                 .HasColumnName("noiBat");
+
             entity.Property(e => e.Slug)
                 .HasMaxLength(255)
                 .HasColumnName("slug");
+
             entity.Property(e => e.TenSanPham)
                 .HasMaxLength(255)
                 .HasColumnName("tenSanPham");
+
             entity.Property(e => e.ThanhPhanNoiBat)
                 .HasMaxLength(255)
                 .HasColumnName("thanhPhanNoiBat");
+
             entity.Property(e => e.ThuongHieu)
                 .HasMaxLength(255)
                 .HasColumnName("thuongHieu");
+
             entity.Property(e => e.TrangThai)
                 .HasDefaultValue(true)
                 .HasColumnName("trangThai");
 
-            entity.HasOne(d => d.MaDanhMucNavigation).WithMany(p => p.SanPhams)
+            entity.HasOne(d => d.MaDanhMucNavigation)
+                .WithMany(p => p.SanPhams)
                 .HasForeignKey(d => d.MaDanhMuc)
                 .HasConstraintName("FK_SanPham_DanhMuc");
 
-            entity.HasOne(d => d.MaNguoiCapNhatNavigation).WithMany(p => p.SanPhamMaNguoiCapNhatNavigations)
+            entity.HasOne(d => d.MaNguoiCapNhatNavigation)
+                .WithMany(p => p.SanPhamMaNguoiCapNhatNavigations)
                 .HasForeignKey(d => d.MaNguoiCapNhat)
                 .HasConstraintName("FK_SanPham_NguoiCapNhat");
 
-            entity.HasOne(d => d.MaNguoiTaoNavigation).WithMany(p => p.SanPhamMaNguoiTaoNavigations)
+            entity.HasOne(d => d.MaNguoiTaoNavigation)
+                .WithMany(p => p.SanPhamMaNguoiTaoNavigations)
                 .HasForeignKey(d => d.MaNguoiTao)
                 .HasConstraintName("FK_SanPham_NguoiTao");
         });

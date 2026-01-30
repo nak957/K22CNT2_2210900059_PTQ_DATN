@@ -1,0 +1,103 @@
+﻿@model _2210900059_PTQ_DATN.Models.TrangNoiDung
+
+@{
+    ViewData["Title"] = Model.TieuDe;
+}
+
+<style>
+    /* ===========================
+           PAGE: GIỚI THIỆU
+        =========================== */
+
+    .page-content {
+        background-color: #ffffff;
+        padding: 60px 15px;
+    }
+
+        .page-content .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+    /* Tiêu đề trang */
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 34px;
+        font-weight: 600;
+        text-align: center;
+        color: #6b4a2b;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+        .page-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #c58a3d;
+            margin: 15px auto 0;
+        }
+
+    /* Mô tả ngắn */
+    .page-description {
+        font-size: 16px;
+        color: #777;
+        text-align: center;
+        line-height: 1.8;
+        margin-bottom: 40px;
+    }
+
+    /* Nội dung bài viết */
+    .page-body {
+        font-size: 17px;
+        line-height: 1.9;
+        color: #333;
+    }
+
+        .page-body p {
+            margin-bottom: 18px;
+        }
+
+        .page-body strong {
+            color: #6b4a2b;
+            font-weight: 600;
+        }
+
+        .page-body ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+            .page-body ul li {
+                margin-bottom: 8px;
+            }
+
+        .page-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+    
+</style>
+
+<section class="page-content">
+    <div class="container">
+
+        <h1 class="page-title">@Model.TieuDe</h1>
+
+        @if (!string.IsNullOrEmpty(Model.MoTaNgan))
+        {
+            <p class="page-description">
+                @Model.MoTaNgan
+            </p>
+        }
+
+        <div class="page-body">
+            @Html.Raw(Model.NoiDung)
+        </div>
+
+    </div>
+</section>

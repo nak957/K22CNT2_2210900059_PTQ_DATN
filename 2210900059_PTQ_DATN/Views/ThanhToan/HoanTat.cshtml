@@ -1,0 +1,57 @@
+﻿@model _2210900059_PTQ_DATN.Models.DonHang
+
+@{
+    ViewData["Title"] = "Hoàn tất đặt hàng";
+}
+<link rel="stylesheet" href="~/css/order-success.css" asp-append-version="true" />
+<h2 class="order-success-title">Đặt hàng thành công</h2>
+
+<div class="order-success">
+
+    <div class="order-info">
+        <p><strong>Mã đơn hàng:</strong> @Model.MaDonHangCode</p>
+        <p><strong>Họ tên:</strong> @Model.HoTen</p>
+        <p><strong>Số điện thoại:</strong> @Model.SoDienThoai</p>
+        <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+        <p><strong>Tổng tiền:</strong> @string.Format("{0:N0} đ", Model.TongTien)</p>
+    </div>
+
+    <h4 class="mb-3">Chi tiết sản phẩm / dịch vụ</h4>
+
+    <div class="order-table">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Loại</th>
+                    <th>Mã item</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ct in Model.ChiTietDonHangs)
+                {
+                    <tr>
+                        <td>@ct.ItemType</td>
+                        <td>@ct.ItemId</td>
+                        <td>@ct.SoLuong</td>
+                        <td>@string.Format("{0:N0} đ", ct.DonGia)</td>
+                        <td>@string.Format("{0:N0} đ", ct.ThanhTien)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="order-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+            Về trang chủ
+        </a>
+
+        <a asp-controller="GioHang" asp-action="Index" class="btn btn-secondary">
+            Xem giỏ hàng
+        </a>
+    </div>
+
+</div>
