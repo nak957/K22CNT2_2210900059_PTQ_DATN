@@ -2,6 +2,9 @@
 using _2210900059_PTQ_DATN.Models;
 using Microsoft.EntityFrameworkCore;
 using _2210900059_PTQ_DATN.Models.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace _2210900059_PTQ_DATN.Controllers
 {
@@ -25,7 +28,7 @@ namespace _2210900059_PTQ_DATN.Controllers
 
         // POST: /TaiKhoan/Login
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
             var nguoiDung = _context.NguoiDungs
                 .FirstOrDefault(u =>
@@ -38,10 +41,29 @@ namespace _2210900059_PTQ_DATN.Controllers
                 return View();
             }
 
-            // Lưu session
+            // Lưu session (giữ cả key cũ và key "USER_ID" để các controller khác dùng)
             HttpContext.Session.SetInt32("MaNguoiDung", nguoiDung.MaNguoiDung);
+            HttpContext.Session.SetInt32("USER_ID", nguoiDung.MaNguoiDung); // <-- thêm
             HttpContext.Session.SetString("TenDangNhap", nguoiDung.TenDangNhap);
             HttpContext.Session.SetString("VaiTro", nguoiDung.VaiTro);
+
+            // Tạo claim để có thể dùng User.Claims trong controller khác (fallback)
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, nguoiDung.MaNguoiDung.ToString()),
+                new Claim(ClaimTypes.Name, nguoiDung.TenDangNhap ?? string.Empty),
+                new Claim(ClaimTypes.Role, nguoiDung.VaiTro ?? "khachhang")
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(claimsIdentity);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true // optional: giữ login giữa các phiên
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
             // Phân quyền
             if (nguoiDung.VaiTro == "admin")
@@ -104,6 +126,7 @@ namespace _2210900059_PTQ_DATN.Controllers
             _context.SaveChanges(); // QUAN TRỌNG: để có MaNguoiDung
 
             // ===== TẠO LIÊN HỆ =====
+            // Sửa: ghi địa chỉ vào cột `DiaChi`, không lưu nhầm vào `NoiDung`.
             var lienHe = new LienHe
             {
                 HoTen = model.HoTen ?? model.TenDangNhap,
@@ -111,7 +134,10 @@ namespace _2210900059_PTQ_DATN.Controllers
                 SoDienThoai = model.SoDienThoai,
                 TieuDe = "Thông tin khách hàng mới",
                 LoaiLienHe = "Khách hàng",
-                NoiDung = model.DiaChi ?? "Chưa cung cấp địa chỉ",
+                // Đúng: lưu địa chỉ vào DiaChi
+                DiaChi = model.DiaChi ?? "Chưa cung cấp địa chỉ",
+                // NoiDung để mô tả/ghi chú, giữ mặc định thông báo
+                NoiDung = "Đăng ký tài khoản - thông tin khách hàng mới",
                 TrangThai = "Mới",
                 DaDoc = false,
                 NgayGui = DateTime.Now,
@@ -198,8 +224,10 @@ namespace _2210900059_PTQ_DATN.Controllers
 
         // ===================== LOGOUT =====================
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            // xóa cookie auth & session
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
