@@ -1,0 +1,98 @@
+﻿@model List<_2210900059_PTQ_DATN.ViewModels.DonHangDichVuVM>
+
+@{
+    ViewData["Title"] = "Lịch hẹn dịch vụ";
+}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Lịch hẹn dịch vụ</h2>
+
+    @* THÔNG BÁO *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @* FORM TRA CỨU KHÁCH VÃNG LAI *@
+    <form asp-action="TraCuuDichVu" method="post" class="row g-2 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="maDonHangCode" class="form-control" placeholder="Mã đơn hàng" required />
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="soDienThoai" class="form-control" placeholder="Số điện thoại" required />
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">
+                Tra cứu lịch hẹn
+            </button>
+        </div>
+    </form>
+
+    @* DANH SÁCH LỊCH HẸN *@
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Dịch vụ</th>
+                    <th>Số lượng</th>
+                    <th>Ngày hẹn</th>
+                    <th>Giờ hẹn</th>
+                    <th>Trạng thái</th>
+                    <th width="180">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaDonHangCode</td>
+                        <td>@item.TenDichVu</td>
+                        <td>@item.SoLuong</td>
+                        <td>@item.NgayHen.ToString("dd/MM/yyyy")</td>
+                        <td>@item.GioHen</td>
+                        <td>
+                            <span class="badge
+                                        @(item.TrangThai == "Chờ xử lý" ? "bg-warning text-dark" :
+                                                                    item.TrangThai == "Đã hủy" ? "bg-danger" : "bg-success")">
+                        @item.TrangThai
+                    </span>
+                </td>
+                <td>
+                    <a asp-action="ChiTietDichVu"
+                       asp-route-id="@item.MaDonHang"
+                       class="btn btn-sm btn-info">
+                        Chi tiết
+                    </a>
+
+                    @if (item.TrangThai == "Chờ xử lý")
+                            {
+                                <form asp-action="HuyLichHen"
+                                      method="post"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Bạn chắc chắn muốn hủy lịch hẹn này?');">
+                                    <input type="hidden" name="maDonHang" value="@item.MaDonHang" />
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Hủy
+                                    </button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Chưa có lịch hẹn nào.
+        </div>
+    }
+</div>

@@ -46,7 +46,12 @@
                         onclick="location.href='@Url.Action("Index", "DonHang")'">
                     📦
                 </button>
-
+                <!-- ICON LỊCH HẸN (LUÔN HIỂN THỊ) -->
+                <button class="icon"
+                        title="Đơn dịch vụ"
+                        onclick="location.href='@Url.Action("DonHangDichVu", "DonHang")'">
+                    🗓️
+                </button>
                 @if (Context.Session.GetString("TenDangNhap") == null)
                 {
                     <!-- CHƯA ĐĂNG NHẬP -->

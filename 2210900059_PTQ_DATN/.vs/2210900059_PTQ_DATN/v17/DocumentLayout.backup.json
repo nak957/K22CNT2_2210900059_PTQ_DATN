@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\donhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\donhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\donhang\\chitietdichvu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\donhang\\chitietdichvu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\donhang\\donhangdichvu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\donhang\\donhangdichvu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +26,62 @@
       "DocumentGroups": [
         {
           "DockedHeight": 87,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAADAAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-01T16:28:59.526Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ChiTietDichVu.cshtml",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\DonHang\\ChiTietDichVu.cshtml",
+              "RelativeDocumentMoniker": "Views\\DonHang\\ChiTietDichVu.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\DonHang\\ChiTietDichVu.cshtml",
+              "RelativeToolTip": "Views\\DonHang\\ChiTietDichVu.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-01T16:21:21.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DonHangDichVu.cshtml",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\DonHang\\DonHangDichVu.cshtml",
+              "RelativeDocumentMoniker": "Views\\DonHang\\DonHangDichVu.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\DonHang\\DonHangDichVu.cshtml",
+              "RelativeToolTip": "Views\\DonHang\\DonHangDichVu.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-01T16:20:07.34Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\DonHang\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\DonHang\\Index.cshtml",
-              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\DonHang\\Index.cshtml*",
-              "RelativeToolTip": "Views\\DonHang\\Index.cshtml*",
-              "ViewState": "AgIAADEAAAAAAAAAAAAAAMoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-31T08:50:37.523Z",
+              "Title": "DonHangController.cs",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Controllers\\DonHangController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DonHangController.cs",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Controllers\\DonHangController.cs",
+              "RelativeToolTip": "Controllers\\DonHangController.cs",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAAwIQAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T15:29:45.566Z",
               "EditorCaption": ""
             }
           ]
