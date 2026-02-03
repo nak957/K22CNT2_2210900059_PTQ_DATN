@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,152 +21,143 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             _context = context;
         }
 
-        // GET: Admins/BaiViets
+        // =======================
+        // GET: Index
+        // =======================
         public async Task<IActionResult> Index()
         {
-            var leSkinDbContext = _context.BaiViets.Include(b => b.MaNguoiCapNhatNavigation).Include(b => b.MaNguoiTaoNavigation);
-            return View(await leSkinDbContext.ToListAsync());
-        }
-
-        // GET: Admins/BaiViets/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var baiViet = await _context.BaiViets
-                .Include(b => b.MaNguoiCapNhatNavigation)
+            var data = _context.BaiViets
                 .Include(b => b.MaNguoiTaoNavigation)
-                .FirstOrDefaultAsync(m => m.MaBaiViet == id);
-            if (baiViet == null)
-            {
-                return NotFound();
-            }
+                .Include(b => b.MaNguoiCapNhatNavigation);
 
-            return View(baiViet);
+            return View(await data.ToListAsync());
         }
 
-        // GET: Admins/BaiViets/Create
+        // =======================
+        // GET: Create
+        // =======================
         public IActionResult Create()
         {
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung");
+            ViewData["Loai"] =
+                new SelectList(new List<string> { "Tin tức", "Sự kiện" });
+
             return View();
         }
 
-        // POST: Admins/BaiViets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // =======================
+        // POST: Create
+        // =======================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaBaiViet,TieuDe,Slug,HinhAnh,MoTa,NoiDung,Loai,NoiBat,NgayDang,MaNguoiTao,MaNguoiCapNhat")] BaiViet baiViet)
+        public async Task<IActionResult> Create(BaiViet baiViet, IFormFile fileAnh)
         {
-            if (ModelState.IsValid)
+            // FIX 1: gán người tạo
+            baiViet.MaNguoiTao =
+                HttpContext.Session.GetInt32("MaNguoiDung");
+
+            // FIX 2: ngày đăng
+            baiViet.NgayDang ??= DateTime.Now;
+
+            // Upload ảnh
+            if (fileAnh != null && fileAnh.Length > 0)
             {
-                _context.Add(baiViet);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                baiViet.HinhAnh = await UploadAnh(fileAnh);
             }
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", baiViet.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", baiViet.MaNguoiTao);
-            return View(baiViet);
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["Loai"] =
+                    new SelectList(new List<string> { "Tin tức", "Sự kiện" }, baiViet.Loai);
+
+                return View(baiViet);
+            }
+
+            _context.BaiViets.Add(baiViet);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Admins/BaiViets/Edit/5
+        // =======================
+        // GET: Edit
+        // =======================
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var baiViet = await _context.BaiViets.FindAsync(id);
-            if (baiViet == null)
-            {
-                return NotFound();
-            }
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", baiViet.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", baiViet.MaNguoiTao);
+            if (baiViet == null) return NotFound();
+
+            ViewData["Loai"] =
+                new SelectList(new List<string> { "Tin tức", "Sự kiện" }, baiViet.Loai);
+
             return View(baiViet);
         }
 
-        // POST: Admins/BaiViets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // =======================
+        // POST: Edit
+        // =======================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaBaiViet,TieuDe,Slug,HinhAnh,MoTa,NoiDung,Loai,NoiBat,NgayDang,MaNguoiTao,MaNguoiCapNhat")] BaiViet baiViet)
+        public async Task<IActionResult> Edit(int id, BaiViet baiViet, IFormFile fileAnh)
         {
             if (id != baiViet.MaBaiViet)
-            {
                 return NotFound();
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(baiViet);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BaiVietExists(baiViet.MaBaiViet))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", baiViet.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "MaNguoiDung", baiViet.MaNguoiTao);
-            return View(baiViet);
-        }
-
-        // GET: Admins/BaiViets/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
+            var baiVietDb = await _context.BaiViets.FindAsync(id);
+            if (baiVietDb == null)
                 return NotFound();
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["Loai"] =
+                    new SelectList(new List<string> { "Tin tức", "Sự kiện" }, baiViet.Loai);
+
+                return View(baiViet);
             }
 
-            var baiViet = await _context.BaiViets
-                .Include(b => b.MaNguoiCapNhatNavigation)
-                .Include(b => b.MaNguoiTaoNavigation)
-                .FirstOrDefaultAsync(m => m.MaBaiViet == id);
-            if (baiViet == null)
-            {
-                return NotFound();
-            }
+            baiVietDb.TieuDe = baiViet.TieuDe;
+            baiVietDb.Slug = baiViet.Slug;
+            baiVietDb.MoTa = baiViet.MoTa;
+            baiVietDb.NoiDung = baiViet.NoiDung;
+            baiVietDb.Loai = baiViet.Loai;
+            baiVietDb.NoiBat = baiViet.NoiBat;
+            baiVietDb.NgayDang = baiViet.NgayDang ?? DateTime.Now;
 
-            return View(baiViet);
-        }
+            // FIX 3: người cập nhật
+            baiVietDb.MaNguoiCapNhat =
+                HttpContext.Session.GetInt32("MaNguoiDung");
 
-        // POST: Admins/BaiViets/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var baiViet = await _context.BaiViets.FindAsync(id);
-            if (baiViet != null)
+            if (fileAnh != null && fileAnh.Length > 0)
             {
-                _context.BaiViets.Remove(baiViet);
+                baiVietDb.HinhAnh = await UploadAnh(fileAnh);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BaiVietExists(int id)
+        // =======================
+        // UPLOAD ẢNH (GIỮ NGUYÊN)
+        // =======================
+        private async Task<string> UploadAnh(IFormFile file)
         {
-            return _context.BaiViets.Any(e => e.MaBaiViet == id);
+            var folder = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot/uploads/bai-viet");
+
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var path = Path.Combine(folder, fileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return "/uploads/bai-viet/" + fileName;
         }
     }
 }

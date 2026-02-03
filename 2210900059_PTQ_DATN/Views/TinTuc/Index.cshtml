@@ -1,0 +1,202 @@
+﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.BaiViet>
+
+@{
+    ViewData["Title"] = "Tin tức - TQbeauty";
+}
+
+<style>
+    :root {
+        --primary: #d98b2b;
+        --text-dark: #2d2d2d;
+        --text-muted: #777;
+    }
+
+    /* ===== PAGE WRAPPER ===== */
+    .news-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 16px;
+    }
+
+    .news-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 40px;
+        color: var(--text-dark);
+    }
+
+    /* ===== GRID ===== */
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+    }
+
+    /* ===== CARD ===== */
+    .news-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: transform .25s ease, box-shadow .25s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+
+    /* ===== IMAGE ===== */
+    .news-thumb {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        background: #f2f2f2;
+    }
+
+        .news-thumb.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+    /* ===== CONTENT ===== */
+    .news-body {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .news-badge {
+        display: inline-block;
+        align-self: flex-start;
+        margin-bottom: 10px;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #fff;
+        background: #e74c3c;
+        border-radius: 999px;
+    }
+
+    .news-title-item {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-dark);
+        line-height: 1.4;
+        margin-bottom: 6px;
+    }
+
+    .news-date {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+    }
+
+    .news-desc {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 18px;
+        flex: 1;
+    }
+
+    /* ===== READ MORE ===== */
+    .news-link {
+        align-self: flex-start;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--primary);
+    }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+
+        .news-title
+
+    {
+        font-size: 26px;
+    }
+
+    .news-thumb {
+        height: 160px;
+    }
+
+    }
+</style>
+
+<div class="news-wrapper">
+    <h1 class="news-title">
+        Tin tức & Kiến thức làm đẹp
+    </h1>
+
+    <div class="news-grid">
+        @foreach (var item in Model)
+        {
+            <div class="news-card">
+
+                @{
+                    string imgSrc = null;
+                    if (!string.IsNullOrEmpty(item.HinhAnh))
+                    {
+                        var h = item.HinhAnh;
+                        if (h.StartsWith("/") || h.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            imgSrc = h;
+                        }
+                        else
+                        {
+                            imgSrc = Url.Content($"~/uploads/bai-viet/{h}");
+                        }
+                    }
+                }
+
+                @if (!string.IsNullOrEmpty(imgSrc))
+                {
+                    <img src="@imgSrc"
+                         alt="@item.TieuDe"
+                         class="news-thumb" />
+                }
+                else
+                {
+                    <div class="news-thumb empty">
+                        Không có ảnh
+                    </div>
+                }
+
+                <div class="news-body">
+                    @if (item.NoiBat == true)
+                    {
+                        <span class="news-badge">Nổi bật</span>
+                    }
+
+                    <h2 class="news-title-item">
+                        @item.TieuDe
+                    </h2>
+
+                    <div class="news-date">
+                        @item.NgayDang?.ToString("dd/MM/yyyy")
+                    </div>
+
+                    <div class="news-desc">
+                        @item.MoTa
+                    </div>
+
+                    <a asp-action="ChiTiet"
+                       asp-route-slug="@item.Slug"
+                       class="news-link">
+                        Đọc tiếp →
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

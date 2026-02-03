@@ -163,6 +163,8 @@ wwwroot\images\spa-tham-my-cong-nghe-cao-my-pham.jpg
 wwwroot\images\spa-transform.png
 wwwroot\images\tha9166-15712248994621600141290-crop-15712249136131507989110.jpg
 wwwroot\images\thuc-hu-te-bao-goc-trong-tham-my-va-lam-dep.jpg
+wwwroot\images\tintuc03.png
+wwwroot\images\tintuc4.png
 wwwroot\images\Untitled-1.png
 wwwroot\images\vn-11134207-7r98o-lrs7tti7i9p5a0.jpg
 wwwroot\images\vn-11134207-7r98o-lstjw3h85gux18.jpg
@@ -226,3 +228,14 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\uploads\bai-viet\0a5719ae-466d-491c-b58d-0e897cf07b11.jpg
+wwwroot\uploads\bai-viet\37a7ddd7-da78-41c6-9d07-a370a01df7c6.png
+wwwroot\uploads\bai-viet\3df8a37f-6bd0-4aa2-a562-32d5fffe2412.jpg
+wwwroot\uploads\bai-viet\5ac54a4b-83c7-4b98-815f-3b136007101b.png
+wwwroot\uploads\bai-viet\5fd4dcd8-a1e8-45e5-b02e-6a4f177f7c25.jpg
+wwwroot\uploads\bai-viet\852736da-aea9-48ae-98f9-660f00806b19.jpg
+wwwroot\uploads\bai-viet\94db7a74-0cd0-4238-9b8f-846389e314d8.png
+wwwroot\uploads\bai-viet\a447e37a-82f0-4c1d-9d12-977f1446dfdf.jpg
+wwwroot\uploads\bai-viet\ad71fa20-8b4d-4654-8bec-c3ea2f2f277d.png
+wwwroot\uploads\bai-viet\bf8ff88f-c873-4e06-a7c0-52e7a7d51ef1.jpg
+wwwroot\uploads\bai-viet\ec9a3370-388d-4d81-adf7-4ad2fc67b2c9.jpg

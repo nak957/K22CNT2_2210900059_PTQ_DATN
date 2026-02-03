@@ -4,68 +4,175 @@
     ViewData["Title"] = "Chi tiết lịch hẹn";
 }
 
-<div class="container mt-4">
-
-    <h2 class="mb-4">Chi tiết lịch hẹn</h2>
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
+<style>
+    :root {
+        --primary: #d98b2b;
     }
 
-    <table class="table table-bordered">
-        <tr>
-            <th width="200">Mã đơn hàng</th>
-            <td>@Model.MaDonHangCode</td>
-        </tr>
-        <tr>
-            <th>Dịch vụ</th>
-            <td>@Model.TenDichVu</td>
-        </tr>
-        <tr>
-            <th>Số lượng</th>
-            <td>@Model.SoLuong</td>
-        </tr>
-        <tr>
-            <th>Ngày hẹn</th>
-            <td>@Model.NgayHen.ToString("dd/MM/yyyy")</td>
-        </tr>
-        <tr>
-            <th>Giờ hẹn</th>
-            <td>@Model.GioHen</td>
-        </tr>
-        <tr>
-            <th>Trạng thái</th>
-            <td>
-                <span class="badge
-                    @(Model.TrangThai == "Chờ xử lý" ? "bg-warning text-dark" :
-                                            Model.TrangThai == "Đã hủy" ? "bg-danger" : "bg-success")">
-                    @Model.TrangThai
-                </span>
-            </td>
-        </tr>
-    </table>
+    /* ===== SECTION ===== */
+    .section {
+        padding: 60px 0;
+        background: #fff;
+    }
 
-    <div class="mt-3">
-        <a asp-action="DichVu" class="btn btn-secondary">
-            Quay lại danh sách
-        </a>
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
 
-        @if (Model.TrangThai == "Chờ xử lý")
-        {
-            <form asp-action="HuyLichHen"
-                  method="post"
-                  class="d-inline"
-                  onsubmit="return confirm('Bạn chắc chắn muốn hủy lịch hẹn này?');">
-                <input type="hidden" name="maDonHang" value="@Model.MaDonHang" />
-                <button type="submit" class="btn btn-danger">
-                    Hủy lịch hẹn
-                </button>
-            </form>
+    /* ===== CARD ===== */
+    .detail-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        padding: 28px;
+    }
+
+    /* ===== INFO TABLE ===== */
+    .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .detail-table th {
+            width: 220px;
+            padding: 14px 16px;
+            background: #f9f9f9;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            text-align: left;
         }
+
+        .detail-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+    /* ===== STATUS ===== */
+    .order-status.pending {
+        color: #e67e22;
+        font-weight: 600;
+    }
+
+    .order-status.completed {
+        color: #27ae60;
+        font-weight: 600;
+    }
+
+    .order-status.canceled {
+        color: #e74c3c;
+        font-weight: 600;
+    }
+
+    /* ===== ACTION ===== */
+    .detail-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+        .detail-actions form {
+            margin: 0;
+        }
+
+    .btn-back {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1px solid #ccc;
+        background: #fff;
+        font-weight: 600;
+        text-decoration: none;
+        color: #333;
+    }
+
+        .btn-back:hover {
+            background: #f5f5f5;
+        }
+
+    .btn-cancel {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: none;
+        background: #e74c3c;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+        .btn-cancel:hover {
+            background: #c0392b;
+        }
+</style>
+
+<div class="section">
+    <div class="container">
+
+        <h2 class="section-title">Chi tiết lịch hẹn</h2>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        <div class="detail-card">
+            <table class="detail-table">
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <td>@Model.MaDonHangCode</td>
+                </tr>
+                <tr>
+                    <th>Dịch vụ</th>
+                    <td>@Model.TenDichVu</td>
+                </tr>
+                <tr>
+                    <th>Số lượng</th>
+                    <td>@Model.SoLuong</td>
+                </tr>
+                <tr>
+                    <th>Ngày hẹn</th>
+                    <td>@Model.NgayHen.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <th>Giờ hẹn</th>
+                    <td>@Model.GioHen</td>
+                </tr>
+                <tr>
+                    <th>Trạng thái</th>
+                    <td>
+                        <span class="order-status
+                            @(Model.TrangThai == "Chờ xử lý" ? "pending" :
+                                                            Model.TrangThai == "Đã hủy" ? "canceled" : "completed")">
+                            @Model.TrangThai
+                        </span>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="detail-actions">
+                <a asp-action="DonHangDichVu" class="btn-back">
+                    ← Quay lại danh sách
+                </a>
+
+                @if (Model.TrangThai == "Chờ xử lý")
+                {
+                    <form asp-action="HuyLichHen"
+                          method="post"
+                          onsubmit="return confirm('Bạn chắc chắn muốn hủy lịch hẹn này?');">
+                        <input type="hidden" name="maDonHang" value="@Model.MaDonHang" />
+                        <button type="submit" class="btn-cancel">
+                            Hủy lịch hẹn
+                        </button>
+                    </form>
+                }
+            </div>
+        </div>
+
     </div>
 </div>

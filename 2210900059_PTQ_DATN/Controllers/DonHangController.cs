@@ -170,7 +170,7 @@ namespace _2210900059_PTQ_DATN.Controllers
             if (string.IsNullOrEmpty(maDonHangCode) || string.IsNullOrEmpty(soDienThoai))
             {
                 TempData["Error"] = "Vui lòng nhập đầy đủ mã đơn hàng và số điện thoại.";
-                return RedirectToAction("DichVu");
+                return RedirectToAction("DonHangDichVu");
             }
 
             var lichHen = _context.ChiTietDonHangs
@@ -198,7 +198,7 @@ namespace _2210900059_PTQ_DATN.Controllers
 
             return View("DonHangDichVu", lichHen);
         }
-
+        // CHI TIẾT LỊCH HẸN
         public IActionResult ChiTietDichVu(int id)
         {
             var donHang = _context.DonHangs.FirstOrDefault(x => x.MaDonHang == id);
@@ -249,7 +249,7 @@ namespace _2210900059_PTQ_DATN.Controllers
             _context.SaveChanges();
 
             TempData["Success"] = "Đã hủy lịch hẹn thành công.";
-            return RedirectToAction("DichVu");
+            return RedirectToAction("DonHangDichVu");
         }
     }
 }

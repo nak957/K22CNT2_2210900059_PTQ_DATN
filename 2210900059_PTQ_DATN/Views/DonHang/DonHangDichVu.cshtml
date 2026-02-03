@@ -1,98 +1,240 @@
 ﻿@model List<_2210900059_PTQ_DATN.ViewModels.DonHangDichVuVM>
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Lịch hẹn dịch vụ";
+    var maNguoiDung = Context.Session.GetInt32("MaNguoiDung");
 }
 
-<div class="container mt-4">
-
-    <h2 class="mb-4">Lịch hẹn dịch vụ</h2>
-
-    @* THÔNG BÁO *@
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
+<style>
+    :root {
+        --primary: #d98b2b;
     }
 
-    @* FORM TRA CỨU KHÁCH VÃNG LAI *@
-    <form asp-action="TraCuuDichVu" method="post" class="row g-2 mb-4">
-        <div class="col-md-4">
-            <input type="text" name="maDonHangCode" class="form-control" placeholder="Mã đơn hàng" required />
-        </div>
-        <div class="col-md-4">
-            <input type="text" name="soDienThoai" class="form-control" placeholder="Số điện thoại" required />
-        </div>
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-primary w-100">
-                Tra cứu lịch hẹn
-            </button>
-        </div>
-    </form>
-
-    @* DANH SÁCH LỊCH HẸN *@
-    @if (Model != null && Model.Any())
-    {
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Mã đơn</th>
-                    <th>Dịch vụ</th>
-                    <th>Số lượng</th>
-                    <th>Ngày hẹn</th>
-                    <th>Giờ hẹn</th>
-                    <th>Trạng thái</th>
-                    <th width="180">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.MaDonHangCode</td>
-                        <td>@item.TenDichVu</td>
-                        <td>@item.SoLuong</td>
-                        <td>@item.NgayHen.ToString("dd/MM/yyyy")</td>
-                        <td>@item.GioHen</td>
-                        <td>
-                            <span class="badge
-                                        @(item.TrangThai == "Chờ xử lý" ? "bg-warning text-dark" :
-                                                                    item.TrangThai == "Đã hủy" ? "bg-danger" : "bg-success")">
-                        @item.TrangThai
-                    </span>
-                </td>
-                <td>
-                    <a asp-action="ChiTietDichVu"
-                       asp-route-id="@item.MaDonHang"
-                       class="btn btn-sm btn-info">
-                        Chi tiết
-                    </a>
-
-                    @if (item.TrangThai == "Chờ xử lý")
-                            {
-                                <form asp-action="HuyLichHen"
-                                      method="post"
-                                      class="d-inline"
-                                      onsubmit="return confirm('Bạn chắc chắn muốn hủy lịch hẹn này?');">
-                                    <input type="hidden" name="maDonHang" value="@item.MaDonHang" />
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        Hủy
-                                    </button>
-                                </form>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    /* ===== SECTION ===== */
+    .section {
+        padding: 60px 0;
+        background: #fff;
     }
-    else
-    {
-        <div class="alert alert-info">
-            Chưa có lịch hẹn nào.
-        </div>
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 30px;
     }
+
+    /* ===== LOOKUP FORM ===== */
+    .order-lookup {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        padding: 24px;
+        margin-bottom: 30px;
+    }
+
+        .order-lookup h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+    .lookup-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 14px;
+    }
+
+    .order-lookup input {
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .order-lookup button {
+        padding: 12px 28px;
+        border-radius: 999px;
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+        .order-lookup button:hover {
+            background: #b97824;
+        }
+
+    /* ===== TABLE CARD ===== */
+    .order-wrapper {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        padding: 24px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        padding: 14px;
+        font-size: 12px;
+        text-transform: uppercase;
+        background: var(--primary);
+        color: #fff;
+        text-align: left;
+    }
+
+    td {
+        padding: 16px 14px;
+        border-bottom: 1px solid #eee;
+        vertical-align: middle;
+    }
+
+    /* ===== STATUS ===== */
+    .order-status.pending {
+        color: #e67e22;
+        font-weight: 600;
+    }
+
+    .order-status.completed {
+        color: #27ae60;
+        font-weight: 600;
+    }
+
+    .order-status.canceled {
+        color: #e74c3c;
+        font-weight: 600;
+    }
+
+    /* ===== ACTION ===== */
+    .order-view {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 13px;
+        margin-right: 6px;
+        display: inline-block;
+    }
+
+        .order-view:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+    .order-cancel {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: none;
+        background: #e74c3c;
+        color: #fff;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+        .order-cancel:hover {
+            background: #c0392b;
+        }
+
+    /* ===== EMPTY ===== */
+    .empty-order {
+        text-align: center;
+        padding: 80px 0;
+        color: #666;
+    }
+</style>
+
+<div class="section">
+    <div class="container">
+
+        <h2 class="section-title">Lịch hẹn dịch vụ</h2>
+
+        @* THÔNG BÁO *@
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        @* FORM TRA CỨU – CHỈ HIỂN THỊ KHI CHƯA ĐĂNG NHẬP *@
+        @if (maNguoiDung == null)
+        {
+            <div class="order-lookup">
+                <h4>Tra cứu lịch hẹn</h4>
+                <form asp-action="TraCuuDichVu" method="post">
+                    <div class="lookup-row">
+                        <input type="text" name="maDonHangCode" placeholder="Mã đơn hàng" required />
+                        <input type="text" name="soDienThoai" placeholder="Số điện thoại" required />
+                        <button type="submit">Tra cứu</button>
+                    </div>
+                </form>
+            </div>
+        }
+
+        @* DANH SÁCH *@
+        @if (Model != null && Model.Any())
+        {
+            <div class="order-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Dịch vụ</th>
+                            <th>Số lượng</th>
+                            <th>Ngày hẹn</th>
+                            <th>Giờ hẹn</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaDonHangCode</td>
+                                <td>@item.TenDichVu</td>
+                                <td>@item.SoLuong</td>
+                                <td>@item.NgayHen.ToString("dd/MM/yyyy")</td>
+                                <td>@item.GioHen</td>
+                                <td>
+                                    <span class="order-status
+                                        @(item.TrangThai == "Chờ xử lý" ? "pending" :
+                                          item.TrangThai == "Đã hủy" ? "canceled" : "completed")">
+                                        @item.TrangThai
+                                    </span>
+                                </td>
+                                <td>
+                                    <a asp-action="ChiTietDichVu"
+                                       asp-route-id="@item.MaDonHang"
+                                       class="order-view">
+                                        Chi tiết
+                                    </a>
+
+                               
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="empty-order">
+                Chưa có lịch hẹn nào.
+            </div>
+        }
+
+    </div>
 </div>

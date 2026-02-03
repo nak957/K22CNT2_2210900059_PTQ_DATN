@@ -1,54 +1,57 @@
-﻿@* @model IEnumerable<_2210900059_PTQ_DATN.Models.SanPham> *@
-@using _2210900059_PTQ_DATN.Models
+﻿@using _2210900059_PTQ_DATN.Models
 
 @{
     ViewData["Title"] = "Trang chủ";
 
     var sanPhams = ViewBag.SanPhams as List<SanPham>;
     var dichVus = ViewBag.DichVus as List<DichVu>;
+    var baiViets = ViewBag.BaiViets as List<BaiViet>;
 }
 
-
-   
-
-    <!-- Banner slider -->
-    <section class="banner">
-        <div class="slider" id="slider">
-            <div class="slide"><img src="@(Url.Content("~/images/banner-leskin-1.jpg"))" alt="banner 1" /></div>
-            <div class="slide"><img src="@(Url.Content("~/images/banner-leskin-2.jpg"))" alt="banner 2" /></div>
-            <div class="slide"><img src="@(Url.Content("~/images/banner-leskin-3.jpg"))" alt="banner 3" /></div>
+<!-- Banner slider -->
+<section class="banner">
+    <div class="slider" id="slider">
+        <div class="slide">
+            <img src="@(Url.Content("~/images/banner-leskin-1.jpg"))" alt="banner 1" />
         </div>
-        <div class="dots" id="dots"></div>
-    </section>
+        <div class="slide">
+            <img src="@(Url.Content("~/images/banner-leskin-2.jpg"))" alt="banner 2" />
+        </div>
+        <div class="slide">
+            <img src="@(Url.Content("~/images/banner-leskin-3.jpg"))" alt="banner 3" />
+        </div>
+    </div>
+    <div class="dots" id="dots"></div>
+</section>
 
-    <!-- Features / small icons -->
-    <section class="features">
-        <div class="container">
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <div class="fi-icon">💸</div>
-                    <p>GIẢM 10% <br /><span>TẶNG ĐIỂM TÍCH LŨY</span></p>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-icon">🎁</div>
-                    <p>50+ ƯU ĐÃI <br /><span>MỖI THÁNG</span></p>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-icon">⚡</div>
-                    <p>ĐẶT DỊCH VỤ <br /><span>NHANH CHÓNG</span></p>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-icon">⭐</div>
-                    <p>HƠN 1250+ <br /><span>KHÁCH HÀNG</span></p>
-                </div>
+<!-- Features -->
+<section class="features">
+    <div class="container">
+        <div class="feature-grid">
+            <div class="feature-item">
+                <div class="fi-icon">💸</div>
+                <p>GIẢM 10% <br /><span>TẶNG ĐIỂM TÍCH LŨY</span></p>
+            </div>
+            <div class="feature-item">
+                <div class="fi-icon">🎁</div>
+                <p>50+ ƯU ĐÃI <br /><span>MỖI THÁNG</span></p>
+            </div>
+            <div class="feature-item">
+                <div class="fi-icon">⚡</div>
+                <p>ĐẶT DỊCH VỤ <br /><span>NHANH CHÓNG</span></p>
+            </div>
+            <div class="feature-item">
+                <div class="fi-icon">⭐</div>
+                <p>HƠN 1250+ <br /><span>KHÁCH HÀNG</span></p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SẢN PHẨM -->
-    <section class="section products">
-        <div class="container">
-            <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
+<!-- SẢN PHẨM -->
+<section class="section products">
+    <div class="container">
+        <h2 class="section-title">SẢN PHẨM NỔI BẬT</h2>
 
         <div class="product-row">
             @if (sanPhams != null && sanPhams.Any())
@@ -59,13 +62,11 @@
                         <div class="product-img">
                             @if (!string.IsNullOrEmpty(sp.HinhAnh))
                             {
-                                <img src="@(Url.Content("~/images/products/" + sp.HinhAnh))"
-                                     alt="@sp.TenSanPham" />
+                                <img src="@(Url.Content("~/images/products/" + sp.HinhAnh))" alt="@sp.TenSanPham" />
                             }
                             else
                             {
-                                <img src="@(Url.Content("~/images/no-image.png"))"
-                                     alt="No image" />
+                                <img src="@(Url.Content("~/images/no-image.png"))" alt="No image" />
                             }
                         </div>
 
@@ -75,7 +76,6 @@
                                href="@Url.Action("ChiTiet", "SanPham", new { id = sp.MaSanPham })">
                                 Xem thêm
                             </a>
-
                         </div>
                     </article>
                 }
@@ -85,135 +85,155 @@
                 <p>Không có sản phẩm</p>
             }
         </div>
+    </div>
+</section>
 
-        </div>
-    </section>
+<!-- DỊCH VỤ -->
+<section class="section services">
+    <div class="container">
+        <h2 class="section-title">DỊCH VỤ NỔI BẬT</h2>
 
-    <!-- DỊCH VỤ NỔI BẬT -->
-    <section class="section services">
-        <div class="container">
-            <h2 class="section-title">DỊCH VỤ NỔI BẬT</h2>
-
-            <div class="service-row">
-                @if (dichVus != null && dichVus.Any())
+        <div class="service-row">
+            @if (dichVus != null && dichVus.Any())
+            {
+                foreach (var dv in dichVus)
                 {
-                    foreach (var dv in dichVus)
+                    <article class="card service-card">
+                        <div class="service-img">
+                            @if (!string.IsNullOrEmpty(dv.HinhAnh))
+                            {
+                                <img src="@(Url.Content("~/images/services/" + dv.HinhAnh))" alt="@dv.TenDichVu" />
+                            }
+                            else
+                            {
+                                <img src="@(Url.Content("~/images/no-image.png"))" alt="No image" />
+                            }
+                        </div>
+                        <div class="card-body">
+                            <h3>@dv.TenDichVu</h3>
+                            <a href="@Url.Action("ChiTiet", "DichVu", new { id = dv.MaDichVu })"
+                               class="btn-outline">Xem chi tiết</a>
+                        </div>
+                    </article>
+                }
+            }
+            else
+            {
+                <p>Không có dịch vụ nổi bật</p>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- 5 STEPS -->
+<section class="section steps">
+    <div class="container">
+        <h3 class="muted-title">5 BƯỚC ĐỂ TRẢI NGHIỆM DỊCH VỤ TẠI TQBEAUTY</h3>
+        <div class="steps-row">
+            <div class="step"><span class="num">01</span><p>Cài app hoặc truy cập website</p></div>
+            <div class="step"><span class="num">02</span><p>Đăng ký thông tin</p></div>
+            <div class="step"><span class="num">03</span><p>Được tư vấn</p></div>
+            <div class="step"><span class="num">04</span><p>Đặt lịch tại Spa</p></div>
+            <div class="step"><span class="num">05</span><p>Trải nghiệm dịch vụ</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY -->
+<section class="section why">
+    <div class="container">
+        <h2 class="section-title">Vì sao chọn TQbeauty ?</h2>
+
+        <div class="why-wrapper">
+            <div class="center-image">
+                <img src="images/dermatude-model.png" alt="Leskin Center">
+            </div>
+
+            <div class="circle-card circle1">
+                <img src="images/spa-transform.png" alt="">
+                <p class="circle-title">Phác đồ điều trị độc quyền</p>
+            </div>
+
+            <div class="circle-card circle2">
+                <img src="images/phone.png" alt="">
+                <p class="circle-title">Trải nghiệm dễ dàng, nhanh chóng</p>
+            </div>
+
+            <div class="circle-card circle3">
+                <img src="images/cangdamat2.png" alt="">
+                <p class="circle-title">Hiệu quả rõ rệt</p>
+            </div>
+
+            <div class="circle-card circle4">
+                <img src="images/spa-tham-my-cong-nghe-cao-my-pham.jpg" alt="">
+                <p class="circle-title">Công nghệ vượt trội</p>
+            </div>
+
+            <div class="circle-card circle5">
+                <img src="images/cac-dich-vu-spa.jpg" alt="">
+                <p class="circle-title">Tuyệt đối an toàn</p>
+            </div>
+
+            <div class="circle-card circle6">
+                <img src="images/Untitled-1.png" alt="">
+                <p class="circle-title">Thương hiệu uy tín</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TIN TỨC -->
+<section class="section news">
+    <div class="container">
+        <h2 class="section-title">TIN TỨC NỔI BẬT</h2>
+
+        <div class="news-row">
+            @if (baiViets != null && baiViets.Any())
+            {
+                foreach (var bv in baiViets)
+                {
+                    string imgSrc = null;
+                    if (!string.IsNullOrEmpty(bv.HinhAnh))
                     {
-                        <article class="card service-card">
-                            <div class="service-img">
-                                @if (!string.IsNullOrEmpty(dv.HinhAnh))
-                                {
-                                    <img src="@(Url.Content("~/images/services/" + dv.HinhAnh))"
-                                         alt="@dv.TenDichVu" />
-                                }
-                                else
-                                {
-                                    <img src="@(Url.Content("~/images/no-image.png"))"
-                                         alt="No image" />
-                                }
-                            </div>
-                            <div class="card-body">
-                                <h3>@dv.TenDichVu</h3>
-                                <a href="@Url.Action("ChiTiet", "DichVu", new { id = dv.MaDichVu })"
-                                class="btn-outline">Xem chi tiết</a>
-                            </div>
-                        </article>
+                        if (bv.HinhAnh.StartsWith("/") || bv.HinhAnh.StartsWith("http"))
+                        {
+                            imgSrc = bv.HinhAnh;
+                        }
+                        else
+                        {
+                            imgSrc = Url.Content($"~/uploads/bai-viet/{bv.HinhAnh}");
+                        }
                     }
+
+                    <article class="news-card">
+                        @if (!string.IsNullOrEmpty(imgSrc))
+                        {
+                            <img src="@imgSrc" alt="@bv.TieuDe" />
+                        }
+
+                        <div class="news-body">
+                            <h4>@bv.TieuDe</h4>
+                            <p>@bv.MoTa</p>
+                            <a asp-controller="TinTuc"
+                               asp-action="ChiTiet"
+                               asp-route-slug="@bv.Slug"
+                               class="link-detail">
+                                CHI TIẾT
+                            </a>
+                        </div>
+                    </article>
                 }
-                else
-                {
-                    <p>Không có dịch vụ nổi bật</p>
-                }
-            </div>
+            }
+            else
+            {
+                <p>Chưa có bài viết nổi bật</p>
+            }
         </div>
-    </section>
+    </div>
+</section>
 
+@section Scripts {
+    <script src="@(Url.Content("~/js/include.js"))"></script>
+    <script src="@(Url.Content("~/js/index.js"))"></script>
+}
 
-    <!-- 5 steps banner -->
-    <section class="section steps">
-        <div class="container">
-            <h3 class="muted-title">5 BƯỚC ĐỂ TRẢI NGHIỆM DỊCH VỤ TẠI TQBEAUTY</h3>
-            <div class="steps-row">
-                <div class="step"><span class="num">01</span><p>Cài app TQbeauty hoặc vào website TQbeauty</p></div>
-                <div class="step"><span class="num">02</span><p>Đăng ký thông tin</p></div>
-                <div class="step"><span class="num">03</span><p>Được tư vấn và giải đáp</p></div>
-                <div class="step"><span class="num">04</span><p>Đặt chỗ tại Spa</p></div>
-                <div class="step"><span class="num">05</span><p>Trải nghiệm quy trình điều trị</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why choose section (circle images) -->
-    <section class="section why">
-        <div class="container">
-            <h2 class="section-title">Vì sao chọn TQbeauty ?</h2>
-
-            <div class="why-wrapper">
-                <div class="center-image">
-                    <img src="@(Url.Content("~/images/dermatude-model.png"))" alt="TQbeauty Center" />
-                </div>
-
-                <div class="circle-card circle1">
-                    <img src="@(Url.Content("~/images/spa-transform.png"))" alt="" />
-                    <p class="circle-title">Phác đồ điều trị độc quyền</p>
-                </div>
-
-                <div class="circle-card circle2">
-                    <img src="@(Url.Content("~/images/phone.png"))" alt="" />
-                    <p class="circle-title">Trải nghiệm dễ dàng, nhanh chóng</p>
-                </div>
-
-                <div class="circle-card circle3">
-                    <img src="@(Url.Content("~/images/cangdamat2.png"))" alt="" />
-                    <p class="circle-title">Hiệu quả rõ rệt</p>
-                </div>
-
-                <div class="circle-card circle4">
-                    <img src="@(Url.Content("~/images/spa-tham-my-cong-nghe-cao-my-pham.jpg"))" alt="" />
-                    <p class="circle-title">Công nghệ vượt trội</p>
-                </div>
-
-                <div class="circle-card circle5">
-                    <img src="@(Url.Content("~/images/cac-dich-vu-spa.jpg"))" alt="" />
-                    <p class="circle-title">Tuyệt đối an toàn</p>
-                </div>
-
-                <div class="circle-card circle6">
-                    <img src="@(Url.Content("~/images/Untitled-1.png"))" alt="" />
-                    <p class="circle-title">Thương hiệu uy tín</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- News / featured -->
-    <section class="section news">
-        <div class="container">
-            <h2 class="section-title">TIN TỨC NỔI BẬT</h2>
-            <div class="news-row">
-                <article class="news-card">
-                    <img src="@(Url.Content("~/images/tha9166-15712248994621600141290-crop-15712249136131507989110.jpg"))" alt="" />
-                    <div class="news-body">
-                        <h4>Press Green Beauty 2019: Vì một môi trường xanh</h4>
-                        <p>Leskin hân hạnh là nhà tài trợ vàng của cuộc thi Press Green Beauty 2019.</p>
-                        <a href="#" class="link-detail">CHI TIẾT</a>
-                    </div>
-                </article>
-
-                <article class="news-card">
-                    <img src="@(Url.Content("~/images/thuc-hu-te-bao-goc-trong-tham-my-va-lam-dep.jpg"))" alt="" />
-                    <div class="news-body">
-                        <h4>Thực hư tế bào gốc trong thẩm mỹ</h4>
-                        <p>Công nghệ tế bào gốc (TBG) hiện nay được xem là "cánh cửa" mở ra nhiều con đường mới.</p>
-                        <a href="#" class="link-detail">CHI TIẾT</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partners/footer area can be provided by layout or included separately -->
-    @section Scripts {
-        <script src="@(Url.Content("~/js/include.js"))"></script>
-        <script src="@(Url.Content("~/js/index.js"))"></script>
-    }
