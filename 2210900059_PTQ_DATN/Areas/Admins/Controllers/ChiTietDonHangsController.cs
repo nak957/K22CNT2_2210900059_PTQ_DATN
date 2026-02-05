@@ -19,29 +19,59 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             _context = context;
         }
 
-        // GET: Admins/ChiTietDonHangs
-        public async Task<IActionResult> Index()
+        // =========================
+        // INDEX – LỌC THEO ĐƠN HÀNG
+        // =========================
+        public async Task<IActionResult> Index(int? maDonHang)
         {
-            var leSkinDbContext = _context.ChiTietDonHangs.Include(c => c.MaDonHangNavigation).Include(c => c.ItemId);
-            return View(await leSkinDbContext.ToListAsync());
+            var query = _context.ChiTietDonHangs
+                .Include(c => c.MaDonHangNavigation)
+                .AsQueryable();
+
+            if (maDonHang.HasValue)
+            {
+                query = query.Where(c => c.MaDonHang == maDonHang.Value);
+                ViewBag.MaDonHang = maDonHang.Value;
+            }
+
+            return View(await query.ToListAsync());
         }
 
-        // GET: Admins/ChiTietDonHangs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // ======================================
+        // DETAILS – CHI TIẾT ĐƠN HÀNG (THEO MÃ ĐƠN)
+        // ======================================
+        public async Task<IActionResult> Details(int maDonHang)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var chiTietDonHang = await _context.ChiTietDonHangs
                 .Include(c => c.MaDonHangNavigation)
-                .Include(c => c.ItemId)
-                .FirstOrDefaultAsync(m => m.MaChiTiet == id);
+                .FirstOrDefaultAsync(c => c.MaDonHang == maDonHang);
+
             if (chiTietDonHang == null)
-            {
                 return NotFound();
+
+            // =========================
+            // LẤY TÊN SP / DV THEO ITEM
+            // =========================
+            string itemName = "Không xác định";
+
+            if (chiTietDonHang.ItemType == "SanPham")
+            {
+                itemName = await _context.SanPhams
+                    .Where(x => x.MaSanPham == chiTietDonHang.ItemId)
+                    .Select(x => x.TenSanPham)
+                    .FirstOrDefaultAsync()
+                    ?? "Sản phẩm không tồn tại";
             }
+            else if (chiTietDonHang.ItemType == "DichVu")
+            {
+                itemName = await _context.DichVus
+                    .Where(x => x.MaDichVu == chiTietDonHang.ItemId)
+                    .Select(x => x.TenDichVu)
+                    .FirstOrDefaultAsync()
+                    ?? "Dịch vụ không tồn tại";
+            }
+
+            ViewBag.ItemName = itemName;
 
             return View(chiTietDonHang);
         }
@@ -50,16 +80,13 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         public IActionResult Create()
         {
             ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang");
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham");
             return View();
         }
 
         // POST: Admins/ChiTietDonHangs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaChiTiet,MaDonHang,MaSanPham,SoLuong,DonGia,ThanhTien,GhiChu")] ChiTietDonHang chiTietDonHang)
+        public async Task<IActionResult> Create(ChiTietDonHang chiTietDonHang)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +94,14 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang", chiTietDonHang.MaDonHang);
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.ItemId);
+
+            ViewData["MaDonHang"] = new SelectList(
+                _context.DonHangs,
+                "MaDonHang",
+                "MaDonHang",
+                chiTietDonHang.MaDonHang
+            );
+
             return View(chiTietDonHang);
         }
 
@@ -76,31 +109,29 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var chiTietDonHang = await _context.ChiTietDonHangs.FindAsync(id);
             if (chiTietDonHang == null)
-            {
                 return NotFound();
-            }
-            ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang", chiTietDonHang.MaDonHang);
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.ItemId);
+
+            ViewData["MaDonHang"] = new SelectList(
+                _context.DonHangs,
+                "MaDonHang",
+                "MaDonHang",
+                chiTietDonHang.MaDonHang
+            );
+
             return View(chiTietDonHang);
         }
 
         // POST: Admins/ChiTietDonHangs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaChiTiet,MaDonHang,MaSanPham,SoLuong,DonGia,ThanhTien,GhiChu")] ChiTietDonHang chiTietDonHang)
+        public async Task<IActionResult> Edit(int id, ChiTietDonHang chiTietDonHang)
         {
             if (id != chiTietDonHang.MaChiTiet)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -111,20 +142,22 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChiTietDonHangExists(chiTietDonHang.MaChiTiet))
-                    {
+                    if (!_context.ChiTietDonHangs.Any(e => e.MaChiTiet == chiTietDonHang.MaChiTiet))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDonHang"] = new SelectList(_context.DonHangs, "MaDonHang", "MaDonHang", chiTietDonHang.MaDonHang);
-            ViewData["MaSanPham"] = new SelectList(_context.SanPhams, "MaSanPham", "MaSanPham", chiTietDonHang.ItemId);
-            ViewData["MaDichVu"] = new SelectList(_context.DichVus, "MaDichVu", "MaDichVu", chiTietDonHang.ItemId);
+
+            ViewData["MaDonHang"] = new SelectList(
+                _context.DonHangs,
+                "MaDonHang",
+                "MaDonHang",
+                chiTietDonHang.MaDonHang
+            );
+
             return View(chiTietDonHang);
         }
 
@@ -132,18 +165,14 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var chiTietDonHang = await _context.ChiTietDonHangs
                 .Include(c => c.MaDonHangNavigation)
-                .Include(c => c.ItemId)
                 .FirstOrDefaultAsync(m => m.MaChiTiet == id);
+
             if (chiTietDonHang == null)
-            {
                 return NotFound();
-            }
 
             return View(chiTietDonHang);
         }
@@ -161,11 +190,6 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ChiTietDonHangExists(int id)
-        {
-            return _context.ChiTietDonHangs.Any(e => e.MaChiTiet == id);
         }
     }
 }

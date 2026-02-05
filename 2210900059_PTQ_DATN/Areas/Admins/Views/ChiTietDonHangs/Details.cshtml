@@ -1,54 +1,88 @@
 ﻿@model _2210900059_PTQ_DATN.Models.ChiTietDonHang
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết đơn hàng";
 }
 
-<h1>Details</h1>
+<div class="max-w-4xl mx-auto">
 
-<div>
-    <h4>ChiTietDonHang</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThanhTien)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThanhTien)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GhiChu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaDonHangNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaDonHangNavigation.MaDonHang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItemId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.MaChiTiet">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <!-- HEADER -->
+    <div class="mb-6">
+        <h1 class="text-3xl font-black text-[#171118]">
+            Chi tiết đơn hàng
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Thông tin sản phẩm / dịch vụ trong đơn hàng
+        </p>
+    </div>
+
+    <!-- CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm p-6">
+
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+
+            <div>
+                <dt class="text-gray-500 font-medium">Loại</dt>
+                <dd class="mt-1 font-semibold text-[#171118]">
+                    @Model.ItemType
+                </dd>
+            </div>
+
+            <div>
+                <dt class="text-gray-500 font-medium">Tên sản phẩm / dịch vụ</dt>
+                <dd class="mt-1 font-semibold text-purple-700">
+                    @ViewBag.ItemName
+                </dd>
+            </div>
+
+            <div>
+                <dt class="text-gray-500 font-medium">Số lượng</dt>
+                <dd class="mt-1 font-semibold">
+                    @Model.SoLuong
+                </dd>
+            </div>
+
+            <div>
+                <dt class="text-gray-500 font-medium">Đơn giá</dt>
+                <dd class="mt-1 font-semibold text-red-600">
+                    @string.Format("{0:N0} ₫", Model.DonGia)
+                </dd>
+            </div>
+
+            <div>
+                <dt class="text-gray-500 font-medium">Thành tiền</dt>
+                <dd class="mt-1 font-semibold text-red-700">
+                    @string.Format("{0:N0} ₫", Model.ThanhTien)
+                </dd>
+            </div>
+
+            <div>
+                <dt class="text-gray-500 font-medium">Mã đơn hàng</dt>
+                <dd class="mt-1 font-semibold">
+                    @Model.MaDonHangNavigation?.MaDonHang
+                </dd>
+            </div>
+
+            <div class="md:col-span-2">
+                <dt class="text-gray-500 font-medium">Ghi chú</dt>
+                <dd class="mt-1 text-gray-700">
+                    @Model.GhiChu
+                </dd>
+            </div>
+
+        </dl>
+    </div>
+
+    <!-- ACTION -->
+    <div class="mt-6 flex justify-end">
+        <a asp-area="Admins"
+           asp-controller="DonHangs"
+           asp-action="Index"
+           class="inline-flex items-center gap-2 px-6 h-11
+                  rounded-xl bg-gray-200 text-gray-700 font-semibold
+                  hover:bg-gray-300 transition">
+            ← Quay lại danh sách đơn hàng
+        </a>
+    </div>
+
 </div>

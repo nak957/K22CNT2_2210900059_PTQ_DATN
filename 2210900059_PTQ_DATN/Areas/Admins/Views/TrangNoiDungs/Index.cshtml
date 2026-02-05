@@ -1,95 +1,145 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.TrangNoiDung>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý Trang nội dung";
 }
 
-<h1>Index</h1>
+<style>
+    .bg-primary {
+        background-color: #2563eb; /* xanh chủ đạo */
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TieuDe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoaiTrang)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoTaNgan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiDung)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ThuTu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HienThi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoiBat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayCapNhat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiCapNhatNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNguoiTaoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TieuDe)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiTrang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTaNgan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThuTu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HienThi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiBat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayCapNhat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiCapNhatNavigation.MaNguoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNguoiTaoNavigation.MaNguoiDung)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaTrang">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaTrang">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaTrang">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    .text-primary {
+        color: #2563eb;
+    }
+</style>
+
+<div class="space-y-6">
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-extrabold text-slate-800">
+                Quản lý Trang nội dung
+            </h1>
+            <p class="text-sm text-slate-500">
+                Danh sách các trang nội dung trong hệ thống
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
+            <span class="material-symbols-outlined text-base">add</span>
+            Thêm trang
+        </a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="bg-white rounded-xl border overflow-hidden">
+
+        <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 border-b">
+                <tr class="text-left text-slate-600 font-semibold">
+                    <th class="px-4 py-3">Tiêu đề</th>
+                    <th class="px-4 py-3">Slug</th>
+                    <th class="px-4 py-3">Loại</th>
+                    <th class="px-4 py-3 text-center">Thứ tự</th>
+                    <th class="px-4 py-3 text-center">Hiển thị</th>
+                    <th class="px-4 py-3 text-center">Nổi bật</th>
+                    <th class="px-4 py-3">Cập nhật</th>
+                    <th class="px-4 py-3">Người tạo</th>
+                    <th class="px-4 py-3 text-center">Hành động</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="px-4 py-3 font-medium text-slate-800">
+                            @item.TieuDe
+                        </td>
+
+                        <td class="px-4 py-3 text-slate-500">
+                            @item.Slug
+                        </td>
+
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 rounded-md bg-slate-100 text-slate-700 text-xs">
+                                @item.LoaiTrang
+                            </span>
+                        </td>
+
+                        <td class="px-4 py-3 text-center">
+                            @item.ThuTu
+                        </td>
+
+                        <td class="px-4 py-3 text-center">
+                            @if (item.HienThi == true)
+                            {
+                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
+                                    Có
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-600">
+                                    Không
+                                </span>
+                            }
+                        </td>
+
+                        <td class="px-4 py-3 text-center">
+                            @if (item.NoiBat == true)
+                            {
+                                <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">
+                                    Có
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="px-2 py-1 text-xs rounded-full bg-slate-100 text-slate-500">
+                                    Không
+                                </span>
+                            }
+                        </td>
+
+                        <td class="px-4 py-3 text-slate-500">
+                            @item.NgayCapNhat?.ToString("dd/MM/yyyy")
+                        </td>
+
+                        <td class="px-4 py-3 text-slate-500">
+                            @(item.MaNguoiTaoNavigation?.MaNguoiDung.ToString() ?? "-")
+                        </td>
+
+                        <td class="px-4 py-3">
+                            <div class="flex items-center justify-center gap-3">
+                                <a asp-action="Edit" asp-route-id="@item.MaTrang"
+                                   class="text-blue-600 hover:text-blue-800">
+                                    <span class="material-symbols-outlined text-base">edit</span>
+                                </a>
+
+                                <a asp-action="Details" asp-route-id="@item.MaTrang"
+                                   class="text-slate-600 hover:text-slate-800">
+                                    <span class="material-symbols-outlined text-base">visibility</span>
+                                </a>
+
+                                <a asp-action="Delete" asp-route-id="@item.MaTrang"
+                                   class="text-red-600 hover:text-red-800">
+                                    <span class="material-symbols-outlined text-base">delete</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (!Model.Any())
+        {
+            <div class="p-6 text-center text-slate-500">
+                Không có dữ liệu trang nội dung.
+            </div>
+        }
+    </div>
+</div>

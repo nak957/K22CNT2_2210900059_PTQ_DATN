@@ -18,61 +18,93 @@
     <!-- STAT CARDS -->
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        <!-- Người dùng -->
-        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-4">
-                <div class="p-2 bg-indigo-100 rounded-lg">
-                    <span class="material-symbols-outlined text-indigo-600">group</span>
-                </div>
-                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
-                    +0%
-                </span>
-            </div>
-            <p class="text-sm text-gray-500 uppercase tracking-wide">Người dùng</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
-        </div>
+        <!-- NGƯỜI DÙNG -->
+        <a asp-area="Admins"
+           asp-controller="NguoiDungs"
+           asp-action="Index"
+           class="block">
 
-        <!-- Sản phẩm -->
-        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-4">
-                <div class="p-2 bg-green-100 rounded-lg">
-                    <span class="material-symbols-outlined text-green-600">inventory_2</span>
+            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-2 bg-indigo-100 rounded-lg">
+                        <span class="material-symbols-outlined text-indigo-600">group</span>
+                    </div>
+                    <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                        +0%
+                    </span>
                 </div>
-                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
-                    +0%
-                </span>
+                <p class="text-sm text-gray-500 uppercase tracking-wide">Người dùng</p>
+                <p class="text-3xl font-extrabold text-gray-800 mt-1">
+                    @ViewBag.TongNguoiDung
+                </p>
             </div>
-            <p class="text-sm text-gray-500 uppercase tracking-wide">Sản phẩm</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
-        </div>
+        </a>
 
-        <!-- Đơn hàng -->
-        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-4">
-                <div class="p-2 bg-amber-100 rounded-lg">
-                    <span class="material-symbols-outlined text-amber-600">receipt_long</span>
-                </div>
-                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
-                    +0%
-                </span>
-            </div>
-            <p class="text-sm text-gray-500 uppercase tracking-wide">Đơn hàng</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
-        </div>
+        <!-- SẢN PHẨM -->
+        <a asp-area="Admins"
+           asp-controller="SanPhams"
+           asp-action="Index"
+           class="block">
 
-        <!-- Liên hệ -->
-        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-4">
-                <div class="p-2 bg-rose-100 rounded-lg">
-                    <span class="material-symbols-outlined text-rose-600">mail</span>
+            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <span class="material-symbols-outlined text-green-600">inventory_2</span>
+                    </div>
+                    <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                        +0%
+                    </span>
                 </div>
-                <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
-                    +0%
-                </span>
+                <p class="text-sm text-gray-500 uppercase tracking-wide">Sản phẩm</p>
+                <p class="text-3xl font-extrabold text-gray-800 mt-1">
+                    @ViewBag.TongSanPham
+                </p>
             </div>
-            <p class="text-sm text-gray-500 uppercase tracking-wide">Liên hệ</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">0</p>
-        </div>
+        </a>
+
+        <!-- ĐƠN HÀNG -->
+        <a asp-area="Admins"
+           asp-controller="DonHangs"
+           asp-action="Index"
+           class="block">
+
+            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-2 bg-amber-100 rounded-lg">
+                        <span class="material-symbols-outlined text-amber-600">receipt_long</span>
+                    </div>
+                    <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                        +0%
+                    </span>
+                </div>
+                <p class="text-sm text-gray-500 uppercase tracking-wide">Đơn hàng</p>
+                <p class="text-3xl font-extrabold text-gray-800 mt-1">
+                    @ViewBag.TongDonHang
+                </p>
+            </div>
+        </a>
+
+        <!-- LIÊN HỆ -->
+        <a asp-area="Admins"
+           asp-controller="LienHes"
+           asp-action="Index"
+           class="block">
+
+            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-2 bg-rose-100 rounded-lg">
+                        <span class="material-symbols-outlined text-rose-600">mail</span>
+                    </div>
+                    <span class="text-emerald-500 text-xs font-bold bg-emerald-100 px-2 py-1 rounded">
+                        +0%
+                    </span>
+                </div>
+                <p class="text-sm text-gray-500 uppercase tracking-wide">Liên hệ</p>
+                <p class="text-3xl font-extrabold text-gray-800 mt-1">
+                    @ViewBag.TongLienHe
+                </p>
+            </div>
+        </a>
 
     </div>
 

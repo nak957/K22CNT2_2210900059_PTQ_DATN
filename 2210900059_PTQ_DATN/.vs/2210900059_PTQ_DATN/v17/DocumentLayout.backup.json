@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\tintuc\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\tintuc\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\views\\tintuc\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:views\\tintuc\\chitiet.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\areas\\admins\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:areas\\admins\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,47 +14,20 @@
       "DocumentGroups": [
         {
           "DockedHeight": 206,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ChiTiet.cshtml",
-              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\TinTuc\\ChiTiet.cshtml",
-              "RelativeDocumentMoniker": "Views\\TinTuc\\ChiTiet.cshtml",
-              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\TinTuc\\ChiTiet.cshtml*",
-              "RelativeToolTip": "Views\\TinTuc\\ChiTiet.cshtml*",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAjwG8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-03T16:14:20.658Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\TinTuc\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\TinTuc\\Index.cshtml",
-              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Views\\TinTuc\\Index.cshtml",
-              "RelativeToolTip": "Views\\TinTuc\\Index.cshtml",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAjwHkAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Areas\\Admins\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admins\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Areas\\Admins\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Areas\\Admins\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-03T16:12:56.559Z",
+              "WhenOpened": "2026-02-05T10:58:01.615Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedHeight": 71,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }
