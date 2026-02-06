@@ -1,13 +1,16 @@
 ﻿@model IEnumerable<_2210900059_PTQ_DATN.Models.DichVu>
+@using _2210900059_PTQ_DATN.Models
 
 @{
     ViewData["Title"] = "Quản lý dịch vụ";
+    var danhMucs = ViewBag.DanhMucs as List<DanhMucDichVu>;
+    var maDanhMucDangChon = ViewBag.MaDanhMucDangChon as int?;
 }
 
 <div class="max-w-7xl mx-auto">
 
     <!-- HEADER -->
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex items-center justify-between mb-6">
         <div>
             <h1 class="text-3xl font-black text-[#171118]">
                 Quản lý dịch vụ
@@ -19,16 +22,43 @@
 
         <a asp-action="Create"
            class="flex items-center gap-2 rounded-xl h-12 px-6
-          bg-purple-600 text-white text-base font-bold
-          hover:bg-purple-700
-          shadow-lg shadow-purple-600/30
-          transition">
+                  bg-purple-600 text-white text-base font-bold
+                  hover:bg-purple-700
+                  shadow-lg shadow-purple-600/30
+                  transition">
             <span class="material-symbols-outlined">add_circle</span>
             <span>Thêm dịch vụ</span>
         </a>
     </div>
 
-    <!-- TABLE CARD -->
+    <!-- FILTER (CHỈ THÊM KHỐI NÀY – KHÔNG ẢNH HƯỞNG PHẦN KHÁC) -->
+    <div class="flex justify-end mb-4">
+        <form method="get" class="flex items-center gap-2">
+            <span class="text-sm text-gray-500">Lọc theo danh mục:</span>
+
+            <select name="maDanhMuc"
+                    onchange="this.form.submit()"
+                    class="h-9 rounded-lg border border-gray-300
+                           px-3 text-sm text-gray-700
+                           focus:outline-none focus:ring-2
+                           focus:ring-purple-500 focus:border-purple-500">
+                <option value="">Tất cả</option>
+
+                @if (danhMucs != null)
+                {
+                    foreach (var dm in danhMucs)
+                    {
+                        <option value="@dm.MaDanhMucDv"
+                                selected="@(dm.MaDanhMucDv == maDanhMucDangChon)">
+                            @dm.TenDanhMuc
+                        </option>
+                    }
+                }
+            </select>
+        </form>
+    </div>
+
+    <!-- TABLE CARD (GIỮ NGUYÊN 100%) -->
     <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm overflow-x-auto">
 
         <table class="min-w-full text-sm">
@@ -49,22 +79,18 @@
                 {
                     <tr class="hover:bg-gray-50">
 
-                        <!-- TÊN -->
                         <td class="px-4 py-3 font-semibold text-[#171118]">
                             @item.TenDichVu
                         </td>
 
-                        <!-- DANH MỤC -->
                         <td class="px-4 py-3">
                             @item.MaDanhMucDvNavigation?.TenDanhMuc
                         </td>
 
-                        <!-- GIÁ -->
                         <td class="px-4 py-3 text-right font-medium">
                             @string.Format("{0:N0} ₫", item.Gia)
                         </td>
 
-                        <!-- NỔI BẬT -->
                         <td class="px-4 py-3 text-center">
                             @if (item.NoiBat == true)
                             {
@@ -82,7 +108,6 @@
                             }
                         </td>
 
-                        <!-- TRẠNG THÁI -->
                         <td class="px-4 py-3 text-center">
                             @if (item.TrangThai == true)
                             {
@@ -100,14 +125,11 @@
                             }
                         </td>
 
-                        <!-- NGÀY TẠO -->
                         <td class="px-4 py-3 text-center text-gray-500">
                             @item.NgayTao?.ToString("dd/MM/yyyy")
                         </td>
 
-                        <!-- ACTIONS -->
                         <td class="px-4 py-3 text-center whitespace-nowrap">
-
                             <a asp-action="Details"
                                asp-route-id="@item.MaDichVu"
                                class="text-blue-600 hover:underline mr-3">
@@ -125,7 +147,6 @@
                                class="text-red-600 hover:underline">
                                 Xóa
                             </a>
-
                         </td>
                     </tr>
                 }

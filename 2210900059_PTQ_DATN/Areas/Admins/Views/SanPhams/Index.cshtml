@@ -4,26 +4,83 @@
     ViewData["Title"] = "Quản lý sản phẩm";
 }
 
-<!-- Tailwind CDN (nếu Layout đã có thì có thể bỏ) -->
+<!-- Tailwind CDN  -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="max-w-7xl mx-auto px-6 py-8">
 
-    <!-- Header -->
+    <!-- HEADER -->
     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div>
-            <h1 class="text-3xl font-extrabold text-gray-800">Quản lý sản phẩm</h1>
-            <p class="text-gray-500 mt-1">Danh sách toàn bộ sản phẩm trong hệ thống</p>
+            <h1 class="text-3xl font-extrabold text-gray-800">
+                Quản lý sản phẩm
+            </h1>
+            <p class="text-gray-500 mt-1">
+                Danh sách toàn bộ sản phẩm trong hệ thống
+            </p>
         </div>
 
         <a asp-action="Create"
-           class="inline-flex items-center gap-2 px-5 h-11 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition">
+           class="inline-flex items-center gap-2 px-5 h-11 rounded-xl
+                  bg-purple-600 text-white font-semibold
+                  hover:bg-purple-700 transition">
             <span>➕</span>
             Thêm sản phẩm mới
         </a>
     </div>
 
-    <!-- Table -->
+    <!-- 🔍 FILTER DANH MỤC  -->
+    @{
+        var danhMucs = ViewBag.DanhMucs as List<_2210900059_PTQ_DATN.Models.DanhMucSanPham>;
+        int? maDanhMuc = ViewBag.MaDanhMuc as int?;
+    }
+
+    <form method="get"
+          class="mb-6 bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+        <div class="flex flex-wrap items-end gap-4">
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    Danh mục sản phẩm
+                </label>
+
+                <select name="maDanhMuc"
+                        class="min-w-[240px] h-11 px-4 rounded-xl
+                               border border-gray-300 bg-white
+                               focus:outline-none focus:ring-2
+                               focus:ring-purple-500 focus:border-purple-500">
+                    <option value="">-- Tất cả danh mục --</option>
+
+                    @if (danhMucs != null)
+                    {
+                        foreach (var dm in danhMucs)
+                        {
+                            <option value="@dm.MaDanhMuc"
+                                    selected="@(maDanhMuc == dm.MaDanhMuc)">
+                                @dm.TenDanhMuc
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <button type="submit"
+                    class="h-11 px-6 rounded-xl font-semibold
+                           bg-purple-600 text-white
+                           hover:bg-purple-700 transition">
+                🔍 Lọc
+            </button>
+
+            <a asp-action="Index"
+               class="h-11 px-6 rounded-xl font-semibold
+                      border border-gray-300 text-gray-600
+                      hover:bg-gray-100 transition flex items-center">
+                ⟳ Reset
+            </a>
+        </div>
+    </form>
+
+    <!-- TABLE -->
     <div class="bg-white rounded-2xl shadow border border-gray-200 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm text-left">
@@ -39,7 +96,6 @@
                         <th class="px-4 py-3">Thành phần</th>
                         <th class="px-4 py-3 text-right">Giá</th>
                         <th class="px-4 py-3 text-center">Số lượng</th>
-
                         <th class="px-4 py-3 text-center">Trạng thái</th>
                         <th class="px-4 py-3 text-center">Thao tác</th>
                     </tr>
@@ -77,7 +133,6 @@
                                 @String.Format("{0:N0} ₫", item.Gia)
                             </td>
 
-                            <!-- ⭐ HIỂN THỊ SỐ LƯỢNG -->
                             <td class="px-4 py-3 text-center font-semibold">
                                 @if (item.SoLuong > 0)
                                 {
@@ -92,13 +147,15 @@
                             <td class="px-4 py-3 text-center">
                                 @if (item.TrangThai == true)
                                 {
-                                    <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
+                                    <span class="px-3 py-1 text-xs font-bold rounded-full
+                                                         bg-green-100 text-green-700">
                                         Đang bán
                                     </span>
                                 }
                                 else
                                 {
-                                    <span class="px-3 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600">
+                                    <span class="px-3 py-1 text-xs font-bold rounded-full
+                                                         bg-red-100 text-red-600">
                                         Ngừng bán
                                     </span>
                                 }
@@ -107,15 +164,15 @@
                             <td class="px-4 py-3">
                                 <div class="flex justify-end gap-2">
                                     <a asp-action="Edit" asp-route-id="@item.MaSanPham"
-                                       class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                                       class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
                                         ✏️
                                     </a>
                                     <a asp-action="Details" asp-route-id="@item.MaSanPham"
-                                       class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                                       class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                                         👁
                                     </a>
                                     <a asp-action="Delete" asp-route-id="@item.MaSanPham"
-                                       class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition">
+                                       class="p-2 text-red-500 hover:bg-red-50 rounded-lg">
                                         🗑
                                     </a>
                                 </div>

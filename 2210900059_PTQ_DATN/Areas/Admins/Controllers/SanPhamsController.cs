@@ -19,19 +19,31 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             _context = context;
             _environment = environment;
         }
-
         // =======================
         // GET: Admins/SanPhams
         // =======================
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? maDanhMuc)
         {
-            var data = _context.SanPhams
+            ViewData["DanhMucs"] = await _context.DanhMucSanPhams
+                .OrderBy(d => d.TenDanhMuc)
+                .ToListAsync();
+
+            ViewData["MaDanhMucSelected"] = maDanhMuc;
+
+            var query = _context.SanPhams
                 .Include(s => s.MaDanhMucNavigation)
                 .Include(s => s.MaNguoiTaoNavigation)
-                .Include(s => s.MaNguoiCapNhatNavigation);
+                .Include(s => s.MaNguoiCapNhatNavigation)
+                .AsQueryable();
 
-            return View(await data.ToListAsync());
+            if (maDanhMuc.HasValue)
+            {
+                query = query.Where(s => s.MaDanhMuc == maDanhMuc);
+            }
+
+            return View(await query.ToListAsync());
         }
+
 
         // =======================
         // GET: Details

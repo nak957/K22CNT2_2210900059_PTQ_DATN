@@ -4,89 +4,147 @@
     ViewData["Title"] = "Xóa dịch vụ";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-danger text-white">
-            <h4 class="mb-0">Xác nhận xóa dịch vụ</h4>
+<div class="max-w-6xl mx-auto px-4">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-black text-[#171118]">
+            Xác nhận xóa dịch vụ
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Hành động này không thể hoàn tác, vui lòng kiểm tra kỹ thông tin trước khi xóa
+        </p>
+    </div>
+
+    <!-- WARNING CARD -->
+    <div class="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8">
+        <p class="text-red-700 font-semibold">
+            ⚠️ Bạn có chắc chắn muốn xóa dịch vụ này không?
+            Dữ liệu sẽ bị xóa vĩnh viễn khỏi hệ thống.
+        </p>
+    </div>
+
+    <!-- CONTENT CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm p-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 text-sm">
+
+            <!-- LEFT -->
+            <div class="space-y-4">
+
+                <div>
+                    <label class="text-gray-500">Tên dịch vụ</label>
+                    <div class="font-semibold text-lg text-[#171118]">
+                        @Model.TenDichVu
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Slug</label>
+                    <div>@Model.Slug</div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Loại dịch vụ</label>
+                    <div>@Model.LoaiDichVu</div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Công nghệ</label>
+                    <div>@Model.CongNghe</div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Thời lượng</label>
+                    <div>@Model.ThoiLuong</div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Số buổi</label>
+                    <div>@Model.SoBuoi</div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="space-y-4">
+
+                <div>
+                    <label class="text-gray-500">Đối tượng phù hợp</label>
+                    <div>@Model.DoiTuongPhuHop</div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Vùng tác động</label>
+                    <div>@Model.VungTacDong</div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Giá</label>
+                    <div class="text-red-600 font-bold text-lg">
+                        @String.Format("{0:N0} ₫", Model.Gia)
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Nổi bật</label>
+                    <div>
+                        @(Model.NoiBat == true ? "Có" : "Không")
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-gray-500">Trạng thái</label>
+                    <div>
+                        @(Model.TrangThai == true ? "Hoạt động" : "Ẩn")
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="card-body">
-            <p class="text-danger fw-bold">
-                Bạn có chắc chắn muốn xóa dịch vụ này không? Hành động này không thể hoàn tác.
+        <!-- DESCRIPTION -->
+        <div class="mt-8">
+            <label class="text-gray-500">Mô tả ngắn</label>
+            <p class="text-gray-700 mt-1">
+                @Model.MoTaNgan
             </p>
+        </div>
 
-            <dl class="row">
-                <dt class="col-sm-3">Tên dịch vụ</dt>
-                <dd class="col-sm-9">@Model.TenDichVu</dd>
+        <!-- IMAGE -->
+        <div class="mt-8">
+            <label class="text-gray-500 block mb-2">Hình ảnh</label>
 
-                <dt class="col-sm-3">Slug</dt>
-                <dd class="col-sm-9">@Model.Slug</dd>
+            @if (!string.IsNullOrEmpty(Model.HinhAnh))
+            {
+                <img src="~/images/services/@Model.HinhAnh"
+                     class="rounded-xl border max-w-xs shadow-sm" />
+            }
+            else
+            {
+                <span class="text-gray-400">Không có hình ảnh</span>
+            }
+        </div>
 
-                <dt class="col-sm-3">Loại dịch vụ</dt>
-                <dd class="col-sm-9">@Model.LoaiDichVu</dd>
+        <!-- ACTIONS -->
+        <form asp-action="Delete" class="mt-10 flex gap-3">
+            <input type="hidden" asp-for="MaDichVu" />
 
-                <dt class="col-sm-3">Công nghệ</dt>
-                <dd class="col-sm-9">@Model.CongNghe</dd>
-
-                <dt class="col-sm-3">Thời lượng</dt>
-                <dd class="col-sm-9">@Model.ThoiLuong</dd>
-
-                <dt class="col-sm-3">Số buổi</dt>
-                <dd class="col-sm-9">@Model.SoBuoi</dd>
-
-                <dt class="col-sm-3">Đối tượng phù hợp</dt>
-                <dd class="col-sm-9">@Model.DoiTuongPhuHop</dd>
-
-                <dt class="col-sm-3">Vùng tác động</dt>
-                <dd class="col-sm-9">@Model.VungTacDong</dd>
-
-                <dt class="col-sm-3">Mô tả ngắn</dt>
-                <dd class="col-sm-9">@Model.MoTaNgan</dd>
-
-                <dt class="col-sm-3">Giá</dt>
-                <dd class="col-sm-9 text-danger fw-bold">
-                    @String.Format("{0:N0} đ", Model.Gia)
-                </dd>
-
-                <dt class="col-sm-3">Nổi bật</dt>
-                <dd class="col-sm-9">
-                    @(Model.NoiBat == true ? "Có" : "Không")
-                </dd>
-
-                <dt class="col-sm-3">Trạng thái</dt>
-                <dd class="col-sm-9">
-                    @(Model.TrangThai == true ? "Hoạt động" : "Ẩn")
-                </dd>
-
-
-                <dt class="col-sm-3">Hình ảnh</dt>
-                <dd class="col-sm-9">
-                    @if (!string.IsNullOrEmpty(Model.HinhAnh))
-                    {
-                        <img src="~/uploads/@Model.HinhAnh"
-                             class="img-thumbnail"
-                             style="max-width:200px" />
-                    }
-                </dd>
-            </dl>
-
-            <form asp-action="Delete" class="mt-4">
-                <input type="hidden" asp-for="MaDichVu" />
-                <a asp-action="Index"
-                   class="h-12 px-6 rounded-xl border border-[#e4dbe6]
-                      flex items-center justify-center
+            <a asp-action="Index"
+               class="h-11 px-6 rounded-xl border border-[#e4dbe6]
+                      inline-flex items-center justify-center
                       text-gray-600 hover:bg-gray-100 transition">
-                    Hủy bỏ
-                </a>
+                Hủy bỏ
+            </a>
 
-                <button type="submit"
-                        class="h-12 px-8 rounded-xl
+            <button type="submit"
+                    class="h-11 px-8 rounded-xl
                            bg-red-600 text-white font-bold
                            hover:bg-red-700 transition
                            shadow-lg shadow-red-500/20">
-                    Xóa vĩnh viễn
-                </button>
-            </form>
-        </div>
+                Xóa vĩnh viễn
+            </button>
+        </form>
+
     </div>
 </div>

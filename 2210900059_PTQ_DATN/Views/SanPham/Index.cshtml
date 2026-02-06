@@ -2,11 +2,55 @@
 
 @{
     ViewData["Title"] = "Sản phẩm";
+    var danhMucs = ViewBag.DanhMucSanPham as List<_2210900059_PTQ_DATN.Models.DanhMucSanPham>;
+    int? danhMucDangChon = ViewBag.DanhMucDangChon as int?;
 }
+<style>
+    .btn-filter {
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: 1px solid #e4dbe6;
+        background-color: #fff;
+        color: #6b7280;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+        .btn-filter:hover {
+            background-color: #f9fafb;
+            border-color: #d1c4d6;
+            color: #374151;
+        }
+
+        .btn-filter:active {
+            transform: scale(0.97);
+        }
+</style>
 
 <section class="section products">
     <div class="container">
+
         <h2 class="section-title">TẤT CẢ SẢN PHẨM</h2>
+
+        <!-- FILTER -->
+        <form method="get" class="mb-6" style="text-align:right">
+            <select name="danhMucId"
+                    onchange="this.form.submit()"
+                    style="padding:8px 12px;border-radius:6px;border:1px solid #ddd">
+                <option value="">Tất cả danh mục</option>
+
+                @if (danhMucs != null)
+                {
+                    foreach (var dm in danhMucs)
+                    {
+                        <option value="@dm.MaDanhMuc"
+                                selected="@(danhMucDangChon == dm.MaDanhMuc)">
+                            @dm.TenDanhMuc
+                        </option>
+                    }
+                }
+            </select>
+        </form>
 
         <div class="product-row">
             @if (Model != null && Model.Any())

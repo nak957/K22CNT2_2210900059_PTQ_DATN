@@ -119,6 +119,8 @@ wwwroot\images\products\17ebfc7e-4cb6-4165-a238-4f862321efad.jpg
 wwwroot\images\products\2c654469-0a90-4c0a-973d-c696e659e36c.webp
 wwwroot\images\products\446acef1-8af1-4720-bd3e-e823b6fdee04.jpg
 wwwroot\images\products\5525c5b1-ed5e-4a5c-bb77-96a3f918cb9c.jpg
+wwwroot\images\products\756b97d6-aecc-4f8f-97b7-62f5522b9e93.webp
+wwwroot\images\products\8363cb89-52bb-4d7e-a8f2-4249838af3bc.jpg
 wwwroot\images\products\8c59629c-89e9-4e84-8ee0-09861fedfce6.jpg
 wwwroot\images\products\9c466cec-863c-463b-8399-0aabf38fd643.png
 wwwroot\images\products\aa0bca2d-17a8-452b-bc13-a65fcf4d5417.webp
@@ -141,12 +143,14 @@ wwwroot\images\sanpham8.jpg
 wwwroot\images\sanpham9.webp
 wwwroot\images\saokimPharma.png
 wwwroot\images\services\036d87d7-c0f9-4dd1-958c-245ecc7705cf.jpg
+wwwroot\images\services\0c3e5d8b-4770-40e6-9384-71164b97cac3.png
 wwwroot\images\services\1c1664e8-8542-441a-a905-aef9d8eec78c.jpg
 wwwroot\images\services\1e625622-80ae-457a-9766-cd52b46ad0d0.jpg
 wwwroot\images\services\1f7b67d8-95e9-44ff-a7dc-d29cfd77feef.jpg
 wwwroot\images\services\2a0a49d1-6630-49a7-813e-496192b22671.png
 wwwroot\images\services\2c79a6c2-e621-49db-929a-2715cdb77a5b.png
 wwwroot\images\services\394bdfd9-1ef6-49f1-b144-21c3f17cd846.jpg
+wwwroot\images\services\41ef216d-4e57-43c2-a32c-d88fb4042662.jpg
 wwwroot\images\services\45732151-582b-4057-acde-e5ee0e597aa4.jpg
 wwwroot\images\services\4b4db391-8669-4859-9c3f-1fb76905169a.jpg
 wwwroot\images\services\52f5130a-bc7b-430f-9f6a-ec210ad92925.png

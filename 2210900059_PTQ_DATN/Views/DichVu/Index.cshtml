@@ -1,14 +1,74 @@
 ﻿@model List<_2210900059_PTQ_DATN.Models.DichVu>
+@using _2210900059_PTQ_DATN.Models
 
 @{
     ViewData["Title"] = "Dịch vụ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var danhMucs = ViewBag.DanhMucs as List<DanhMucDichVu>;
+    var danhMucDangChon = ViewBag.DanhMucDangChon as string;
 }
+<style>
+    /* ===== FILTER DỊCH VỤ ===== */
+    .service-filter {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 24px;
+    }
+
+    .service-filter select {
+        min-width: 220px;
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        outline: none;
+    }
+
+    .service-filter select:hover {
+        border-color: #c9a45c; /* màu nhấn nhẹ */
+    }
+
+    .service-filter select:focus {
+        border-color: #c9a45c;
+        box-shadow: 0 0 0 3px rgba(201, 164, 92, 0.2);
+    }
+
+        .service-filter select {
+            width: 100%;
+            max-width: 320px;
+        }
+    }
+</style>
 
 <div class="accent-line"></div>
 
 <section class="section services">
     <div class="container">
+
+        <!-- ===== BỘ LỌC DANH MỤC ===== -->
+        <form method="get" asp-action="Index" class="service-filter">
+            <select name="danhMuc" onchange="this.form.submit()">
+                <option value="">-- Tất cả danh mục --</option>
+
+                @if (danhMucs != null)
+                {
+                    foreach (var dm in danhMucs)
+                    {
+                        <option value="@dm.TenDanhMuc"
+                                selected="@(dm.TenDanhMuc == danhMucDangChon)">
+                            @dm.TenDanhMuc
+                        </option>
+                    }
+                }
+            </select>
+        </form>
+
         <div class="service-row">
 
             @if (Model != null && Model.Any())
@@ -32,6 +92,13 @@
                         <div class="card-body">
                             <h3>@dv.TenDichVu</h3>
 
+                            @if (dv.MaDanhMucDvNavigation != null)
+                            {
+                                <span class="service-category">
+                                    @dv.MaDanhMucDvNavigation.TenDanhMuc
+                                </span>
+                            }
+
                             @if (!string.IsNullOrEmpty(dv.MoTaNgan))
                             {
                                 <p class="service-desc">
@@ -39,11 +106,10 @@
                                 </p>
                             }
 
-                            <div class="card-body">
-                                <h3>@dv.TenDichVu</h3>
-                                <a href="@Url.Action("ChiTiet", "DichVu", new { id = dv.MaDichVu })"
-                                   class="btn-outline">Xem chi tiết</a>
-                            </div>
+                            <a href="@Url.Action("ChiTiet", "DichVu", new { id = dv.MaDichVu })"
+                               class="btn-outline">
+                                Xem chi tiết
+                            </a>
                         </div>
                     </article>
                 }

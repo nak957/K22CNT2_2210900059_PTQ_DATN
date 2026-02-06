@@ -1,118 +1,130 @@
 ﻿@model _2210900059_PTQ_DATN.Models.SanPham
 
 @{
-    ViewData["Title"] = "Tạo sản phẩm";
+    ViewData["Title"] = "Chi tiết sản phẩm";
 }
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="max-w-5xl mx-auto px-6 py-8">
 
+    <!-- Header -->
     <div class="mb-6">
-        <h1 class="text-3xl font-extrabold text-gray-800">Thêm sản phẩm mới</h1>
-        <p class="text-gray-500 mt-1">Nhập thông tin chi tiết cho sản phẩm</p>
+        <h1 class="text-3xl font-extrabold text-gray-800">
+            Chi tiết sản phẩm
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Thông tin chi tiết của sản phẩm
+        </p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow border border-gray-200 p-8">
+    <!-- Card -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow p-8 space-y-6">
 
-        <form asp-action="Create" method="post" enctype="multipart/form-data" class="space-y-6">
+        <!-- Grid info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <div asp-validation-summary="ModelOnly"
-                 class="rounded-lg bg-red-50 text-red-600 px-4 py-3 text-sm"></div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Danh mục -->
-                <div>
-                    <label asp-for="MaDanhMuc" class="block font-semibold text-gray-700 mb-1">Danh mục</label>
-                    <select asp-for="MaDanhMuc" asp-items="ViewBag.MaDanhMuc"
-                            class="w-full rounded-xl border-gray-300"></select>
-                </div>
-
-                <!-- Tên -->
-                <div>
-                    <label asp-for="TenSanPham" class="block font-semibold text-gray-700 mb-1">Tên sản phẩm</label>
-                    <input asp-for="TenSanPham" class="w-full rounded-xl border-gray-300" />
-                </div>
-
-                <div>
-                    <label asp-for="Slug" class="block font-semibold text-gray-700 mb-1">Slug</label>
-                    <input asp-for="Slug" class="w-full rounded-xl border-gray-300" />
-                </div>
-
-                <div>
-                    <label asp-for="LoaiSanPham" class="block font-semibold text-gray-700 mb-1">Loại sản phẩm</label>
-                    <input asp-for="LoaiSanPham" class="w-full rounded-xl border-gray-300" />
-                </div>
-
-                <div>
-                    <label asp-for="ThuongHieu" class="block font-semibold text-gray-700 mb-1">Thương hiệu</label>
-                    <input asp-for="ThuongHieu" class="w-full rounded-xl border-gray-300" />
-                </div>
-
-                <div>
-                    <label asp-for="DungTich" class="block font-semibold text-gray-700 mb-1">Dung tích</label>
-                    <input asp-for="DungTich" class="w-full rounded-xl border-gray-300" />
-                </div>
-
-                <div>
-                    <label asp-for="Gia" class="block font-semibold text-gray-700 mb-1">Giá bán (VNĐ)</label>
-                    <input asp-for="Gia" type="number" min="0"
-                           class="w-full rounded-xl border-gray-300" />
-                </div>
-
-                <!-- ✅ SỐ LƯỢNG -->
-                <div>
-                    <label asp-for="SoLuong" class="block font-semibold text-gray-700 mb-1">
-                        Số lượng tồn kho
-                    </label>
-                    <input asp-for="SoLuong"
-                           type="number"
-                           min="0"
-                           class="w-full rounded-xl border-gray-300" />
-                </div>
-            </div>
-
-            <!-- Mô tả -->
             <div>
-                <label asp-for="MoTaNgan" class="block font-semibold text-gray-700 mb-1">Mô tả ngắn</label>
-                <textarea asp-for="MoTaNgan" rows="3"
-                          class="w-full rounded-xl border-gray-300"></textarea>
+                <label class="text-sm font-semibold text-gray-500">Danh mục</label>
+                <div class="mt-1 text-gray-800 font-medium">
+                    @Model.MaDanhMucNavigation?.TenDanhMuc
+                </div>
             </div>
 
             <div>
-                <label asp-for="MoTaChiTiet" class="block font-semibold text-gray-700 mb-1">Mô tả chi tiết</label>
-                <textarea asp-for="MoTaChiTiet" rows="5"
-                          class="w-full rounded-xl border-gray-300"></textarea>
+                <label class="text-sm font-semibold text-gray-500">Tên sản phẩm</label>
+                <div class="mt-1 text-gray-800 font-medium">
+                    @Model.TenSanPham
+                </div>
             </div>
 
-            <!-- Ảnh -->
             <div>
-                <label class="block font-semibold text-gray-700 mb-1">Hình ảnh</label>
-                <input type="file" name="HinhAnhFile"
-                       accept="image/*"
-                       class="w-full rounded-xl border-gray-300" />
+                <label class="text-sm font-semibold text-gray-500">Slug</label>
+                <div class="mt-1 text-gray-800">
+                    @Model.Slug
+                </div>
             </div>
 
-            <!-- Actions -->
-            <div class="flex justify-between pt-6 border-t">
-                <a asp-action="Index"
-                   class="h-12 px-6 rounded-xl border flex items-center hover:bg-gray-100">
-                    Quay lại
-                </a>
-
-                <button type="submit"
-                        class="h-12 px-6 rounded-xl bg-purple-600 text-white font-bold hover:bg-purple-700">
-                    ➕ Thêm sản phẩm
-                </button>
+            <div>
+                <label class="text-sm font-semibold text-gray-500">Loại sản phẩm</label>
+                <div class="mt-1 text-gray-800">
+                    @Model.LoaiSanPham
+                </div>
             </div>
 
-        </form>
+            <div>
+                <label class="text-sm font-semibold text-gray-500">Thương hiệu</label>
+                <div class="mt-1 text-gray-800">
+                    @Model.ThuongHieu
+                </div>
+            </div>
+
+            <div>
+                <label class="text-sm font-semibold text-gray-500">Dung tích</label>
+                <div class="mt-1 text-gray-800">
+                    @Model.DungTich
+                </div>
+            </div>
+
+            <div>
+                <label class="text-sm font-semibold text-gray-500">Giá bán</label>
+                <div class="mt-1 font-bold text-purple-600">
+                    @String.Format("{0:N0} ₫", Model.Gia)
+                </div>
+            </div>
+
+            <div>
+                <label class="text-sm font-semibold text-gray-500">Tồn kho</label>
+                <div class="mt-1 text-gray-800">
+                    @Model.SoLuong
+                </div>
+            </div>
+        </div>
+
+        <!-- Mô tả -->
+        <div>
+            <label class="text-sm font-semibold text-gray-500">Mô tả ngắn</label>
+            <div class="mt-1 text-gray-800 bg-gray-50 rounded-xl p-4">
+                @Model.MoTaNgan
+            </div>
+        </div>
+
+        <div>
+            <label class="text-sm font-semibold text-gray-500">Mô tả chi tiết</label>
+            <div class="mt-1 text-gray-800 bg-gray-50 rounded-xl p-4 whitespace-pre-line">
+                @Model.MoTaChiTiet
+            </div>
+        </div>
+
+        <!-- Hình ảnh -->
+        <div>
+            <label class="text-sm font-semibold text-gray-500 mb-2 block">
+                Hình ảnh sản phẩm
+            </label>
+
+            @if (!string.IsNullOrEmpty(Model.HinhAnh))
+            {
+                <img src="~/images/products/@Model.HinhAnh"
+                     class="h-48 rounded-xl border object-cover" />
+            }
+            else
+            {
+                <div class="text-gray-400 italic">
+                    Chưa có hình ảnh
+                </div>
+            }
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-between pt-6 border-t">
+            <a asp-action="Index"
+               class="h-11 px-6 rounded-xl border flex items-center
+                      text-gray-600 hover:bg-gray-100 transition">
+                ← Quay lại
+            </a>
+
+            
+        </div>
+
     </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

@@ -1,111 +1,203 @@
 ﻿@model _2210900059_PTQ_DATN.Models.DichVu
 
-
 @{
     ViewData["Title"] = "Chi tiết dịch vụ";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Chi tiết dịch vụ</h4>
-        </div>
+<div class="max-w-6xl mx-auto px-4">
 
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">Tên dịch vụ</dt>
-                <dd class="col-sm-9 fw-bold">@Model.TenDichVu</dd>
+    <!-- HEADER -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-black text-[#171118]">
+            Chi tiết dịch vụ
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Thông tin chi tiết của dịch vụ trong hệ thống
+        </p>
+    </div>
 
-                <dt class="col-sm-3">Slug</dt>
-                <dd class="col-sm-9">@Model.Slug</dd>
+    <!-- CARD -->
+    <div class="bg-white rounded-2xl border border-[#e4dbe6] shadow-sm p-8">
 
-                <dt class="col-sm-3">Loại dịch vụ</dt>
-                <dd class="col-sm-9">@Model.LoaiDichVu</dd>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 text-sm">
 
-                <dt class="col-sm-3">Công nghệ</dt>
-                <dd class="col-sm-9">@Model.CongNghe</dd>
+            <!-- LEFT COLUMN -->
+            <div class="space-y-4">
 
-                <dt class="col-sm-3">Thời lượng</dt>
-                <dd class="col-sm-9">@Model.ThoiLuong</dd>
+                <div>
+                    <label class="text-gray-500">Tên dịch vụ</label>
+                    <div class="font-semibold text-lg text-[#171118]">
+                        @Model.TenDichVu
+                    </div>
+                </div>
 
-                <dt class="col-sm-3">Số buổi</dt>
-                <dd class="col-sm-9">@Model.SoBuoi</dd>
+                <div>
+                    <label class="text-gray-500">Slug</label>
+                    <div>@Model.Slug</div>
+                </div>
 
-                <dt class="col-sm-3">Đối tượng phù hợp</dt>
-                <dd class="col-sm-9">@Model.DoiTuongPhuHop</dd>
+                <div>
+                    <label class="text-gray-500">Loại dịch vụ</label>
+                    <div>@Model.LoaiDichVu</div>
+                </div>
 
-                <dt class="col-sm-3">Vùng tác động</dt>
-                <dd class="col-sm-9">@Model.VungTacDong</dd>
+                <div>
+                    <label class="text-gray-500">Công nghệ</label>
+                    <div>@Model.CongNghe</div>
+                </div>
 
-                <dt class="col-sm-3">Mô tả ngắn</dt>
-                <dd class="col-sm-9">@Model.MoTaNgan</dd>
+                <div>
+                    <label class="text-gray-500">Thời lượng</label>
+                    <div>@Model.ThoiLuong</div>
+                </div>
 
-                <dt class="col-sm-3">Nội dung chi tiết</dt>
-                <dd class="col-sm-9">@Html.Raw(Model.NoiDungChiTiet)</dd>
+                <div>
+                    <label class="text-gray-500">Số buổi</label>
+                    <div>@Model.SoBuoi</div>
+                </div>
 
-                <dt class="col-sm-3">Hình ảnh</dt>
-                <dd class="col-sm-9">
-                    @if (!string.IsNullOrEmpty(Model.HinhAnh))
-                    {
-                        <img src="~/uploads/@Model.HinhAnh"
-                             class="img-thumbnail"
-                             style="max-width:250px" />
-                    }
-                    else
-                    {
-                        <span class="text-muted">Không có hình ảnh</span>
-                    }
-                </dd>
+                <div>
+                    <label class="text-gray-500">Đối tượng phù hợp</label>
+                    <div>@Model.DoiTuongPhuHop</div>
+                </div>
 
-                <dt class="col-sm-3">Giá</dt>
-                <dd class="col-sm-9 text-danger fw-bold">
-                    @String.Format("{0:N0} đ", Model.Gia)
-                </dd>
+                <div>
+                    <label class="text-gray-500">Vùng tác động</label>
+                    <div>@Model.VungTacDong</div>
+                </div>
 
-                <dt class="col-sm-3">Nổi bật</dt>
-                <dd class="col-sm-9">
-                    @(Model.NoiBat == true ? "Có" : "Không")
-                </dd>
+            </div>
 
-                <dt class="col-sm-3">Trạng thái</dt>
-                <dd class="col-sm-9">
-                    @(Model.TrangThai == true ? "Hoạt động" : "Ẩn")
-                </dd>
+            <!-- RIGHT COLUMN -->
+            <div class="space-y-4">
 
+                <div>
+                    <label class="text-gray-500">Danh mục</label>
+                    <div>
+                        @Model.MaDanhMucDvNavigation?.TenDanhMuc
+                    </div>
+                </div>
 
-                <dt class="col-sm-3">Danh mục</dt>
-                <dd class="col-sm-9">
-                    @Model.MaDanhMucDvNavigation?.MaDanhMucDv
-                </dd>
+                <div>
+                    <label class="text-gray-500">Giá</label>
+                    <div class="text-red-600 font-bold text-lg">
+                        @String.Format("{0:N0} ₫", Model.Gia)
+                    </div>
+                </div>
 
-                <dt class="col-sm-3">Người tạo</dt>
-                <dd class="col-sm-9">
-                    @Model.MaNguoiTaoNavigation?.MaNguoiDung
-                </dd>
+                <div>
+                    <label class="text-gray-500">Nổi bật</label>
+                    <div>
+                        @if (Model.NoiBat == true)
+                        {
+                            <span class="px-3 py-1 rounded-full text-xs
+                                             bg-yellow-100 text-yellow-700 font-semibold">
+                                Nổi bật
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="px-3 py-1 rounded-full text-xs
+                                             bg-gray-100 text-gray-500">
+                                Thường
+                            </span>
+                        }
+                    </div>
+                </div>
 
-                <dt class="col-sm-3">Người cập nhật</dt>
-                <dd class="col-sm-9">
-                    @Model.MaNguoiCapNhatNavigation?.MaNguoiDung
-                </dd>
+                <div>
+                    <label class="text-gray-500">Trạng thái</label>
+                    <div>
+                        @if (Model.TrangThai == true)
+                        {
+                            <span class="px-3 py-1 rounded-full text-xs
+                                             bg-green-100 text-green-700 font-semibold">
+                                Hoạt động
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="px-3 py-1 rounded-full text-xs
+                                             bg-red-100 text-red-600 font-semibold">
+                                Tạm ẩn
+                            </span>
+                        }
+                    </div>
+                </div>
 
-                <dt class="col-sm-3">Ngày tạo</dt>
-                <dd class="col-sm-9">
-                    @Model.NgayTao?.ToString("dd/MM/yyyy HH:mm")
-                </dd>
-            </dl>
+                <div>
+                    <label class="text-gray-500">Người tạo</label>
+                    <div>
+                        @Model.MaNguoiTaoNavigation?.MaNguoiDung
+                    </div>
+                </div>
 
-            <div class="mt-4">
-                <a asp-action="Edit"
-                   asp-route-id="@Model.MaDichVu"
-                   class="btn btn-warning">
-                    Chỉnh sửa
-                </a>
+                <div>
+                    <label class="text-gray-500">Người cập nhật</label>
+                    <div>
+                        @Model.MaNguoiCapNhatNavigation?.MaNguoiDung
+                    </div>
+                </div>
 
-                <a asp-action="Index"
-                   class="btn btn-secondary ms-2">
-                    Quay lại danh sách
-                </a>
+                <div>
+                    <label class="text-gray-500">Ngày tạo</label>
+                    <div class="text-gray-600">
+                        @Model.NgayTao?.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+                </div>
+
             </div>
         </div>
+
+        <!-- DESCRIPTION -->
+        <div class="mt-10">
+            <h3 class="text-lg font-bold text-[#171118] mb-2">
+                Mô tả ngắn
+            </h3>
+            <p class="text-gray-600">
+                @Model.MoTaNgan
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <h3 class="text-lg font-bold text-[#171118] mb-2">
+                Nội dung chi tiết
+            </h3>
+            <div class="prose max-w-none text-gray-700">
+                @Html.Raw(Model.NoiDungChiTiet)
+            </div>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="mt-8">
+            <h3 class="text-lg font-bold text-[#171118] mb-3">
+                Hình ảnh
+            </h3>
+
+            @if (!string.IsNullOrEmpty(Model.HinhAnh))
+            {
+                <img src="~/images/services/@Model.HinhAnh"
+                     class="rounded-xl border max-w-sm shadow-sm" />
+            }
+            else
+            {
+                <span class="text-gray-400">Không có hình ảnh</span>
+            }
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="mt-10 flex gap-3">
+
+        
+
+            <a asp-action="Index"
+               class="px-6 h-11 inline-flex items-center rounded-xl
+                      bg-gray-200 text-gray-700 font-semibold
+                      hover:bg-gray-300 transition">
+                Quay lại
+            </a>
+
+        </div>
+
     </div>
 </div>

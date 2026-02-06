@@ -23,53 +23,66 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             _environment = environment;
         }
 
-        // GET: Admins/DichVus
-        public async Task<IActionResult> Index()
+        // ==========================
+        // INDEX + LỌC THEO DANH MỤC
+        // ==========================
+        public async Task<IActionResult> Index(int? maDanhMuc)
         {
-            var leSkinDbContext = _context.DichVus.Include(d => d.MaDanhMucDvNavigation).Include(d => d.MaNguoiCapNhatNavigation).Include(d => d.MaNguoiTaoNavigation);
-            return View(await leSkinDbContext.ToListAsync());
+            var query = _context.DichVus
+                .Include(d => d.MaDanhMucDvNavigation)
+                .Include(d => d.MaNguoiCapNhatNavigation)
+                .Include(d => d.MaNguoiTaoNavigation)
+                .AsQueryable();
+
+            if (maDanhMuc.HasValue)
+            {
+                query = query.Where(d => d.MaDanhMucDv == maDanhMuc);
+            }
+
+            ViewBag.DanhMucs = await _context.DanhMucDichVus.ToListAsync();
+            ViewBag.MaDanhMucDangChon = maDanhMuc;
+
+            return View(await query.ToListAsync());
         }
 
-        // GET: Admins/DichVus/Details/5
+        // ==========================
+        // DETAILS
+        // ==========================
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var dichVu = await _context.DichVus
                 .Include(d => d.MaDanhMucDvNavigation)
                 .Include(d => d.MaNguoiCapNhatNavigation)
                 .Include(d => d.MaNguoiTaoNavigation)
                 .FirstOrDefaultAsync(m => m.MaDichVu == id);
-            if (dichVu == null)
-            {
-                return NotFound();
-            }
+
+            if (dichVu == null) return NotFound();
 
             return View(dichVu);
         }
 
-        // GET: Admins/DichVus/Create
+        // ==========================
+        // CREATE
+        // ==========================
         public IActionResult Create()
         {
             ViewData["MaDanhMucDv"] = new SelectList(
                 _context.DanhMucDichVus,
-                "MaDanhMucDv",      // value
-                "TenDanhMuc"        // text hiển thị
+                "MaDanhMucDv",
+                "TenDanhMuc"
             );
 
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen");
             ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen");
+            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen");
+
             return View();
         }
 
-        // POST: Admins/DichVus/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("MaDichVu,MaDanhMucDv,TenDichVu,Slug,LoaiDichVu,CongNghe,ThoiLuong,SoBuoi,DoiTuongPhuHop,VungTacDong,MoTaNgan,NoiDungChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
             DichVu dichVu,
             IFormFile? HinhAnhFile
         )
@@ -90,12 +103,10 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                     string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
                     string filePath = Path.Combine(uploadPath, fileName);
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await HinhAnhFile.CopyToAsync(stream);
-                    }
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await HinhAnhFile.CopyToAsync(stream);
 
-                    dichVu.HinhAnh = fileName; // chỉ lưu tên file
+                    dichVu.HinhAnh = fileName;
                 }
 
                 dichVu.NgayTao ??= DateTime.Now;
@@ -112,141 +123,89 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
                 dichVu.MaDanhMucDv
             );
 
-            ViewData["MaNguoiCapNhat"] = new SelectList(
-                _context.NguoiDungs,
-                "MaNguoiDung",
-                "HoTen",
-                dichVu.MaNguoiCapNhat
-            );
-
-            ViewData["MaNguoiTao"] = new SelectList(
-                _context.NguoiDungs,
-                "MaNguoiDung",
-                "HoTen",
-                dichVu.MaNguoiTao
-            );
-
             return View(dichVu);
         }
 
-        // GET: Admins/DichVus/Edit/5
+        // ==========================
+        // EDIT
+        // ==========================
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var dichVu = await _context.DichVus.FindAsync(id);
-            if (dichVu == null)
-            {
-                return NotFound();
-            }
+            if (dichVu == null) return NotFound();
 
-            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "TenDanhMuc", dichVu.MaDanhMucDv);
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiTao);
+            ViewData["MaDanhMucDv"] = new SelectList(
+                _context.DanhMucDichVus,
+                "MaDanhMucDv",
+                "TenDanhMuc",
+                dichVu.MaDanhMucDv
+            );
+
             return View(dichVu);
         }
 
-        // POST: Admins/DichVus/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id,
-            [Bind("MaDichVu,MaDanhMucDv,TenDichVu,Slug,LoaiDichVu,CongNghe,ThoiLuong,SoBuoi,DoiTuongPhuHop,VungTacDong,MoTaNgan,NoiDungChiTiet,HinhAnh,Gia,NoiBat,NgayTao,TrangThai,MaNguoiTao,MaNguoiCapNhat")]
-            DichVu dichVu,
-            IFormFile? HinhAnhFile
-        )
+        public async Task<IActionResult> Edit(int id, DichVu dichVu, IFormFile? HinhAnhFile)
         {
-            if (id != dichVu.MaDichVu)
-            {
-                return NotFound();
-            }
+            if (id != dichVu.MaDichVu) return NotFound();
 
             if (ModelState.IsValid)
             {
-                try
+                if (HinhAnhFile != null && HinhAnhFile.Length > 0)
                 {
-                    // If a new image is uploaded, save it and set HinhAnh
-                    if (HinhAnhFile != null && HinhAnhFile.Length > 0)
-                    {
-                        string uploadPath = Path.Combine(
-                            _environment.WebRootPath ?? "wwwroot",
-                            "images",
-                            "services"
-                        );
+                    string uploadPath = Path.Combine(
+                        _environment.WebRootPath ?? "wwwroot",
+                        "images",
+                        "services"
+                    );
 
-                        if (!Directory.Exists(uploadPath))
-                            Directory.CreateDirectory(uploadPath);
+                    if (!Directory.Exists(uploadPath))
+                        Directory.CreateDirectory(uploadPath);
 
-                        string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
-                        string filePath = Path.Combine(uploadPath, fileName);
+                    string fileName = Guid.NewGuid() + Path.GetExtension(HinhAnhFile.FileName);
+                    string filePath = Path.Combine(uploadPath, fileName);
 
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await HinhAnhFile.CopyToAsync(stream);
-                        }
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await HinhAnhFile.CopyToAsync(stream);
 
-                        dichVu.HinhAnh = fileName;
-                    }
-                    else
-                    {
-                        // Preserve existing image when no new file uploaded
-                        var existingImage = await _context.DichVus
-                            .AsNoTracking()
-                            .Where(d => d.MaDichVu == id)
-                            .Select(d => d.HinhAnh)
-                            .FirstOrDefaultAsync();
-
-                        dichVu.HinhAnh = existingImage;
-                    }
-
-                    _context.Update(dichVu);
-                    await _context.SaveChangesAsync();
+                    dichVu.HinhAnh = fileName;
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!DichVuExists(dichVu.MaDichVu))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    dichVu.HinhAnh = await _context.DichVus
+                        .AsNoTracking()
+                        .Where(d => d.MaDichVu == id)
+                        .Select(d => d.HinhAnh)
+                        .FirstOrDefaultAsync();
                 }
+
+                _context.Update(dichVu);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["MaDanhMucDv"] = new SelectList(_context.DanhMucDichVus, "MaDanhMucDv", "TenDanhMuc", dichVu.MaDanhMucDv);
-            ViewData["MaNguoiCapNhat"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiCapNhat);
-            ViewData["MaNguoiTao"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen", dichVu.MaNguoiTao);
             return View(dichVu);
         }
 
-        // GET: Admins/DichVus/Delete/5
+        // ==========================
+        // DELETE
+        // ==========================
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var dichVu = await _context.DichVus
                 .Include(d => d.MaDanhMucDvNavigation)
-                .Include(d => d.MaNguoiCapNhatNavigation)
-                .Include(d => d.MaNguoiTaoNavigation)
                 .FirstOrDefaultAsync(m => m.MaDichVu == id);
-            if (dichVu == null)
-            {
-                return NotFound();
-            }
+
+            if (dichVu == null) return NotFound();
 
             return View(dichVu);
         }
 
-        // POST: Admins/DichVus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -255,15 +214,10 @@ namespace _2210900059_PTQ_DATN.Areas.Admins.Controllers
             if (dichVu != null)
             {
                 _context.DichVus.Remove(dichVu);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool DichVuExists(int id)
-        {
-            return _context.DichVus.Any(e => e.MaDichVu == id);
         }
     }
 }

@@ -491,7 +491,7 @@ body {
 .service-row {
     display: flex;
     gap: 18px;
-    justify-content: space-between;
+    justify-content: flex-start; /* ←  */
     flex-wrap: wrap;
 }
 
@@ -586,9 +586,10 @@ body {
 .product-row {
     display: flex;
     gap: 18px;
-    justify-content: space-between;
+    justify-content: flex-start; /* ←  */
     flex-wrap: wrap;
 }
+
 
 .product-card {
     background: #fff;

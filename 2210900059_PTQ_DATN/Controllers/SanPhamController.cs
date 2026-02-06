@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using _2210900059_PTQ_DATN.Models;
+using System.Linq;
 
 namespace _2210900059_PTQ_DATN.Controllers
 {
     public class SanPhamController : Controller
     {
-        
         private readonly LeSkinDbContext _context;
 
         public SanPhamController(LeSkinDbContext context)
@@ -15,16 +15,29 @@ namespace _2210900059_PTQ_DATN.Controllers
         }
 
         /* =========================
-         * TRANG DANH SÁCH SẢN PHẨM
+         * TRANG DANH SÁCH SẢN PHẨM + LỌC DANH MỤC
          * ========================= */
-        public IActionResult Index()
+        public IActionResult Index(int? danhMucId)
         {
-            var sanPhams = _context.SanPhams
-                .Where(sp => sp.TrangThai == true)
-                .OrderByDescending(sp => sp.NgayTao)
-                .ToList();
+            // Danh sách danh mục để lọc
+            ViewBag.DanhMucSanPham = _context.DanhMucSanPhams.ToList();
+            ViewBag.DanhMucDangChon = danhMucId;
 
-            return View(sanPhams);
+            var sanPhams = _context.SanPhams
+                .Include(sp => sp.MaDanhMucNavigation)
+                .Where(sp => sp.TrangThai == true);
+
+            // Nếu có chọn danh mục → lọc
+            if (danhMucId.HasValue)
+            {
+                sanPhams = sanPhams.Where(sp => sp.MaDanhMuc == danhMucId);
+            }
+
+            return View(
+                sanPhams
+                    .OrderByDescending(sp => sp.NgayTao)
+                    .ToList()
+            );
         }
 
         /* =========================

@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\areas\\admins\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:areas\\admins\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|d:\\baitap\\asp.net\\2210900059_ptq_datn\\areas\\admins\\views\\dichvus\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E4E04827-1478-4182-995C-C4C99B19F751}|2210900059_PTQ_DATN.csproj|solutionrelative:areas\\admins\\views\\dichvus\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,21 +13,25 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 206,
+          "DockedHeight": 71,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Areas\\Admins\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Admins\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Areas\\Admins\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Areas\\Admins\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIUAAAAAAAAAAAAAAA==",
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Areas\\Admins\\Views\\DichVus\\Details.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admins\\Views\\DichVus\\Details.cshtml",
+              "ToolTip": "D:\\baitap\\ASP.NET\\2210900059_PTQ_DATN\\Areas\\Admins\\Views\\DichVus\\Details.cshtml",
+              "RelativeToolTip": "Areas\\Admins\\Views\\DichVus\\Details.cshtml",
+              "ViewState": "AgIAAK4AAAAAAAAAAAAAAL4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-05T10:58:01.615Z",
+              "WhenOpened": "2026-02-06T13:05:48.918Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }

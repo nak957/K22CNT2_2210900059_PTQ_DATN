@@ -13,20 +13,42 @@ namespace _2210900059_PTQ_DATN.Controllers
             _context = context;
         }
 
-        // Trang danh sách dịch vụ
-        public IActionResult Index()
+        // ==========================
+        // DANH SÁCH + LỌC DỊCH VỤ
+        // ==========================
+        public IActionResult Index(string? danhMuc)
         {
-            var dichVus = _context.DichVus
-                .Where(dv => dv.TrangThai == true)
-                .ToList();
+            // Query gốc
+            var query = _context.DichVus
+                .Include(dv => dv.MaDanhMucDvNavigation)
+                .Where(dv => dv.TrangThai == true);
+
+            // Nếu có lọc theo tên danh mục
+            if (!string.IsNullOrEmpty(danhMuc))
+            {
+                query = query.Where(dv =>
+                    dv.MaDanhMucDvNavigation != null &&
+                    dv.MaDanhMucDvNavigation.TenDanhMuc == danhMuc
+                );
+            }
+
+            // Danh sách dịch vụ
+            var dichVus = query.ToList();
+
+            // Danh sách danh mục để render dropdown
+            ViewBag.DanhMucs = _context.DanhMucDichVus.ToList();
+            ViewBag.DanhMucDangChon = danhMuc;
 
             return View(dichVus);
         }
 
-        // ===== CHI TIẾT DỊCH VỤ =====
+        // ==========================
+        // CHI TIẾT DỊCH VỤ
+        // ==========================
         public IActionResult ChiTiet(int id)
         {
             var dichVu = _context.DichVus
+                .Include(dv => dv.MaDanhMucDvNavigation)
                 .FirstOrDefault(dv => dv.MaDichVu == id && dv.TrangThai == true);
 
             if (dichVu == null)

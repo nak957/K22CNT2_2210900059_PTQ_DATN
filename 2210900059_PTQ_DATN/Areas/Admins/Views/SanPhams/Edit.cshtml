@@ -6,159 +6,245 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<div class="max-w-5xl mx-auto px-6 py-8">
+<div class="max-w-6xl mx-auto px-6 py-8">
 
-    <!-- Header -->
-    <div class="mb-6">
-        <h1 class="text-3xl font-extrabold text-gray-800">Chỉnh sửa sản phẩm</h1>
-        <p class="text-gray-500 mt-1">Cập nhật thông tin chi tiết của sản phẩm</p>
+    <!-- HEADER -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-gray-800">
+            Chỉnh sửa sản phẩm
+        </h1>
+        <p class="text-gray-500 mt-1">
+            Cập nhật thông tin chi tiết của sản phẩm trong hệ thống
+        </p>
     </div>
 
-    <!-- Form Card -->
-    <div class="bg-white rounded-2xl shadow border border-gray-200 p-8">
+    <!-- FORM CARD -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
 
-        <form asp-action="Edit" class="space-y-6" enctype="multipart/form-data">
+        <form asp-action="Edit"
+              enctype="multipart/form-data"
+              class="space-y-8">
+
             <div asp-validation-summary="ModelOnly"
-                 class="rounded-lg bg-red-50 text-red-600 px-4 py-3 text-sm"></div>
+                 class="rounded-xl bg-red-50 text-red-600 px-4 py-3 text-sm"></div>
 
             <input type="hidden" asp-for="MaSanPham" />
 
-            <!-- Grid -->
+            <!-- GRID -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 <!-- Danh mục -->
                 <div>
-                    <label asp-for="MaDanhMuc" class="block font-semibold text-gray-700 mb-1">Danh mục</label>
-                    <select asp-for="MaDanhMuc" asp-items="ViewBag.MaDanhMuc"
-                            class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500">
+                    <label asp-for="MaDanhMuc"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Danh mục
+                    </label>
+                    <select asp-for="MaDanhMuc"
+                            asp-items="ViewBag.MaDanhMuc"
+                            class="w-full h-11 px-4 rounded-xl
+                                   border border-gray-300 bg-white
+                                   focus:outline-none focus:ring-2
+                                   focus:ring-purple-500 focus:border-purple-500">
                     </select>
                 </div>
 
-                <!-- Tên sản phẩm -->
+                <!-- Tên -->
                 <div>
-                    <label asp-for="TenSanPham" class="block font-semibold text-gray-700 mb-1">Tên sản phẩm</label>
+                    <label asp-for="TenSanPham"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Tên sản phẩm
+                    </label>
                     <input asp-for="TenSanPham"
-                           class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500" />
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300
+                                  focus:outline-none focus:ring-2
+                                  focus:ring-purple-500 focus:border-purple-500" />
                 </div>
 
                 <div>
-                    <label asp-for="Slug" class="block font-semibold text-gray-700 mb-1">Slug</label>
-                    <input asp-for="Slug" class="w-full rounded-xl border-gray-300" />
+                    <label asp-for="Slug"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Slug
+                    </label>
+                    <input asp-for="Slug"
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300" />
                 </div>
 
                 <div>
-                    <label asp-for="LoaiSanPham" class="block font-semibold text-gray-700 mb-1">Loại sản phẩm</label>
-                    <input asp-for="LoaiSanPham" class="w-full rounded-xl border-gray-300" />
+                    <label asp-for="LoaiSanPham"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Loại sản phẩm
+                    </label>
+                    <input asp-for="LoaiSanPham"
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300" />
                 </div>
 
                 <div>
-                    <label asp-for="ThuongHieu" class="block font-semibold text-gray-700 mb-1">Thương hiệu</label>
-                    <input asp-for="ThuongHieu" class="w-full rounded-xl border-gray-300" />
+                    <label asp-for="ThuongHieu"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Thương hiệu
+                    </label>
+                    <input asp-for="ThuongHieu"
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300" />
                 </div>
 
                 <div>
-                    <label asp-for="DungTich" class="block font-semibold text-gray-700 mb-1">Dung tích</label>
-                    <input asp-for="DungTich" class="w-full rounded-xl border-gray-300" />
+                    <label asp-for="DungTich"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Dung tích
+                    </label>
+                    <input asp-for="DungTich"
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300" />
                 </div>
 
                 <div>
-                    <label asp-for="DoiTuongSuDung" class="block font-semibold text-gray-700 mb-1">Đối tượng sử dụng</label>
-                    <input asp-for="DoiTuongSuDung" class="w-full rounded-xl border-gray-300" />
+                    <label asp-for="DoiTuongSuDung"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Đối tượng sử dụng
+                    </label>
+                    <input asp-for="DoiTuongSuDung"
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300" />
                 </div>
 
                 <!-- Giá -->
                 <div>
-                    <label asp-for="Gia" class="block font-semibold text-gray-700 mb-1">Giá bán (VNĐ)</label>
+                    <label asp-for="Gia"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Giá bán (VNĐ)
+                    </label>
                     <input asp-for="Gia" type="number" min="0"
-                           class="w-full rounded-xl border-gray-300" />
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300" />
                 </div>
 
-                <!-- ⭐ SỐ LƯỢNG -->
+                <!-- Số lượng -->
                 <div>
-                    <label asp-for="SoLuong" class="block font-semibold text-gray-700 mb-1">
+                    <label asp-for="SoLuong"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
                         Số lượng tồn kho
                     </label>
-                    <input asp-for="SoLuong"
-                           type="number"
-                           min="0"
-                           class="w-full rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500" />
-                    <span asp-validation-for="SoLuong" class="text-sm text-red-600"></span>
+                    <input asp-for="SoLuong" type="number" min="0"
+                           class="w-full h-11 px-4 rounded-xl
+                                  border border-gray-300
+                                  focus:outline-none focus:ring-2
+                                  focus:ring-purple-500 focus:border-purple-500" />
+                    <span asp-validation-for="SoLuong"
+                          class="text-sm text-red-600"></span>
                 </div>
-
             </div>
 
-            <!-- Mô tả -->
+            <!-- TEXTAREA -->
             <div>
-                <label asp-for="MoTaNgan" class="block font-semibold text-gray-700 mb-1">Mô tả ngắn</label>
+                <label asp-for="MoTaNgan"
+                       class="block text-sm font-semibold text-gray-700 mb-1">
+                    Mô tả ngắn
+                </label>
                 <textarea asp-for="MoTaNgan" rows="3"
-                          class="w-full rounded-xl border-gray-300"></textarea>
+                          class="w-full px-4 py-3 rounded-xl
+                                 border border-gray-300"></textarea>
             </div>
 
             <div>
-                <label asp-for="MoTaChiTiet" class="block font-semibold text-gray-700 mb-1">Mô tả chi tiết</label>
+                <label asp-for="MoTaChiTiet"
+                       class="block text-sm font-semibold text-gray-700 mb-1">
+                    Mô tả chi tiết
+                </label>
                 <textarea asp-for="MoTaChiTiet" rows="5"
-                          class="w-full rounded-xl border-gray-300"></textarea>
+                          class="w-full px-4 py-3 rounded-xl
+                                 border border-gray-300"></textarea>
             </div>
 
             <div>
-                <label asp-for="CongDungChinh" class="block font-semibold text-gray-700 mb-1">Công dụng chính</label>
-                <input asp-for="CongDungChinh" class="w-full rounded-xl border-gray-300" />
+                <label asp-for="CongDungChinh"
+                       class="block text-sm font-semibold text-gray-700 mb-1">
+                    Công dụng chính
+                </label>
+                <input asp-for="CongDungChinh"
+                       class="w-full h-11 px-4 rounded-xl
+                              border border-gray-300" />
             </div>
 
             <div>
-                <label asp-for="ThanhPhanNoiBat" class="block font-semibold text-gray-700 mb-1">Thành phần nổi bật</label>
-                <input asp-for="ThanhPhanNoiBat" class="w-full rounded-xl border-gray-300" />
+                <label asp-for="ThanhPhanNoiBat"
+                       class="block text-sm font-semibold text-gray-700 mb-1">
+                    Thành phần nổi bật
+                </label>
+                <input asp-for="ThanhPhanNoiBat"
+                       class="w-full h-11 px-4 rounded-xl
+                              border border-gray-300" />
             </div>
 
-            <!-- Hình ảnh -->
+            <!-- IMAGE -->
             <div>
-                <label class="block font-semibold text-gray-700 mb-1">Hình ảnh sản phẩm</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Hình ảnh sản phẩm
+                </label>
 
                 @if (!string.IsNullOrEmpty(Model.HinhAnh))
                 {
-                    <div class="mb-3">
-                        <img src="~/images/products/@Model.HinhAnh"
-                             class="h-24 rounded-xl border object-cover" />
-                    </div>
+                    <img src="~/images/products/@Model.HinhAnh"
+                         class="h-24 w-24 rounded-xl border border-gray-200 mb-3 object-cover" />
                 }
 
                 <input type="file" name="HinhAnhFile"
-                       class="w-full rounded-xl border-gray-300" accept="image/*" />
+                       accept="image/*"
+                       class="w-full h-11 px-4 rounded-xl
+                              border border-gray-300" />
 
                 <input type="hidden" asp-for="HinhAnh" />
             </div>
 
-            <!-- Trạng thái -->
+            <!-- STATUS -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label asp-for="TrangThai" class="block font-semibold text-gray-700 mb-1">Trạng thái</label>
-                    <select asp-for="TrangThai" class="w-full rounded-xl border-gray-300">
+                    <label asp-for="TrangThai"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Trạng thái
+                    </label>
+                    <select asp-for="TrangThai"
+                            class="w-full h-11 px-4 rounded-xl
+                                   border border-gray-300">
                         <option value="true">Đang bán</option>
                         <option value="false">Ngừng bán</option>
                     </select>
                 </div>
 
                 <div>
-                    <label asp-for="NoiBat" class="block font-semibold text-gray-700 mb-1">Sản phẩm nổi bật</label>
-                    <select asp-for="NoiBat" class="w-full rounded-xl border-gray-300">
+                    <label asp-for="NoiBat"
+                           class="block text-sm font-semibold text-gray-700 mb-1">
+                        Sản phẩm nổi bật
+                    </label>
+                    <select asp-for="NoiBat"
+                            class="w-full h-11 px-4 rounded-xl
+                                   border border-gray-300">
                         <option value="true">Có</option>
                         <option value="false">Không</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Actions -->
-            <div class="flex items-center justify-between pt-6 border-t">
+            <!-- ACTIONS -->
+            <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+
                 <a asp-action="Index"
-                   class="h-12 px-6 rounded-xl border flex items-center justify-center
+                   class="h-11 px-6 rounded-xl
+                          border border-gray-300
+                          flex items-center justify-center
                           text-gray-600 hover:bg-gray-100 transition">
                     Quay lại
                 </a>
 
-                <input type="submit"
-                       value="💾 Lưu thay đổi"
-                       class="rounded-xl h-12 px-6 bg-purple-600 text-white font-bold
-                              hover:bg-purple-700 transition shadow-md" />
+                <button type="submit"
+                        class="h-11 px-8 rounded-xl
+                               bg-purple-600 text-white font-semibold
+                               hover:bg-purple-700 transition">
+                    💾 Lưu thay đổi
+                </button>
             </div>
 
         </form>
